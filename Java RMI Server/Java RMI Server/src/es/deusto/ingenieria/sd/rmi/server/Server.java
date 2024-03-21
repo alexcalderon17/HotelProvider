@@ -31,39 +31,6 @@ public class Server extends UnicastRemoteObject implements IServer {
 		//this.conexionAPI = new ConexionAPI();
 	}
 
-	@Override
-	public String sayHello() 
-	{
-		cont++;
-		System.out.println(" * Client number: " + cont);
-		return "Hello World!";
-	}
-	
-	@Override
-	public String sayMessage(String login, String password, String message) throws RemoteException, InvalidUser
-	{
-		if (registeredUsers.containsValue(login)) {
-
-			if (registeredUsers.get(login).contentEquals(password)) {
-				return message;
-			} else {
-				throw new InvalidUser("Incorrect password for user " + login);
-			}
-
-		} else {
-			throw new InvalidUser("User name " + login + "is not present among the registered users");
-		}
-	}
-
-	@Override
-	public void registerUser(String login, String password) throws RemoteException, InvalidUser 
-	{
-		if ( registeredUsers.containsValue(login) == false ) {
-			registeredUsers.put(login, password);			
-		} else {
-			throw new InvalidUser("User name " + login + " is already in the database");
-		}		
-	}
 
 	@Override
 	public String obtenerApartamentos()

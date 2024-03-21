@@ -4,32 +4,23 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface IServer extends Remote 
-{
-	/**
-	 * Test message to say hello to client
-	 * @param
-	 * @return Message
-	 * @throws RemoteException
-	 */
-	String sayHello() throws RemoteException;
+{//soloo metodos que devuelven super. No creaciónd e clases.
 	
-	/**
-	 * Print message to client
-	 * @param login
-	 * @param password
-	 * @param message
-	 * @return Message
-	 * @throws RemoteException
-	 */
-	String sayMessage(String login, String password, String message) throws RemoteException, InvalidUser;
-	
-	/**
-	 * Function to register a new user
-	 * @param login
-	 * @param password
-	 * @throws RemoteException
-	 */
-	void registerUser(String login, String password) throws RemoteException, InvalidUser;
+	/*String CancelarReserva (String ReservaID) throws RemoteException;
+
+	boolean Registrarse(String nombre, String apellidos, String DNI, String correoElectronico, String telefono, String password, int codPostal) throws RemoteException;
+
+	boolean IniciarSesion(String correoElectronico, String contraseña) throws RemoteException;
+
+	boolean ModificarDatosUsuario (String nombre, String apellidos, String DNI, String correoElectrónico, String teléfono, String password, int codPostal)  throws RemoteException;
+
+	boolean ValidarAcceso (String CodigoQR)  throws RemoteException;
+
+	boolean AñadirReseña (String usuarioID, String alojamientoID, int calificacion, String comentario)  throws RemoteException;
+
+	//double CalcularEstrellasPromedio (String alojamientoID)  throws RemoteException;
+
+	//boolean ModificarReserva (String reservaID, Date nuevaFechaInicio, Date nuevaFechaFin) throws RemoteException;*/
 
 	String obtenerApartamentos() throws RemoteException;
 }
