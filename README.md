@@ -23,7 +23,7 @@ El servidor, que se encuentra en Java RMI Server with Ant, gestiona todas las so
 Aceptamos cualquier tipo de sugerencia o contribución, os podeís poner en contacto con cualquiera de nosotros (contacto en autores).
 
 ## Autores
--Markos Agote, email: markosagote@opendeusto.es, repositorio GIT: parrrdo1
+-Markos Agote, email: markosagote@opendeusto.es, repositorio GIT: pardddo1
 -Alex Calderón, email: alexcalderon@opendeusto.es, repositorio GIT: alexcalderon17
 -Pablo de Erauso, email: pablodeerauso@opendeusto.es, repositorio GIT: Derau21
 -Bastiaan Handels, email: bastiaan.handels@opendeusto.es, repositorio GIT: Bastiaan777

@@ -7,6 +7,12 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.server.*;
 import java.util.HashMap;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.io.IOException;
 
 //import ApiClient;
 //import Server; //netstat ano | findstr :port
@@ -62,17 +68,40 @@ public class Server extends UnicastRemoteObject implements IServer {
 	@Override
 	public String obtenerApartamentos()
 	{
-		try{
-			String url = "https://ds2324.arambarri.eus/api/alojamientos";
-			String token = "0518ee96193abf0dca7b3a46591653eb2b162f3fb2dd6fa681b65b97e3e00243187a1b6839aac73946715fb62719b12a1eb14afc36018935b935c2dbf293448fc98a5cde5a219fc208a3db97489b2c2c479825f212d87658ff3b369e4951b0b3f101ac8d52330262e60846ae80b45b6799c69371e4f47a548053137ada4ec6e5";
+		 String respuesta = null;
+       	String url = "https://ds2324.arambarri.eus/api/alojamientos";
+       	String token = "0518ee96193abf0dca7b3a46591653eb2b162f3fb2dd6fa681b65b97e3e00243187a1b6839aac73946715fb62719b12a1eb14afc36018935b935c2dbf293448fc98a5cde5a219fc208a3db97489b2c2c479825f212d87658ff3b369e4951b0b3f101ac8d52330262e60846ae80b45b6799c69371e4f47a548053137ada4ec6e5";
+
+		
+		 try{
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI(url))
+                .header("Authorization", "Bearer " + token)
+                .build();
+
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
+        if(response.statusCode() == 200){ //200 Exitoso
+            respuesta = response.body();
+            return respuesta;
+        }else{
+            System.out.println("error codigo:" + response.statusCode());
+        }
+        }catch(InterruptedException | URISyntaxException | IOException e) {
+            System.out.println("Error en solicitud");
+        }
+        return respuesta;
+        
+		/*try{
+			//String url = "https://ds2324.arambarri.eus/api/alojamientos";
+			//String token = "0518ee96193abf0dca7b3a46591653eb2b162f3fb2dd6fa681b65b97e3e00243187a1b6839aac73946715fb62719b12a1eb14afc36018935b935c2dbf293448fc98a5cde5a219fc208a3db97489b2c2c479825f212d87658ff3b369e4951b0b3f101ac8d52330262e60846ae80b45b6799c69371e4f47a548053137ada4ec6e5";
 			String apiResponse = ApiClient.getApiResponse(url, token);
 			return apiResponse;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return null;
+		return null;*/
 	}
-	
 	
 
 	public static void main(String[] args) {
