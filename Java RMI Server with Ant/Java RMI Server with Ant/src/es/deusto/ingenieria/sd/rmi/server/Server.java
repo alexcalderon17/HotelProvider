@@ -60,15 +60,18 @@ public class Server extends UnicastRemoteObject implements IServer {
 	}
 
 	@Override
-	public String obtenerApartamentos(){
+	public String obtenerApartamentos()
+	{
 		try{
-			String url = "https://ds2324.arambarri.eus";
+			String url = "https://ds2324.arambarri.eus/api/alojamientos";
 			String token = "0518ee96193abf0dca7b3a46591653eb2b162f3fb2dd6fa681b65b97e3e00243187a1b6839aac73946715fb62719b12a1eb14afc36018935b935c2dbf293448fc98a5cde5a219fc208a3db97489b2c2c479825f212d87658ff3b369e4951b0b3f101ac8d52330262e60846ae80b45b6799c69371e4f47a548053137ada4ec6e5";
 			String apiResponse = ApiClient.getApiResponse(url, token);
 			return apiResponse;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		return null;
+	}
 	
 	
 

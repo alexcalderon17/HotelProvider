@@ -44,8 +44,16 @@ public class Client {
 		/**
 		 * Try registering user
 		 */
+
+		try{
+			String apartamentos = stubServer.obtenerApartamentos();
+			System.out.println(apartamentos);
+		}catch(Exception e){
+			System.out.println("No se han podido imprimir los apartamentos.");
+		}
 		try
 		{			
+
 			stubServer.registerUser("Test1", "Test1");
 			System.out.println("* Added user Test1");
 			
