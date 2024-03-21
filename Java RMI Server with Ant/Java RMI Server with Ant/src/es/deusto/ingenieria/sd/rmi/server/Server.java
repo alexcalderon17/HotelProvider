@@ -26,6 +26,7 @@ public class Server extends UnicastRemoteObject implements IServer {
 		cont++;
 		System.out.println(" * Client number: " + cont);
 		return "Hello World!";
+		
 	}
 	
 	@Override
