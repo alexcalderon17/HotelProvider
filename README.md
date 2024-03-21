@@ -1,13 +1,12 @@
-## MiProyecto (descripción)
+## Proyecto
 La solución consta de dos interfaces de usuario distintas: una dirigida a los clientes que desean alquilar habitaciones y otra incorporada en dispositivos de puertas para validar los códigos QR generados durante la reserva.
 
 La interacción entre el backend y los frontends se realiza a través de Java RMI, facilitando la comunicación y gestión de datos entre los distintos componentes del sistema. Este proyecto se integra con los servicios de HotelProvider, un proveedor no real que ofrece una API REST para la consulta y reserva de alojamientos a nivel mundial. 
 
-## Ejecución (Pasos para ejecutar)
-```
-ant [build | export | server]
-```
-## Uso (como le damos uso)
+## Ejecución 
+
+
+## Uso 
 
 Cliente de Usuarios:
 Para utilizar la interfaz de alquiler de habitaciones, los usuarios deben acceder a Java RMI Client Usuarios Ant. Esta aplicación les permite buscar habitaciones disponibles, realizar reservas y recibir correos electrónicos de confirmación con el código QR correspondiente a su reserva.
