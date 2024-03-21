@@ -7,6 +7,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.server.*;
 import java.util.HashMap;
+
 //import ApiClient;
 //import Server; //netstat ano | findstr :port
 
@@ -15,7 +16,7 @@ public class Server extends UnicastRemoteObject implements IServer {
 	private static final long serialVersionUID = 1L;
 	private int cont = 0;
 	private HashMap <String, String> registeredUsers = null;
-	private ApiClient ApiClient = new ApiClient();
+	
 
 	protected Server() throws RemoteException 
 	{
@@ -68,7 +69,7 @@ public class Server extends UnicastRemoteObject implements IServer {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-	}
+	
 	
 
 	public static void main(String[] args) {

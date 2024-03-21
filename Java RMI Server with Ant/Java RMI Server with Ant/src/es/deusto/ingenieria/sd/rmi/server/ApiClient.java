@@ -1,3 +1,5 @@
+package es.deusto.ingenieria.sd.rmi.server;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -9,9 +11,9 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpHeaders;
 
 
-public class ApiClient{ ///MÉTODO LECTURA DE API
+public class ApiClient { ///MÉTODO LECTURA DE API
 //LLAMADA REST CON TOKEN TIPO BEARER
-    public String getApiResponse(String url, String token) throws Exception{
+    public static String getApiResponse(String url, String token) throws Exception{
          //String apiUrl = "https://ds2324.arambarri.eus";
         url = "https://ds2324.arambarri.eus";
         // Token Bearer
