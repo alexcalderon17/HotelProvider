@@ -1,4 +1,4 @@
-PROYECTO
+DESCRIPT
 ========================
 
 ## MiProyecto (descrioción)
