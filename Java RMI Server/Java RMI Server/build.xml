@@ -13,7 +13,7 @@
 	<property name="policy.file" location="security/java.policy"/>	
 
 	
-
+	// Cada target es un comando
 	<target name="help">
 		<echo>Usage: ant [build | export | server]</echo>
 	</target>
@@ -28,7 +28,10 @@
 		<delete dir="${dist.dir}"/>
 		<mkdir dir="${dist.dir}"/>
 		<jar destfile="${dist.dir}/${export.file}" basedir="${build.dir}" excludes="**/Server.class"/>
-    </target>	
+    </target>
+
+	//como tenemos dos clientes (usuarios y puertas), necesitamos dos servidores, 
+	//cada uno escuchara a un cliente
     
 	<target name="server" depends="build" description="Runs the Server">
 		<java classname="es.deusto.ingenieria.sd.rmi.server.Server" classpath="${classpath}" fork="true">

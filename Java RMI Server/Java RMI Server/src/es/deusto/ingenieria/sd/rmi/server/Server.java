@@ -1,3 +1,4 @@
+//aqui vamos a implementar los metodos
 package es.deusto.ingenieria.sd.rmi.server;
 
 import java.rmi.Naming;
@@ -32,6 +33,7 @@ public class Server extends UnicastRemoteObject implements IServer {
 	}
 
 
+	//este metodo coge datos de una API que Unai nos ha proporcionado
 	@Override
 	public String obtenerApartamentos()
 	{
@@ -85,6 +87,9 @@ public class Server extends UnicastRemoteObject implements IServer {
 
 		try 
 		{	
+			// está configurando un servidor RMI, registrándolo en un registro local para que
+			// los clientes puedan encontrarlo y preparándolo para aceptar y manejar llamadas 
+			//de métodos remotos de dichos clientes.
 			IServer objServer = new Server();
 			Registry registry = LocateRegistry.createRegistry((Integer.valueOf(args[1])));
 			//Naming.rebind(name, objServer);

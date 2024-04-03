@@ -1,3 +1,4 @@
+// en principio no sirve para mucho
 package es.deusto.ingenieria.sd.rmi.server;
 
 public class InvalidUser extends Exception 

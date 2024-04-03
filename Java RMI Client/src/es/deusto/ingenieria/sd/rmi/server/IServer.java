@@ -1,3 +1,4 @@
+// solo declaramos los metodos que vamos a implementar en el servidor
 package es.deusto.ingenieria.sd.rmi.server;
 
 import java.rmi.Remote;

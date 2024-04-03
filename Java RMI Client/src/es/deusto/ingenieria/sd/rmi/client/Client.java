@@ -27,8 +27,10 @@ public class Client {
 		try 
 		{
 			Registry registry = LocateRegistry.getRegistry(((Integer.valueOf(args[1]))));
+			// puerto, ip y server name
 			String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
 			//stubServer = (IServer) java.rmi.Naming.lookup(name);
+			// busca un servidor que tenga ese puerto, esa ip y ese server name
 			stubServer = (IServer) registry.lookup(name);
 			//stubServer.obtenerApartamentos(String url, );
 			System.out.println("* Message coming from the server: '");

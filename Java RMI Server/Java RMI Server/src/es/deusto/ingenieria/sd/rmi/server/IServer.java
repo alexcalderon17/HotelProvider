@@ -1,3 +1,4 @@
+//en esta clase vamos a declarar los métodos
 package es.deusto.ingenieria.sd.rmi.server;
 
 import java.rmi.Remote;
