@@ -13,7 +13,7 @@
 	<property name="policy.file" location="security/java.policy"/>	
 
 	
-	// Cada target es un comando
+	<!--Cada target es un comando-->
 	<target name="help">
 		<echo>Usage: ant [build | export | server]</echo>
 	</target>
@@ -30,27 +30,16 @@
 		<jar destfile="${dist.dir}/${export.file}" basedir="${build.dir}" excludes="**/Server.class"/>
     </target>
 
-	//como tenemos dos clientes (usuarios y puertas), necesitamos dos servidores, 
-	//cada uno escuchara a un cliente
+	<!--como tenemos dos clientes (usuarios y puertas), necesitamos dos servidores, 
+	//cada uno escuchara a un cliente-->
     
 	<target name="server" depends="build" description="Runs the Server">
-		<java classname="es.deusto.ingenieria.sd.rmi.server.Server" classpath="${classpath}" fork="true">
+		<java classname="es.deusto.ingenieria.sd.rmi.server.facade.ServerFacadeImpl" classpath="${classpath}" fork="true">
 			<jvmarg value="-Djava.rmi.server.codebase=file:${build.dir}/"/>
 			<jvmarg value="-Djava.security.policy=${policy.file}"/>			
         	<arg value="${server.IP}"/> 
 	 		<arg value="${server.port}"/> 
 			<arg value="${server.Name}"/> 
-        </java>
-    </target>
-
-		<target name="server2" depends="build" description="Runs the Server">
-		<java classname="es.deusto.ingenieria.sd.rmi.server2.Server2" classpath="${classpath}" fork="true">
-			<jvmarg value="-Djava.rmi.server.codebase=file:${build.dir}/"/>
-			<jvmarg value="-Djava.security.policy=${policy.file}"/>			
-        	<arg value="${server.IP}"/> 
-	 		<arg value="${server.port2}"/> 
-			<arg value="${server.Name}"/> 
-			
         </java>
     </target>
 </project>

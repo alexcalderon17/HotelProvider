@@ -1,0 +1,187 @@
+{
+    "data": [
+        {
+            "id": 18,
+            "attributes": {
+                "nombre": "Braemar Lodge And Spa",
+                "descripcion": "Select Braemar Lodge & Spa es un lujoso albergue ubicado en las estribaciones de los Alpes del Sur, cerca del pueblo de Hanmer Springs.\n\nTodas las suites incluyen una sala de estar y dormitorio de planta abierta con TV LCD, chimenea de gas y camas extragrandes. Los hu?spedes podr?n darse un capricho en el ba?o de m?rmol con ba?era de hidromasaje doble y ducha doble. Todas las suites tienen un balc?n privado, muchas de ellas con ba?era de hidromasaje.",
+                "direccion": "283 Medway Road, 7360 Hanmer Springs, Nueva Zelanda",
+                "createdAt": "2024-03-14T18:58:27.985Z",
+                "updatedAt": "2024-03-14T19:21:38.612Z",
+                "publishedAt": "2024-03-14T19:21:38.609Z"
+            }
+        },
+        {
+            "id": 6,
+            "attributes": {
+                "nombre": "Hotel New Otani Tokyo EXECUTIVE HOUSE ZEN",
+                "descripcion": "El Hotel New Otani Executive House Zen se encuentra en Tokio, a 1,2 km del edificio Nacional de la Dieta y a 1,3 km de Chidorigafuchi. El hotel cuenta con una piscina al aire libre de temporada e instalaciones para deportes acu?ticos, y los hu?spedes pueden disfrutar de una comida en el restaurante o una copa en el bar.\n\nTodas las habitaciones de este hotel disponen de aire acondicionado y TV de pantalla plana con canales v?a sat?lite. Todas las habitaciones disponen de ba?o privado con ba?era, bidet y albornoces. Para su comodidad, encontrar? zapatillas y art?culos de aseo gratuitos. El Hotel New Otani Executive House Zen dispone de WiFi gratuita en todas las instalaciones.\n\nEl establecimiento dispone de recepci?n 24 horas.",
+                "direccion": "102-8578 Prefectura de Tokio, Chiyoda-ku Kioicho 4-1, Jap?n ?",
+                "createdAt": "2024-03-14T15:34:48.083Z",
+                "updatedAt": "2024-03-14T20:28:43.082Z",
+                "publishedAt": "2024-03-14T20:28:43.078Z"
+            }
+        },
+        {
+            "id": 1,
+            "attributes": {
+                "nombre": "Koloa Landing Resort",
+                "descripcion": "El Koloa Landing At Poipu Beach se encuentra en el extremo sur de la isla de Kauai y cuenta con 2 piscinas de estilo resort y un centro de fitness de ?ltima generaci?n. Las suites incluyen TV LCD de pantalla plana y cocina completa.\n\nLas suites y las villas cuentan con ventanales, suelo de piedra y balcones grandes con vistas al oc?ano. Tambi?n incluyen WiFi gratis, soporte para iPod, cocina completa y ba?o privado. Adem?s, el establecimiento cuenta con lavadoras y secadoras.\n\nLos jardines del hotel albergan estanques paisajistas y caminos iluminados con antorchas. Todos los d?as se sirve un desayuno continental y el establecimiento dispone de servicio de aparcacoches y servicio de conserjer?a, as? como de paquetes de spa de bienestar.\n\nEl Koloa Landing at Poipu Beach est? a menos de 10 minutos a pie de las tiendas y restaurantes del Poipu Shopping Village. Tambi?n se encuentra a 21 km del aeropuerto de Port Allen.",
+                "direccion": "2641 Poipu Road, Poipu, Koloa, HI 96756, Estados Unidos",
+                "createdAt": "2024-03-06T21:41:28.801Z",
+                "updatedAt": "2024-03-14T15:35:09.116Z",
+                "publishedAt": "2024-03-06T21:41:31.648Z"
+            }
+        },
+        {
+            "id": 2,
+            "attributes": {
+                "nombre": "Sheraton Kauai Resort",
+                "descripcion": "El Sheraton Kauai Resort cuenta con 2 piscinas al aire libre y est? situado en una superficie de m?s de 8 hect?reas en la costa sur de Kaua'i. Este complejo de playa de Poipu se encuentra rodeado por la belleza natural de Kaua'i y a pocos pasos de lugares de inter?s y actividades.\n\nLas habitaciones del Sheraton Kauai Resort incluyen TV de pantalla plana, nevera y art?culos de aseo de Shine by Bliss.\n\nLos hu?spedes podr?n disfrutar de un centro de actividades en la playa. Adem?s, el complejo ofrece actividades culturales, cocina de ra?ces hawaianas, servicios de spa, lugares rom?nticos para bodas y espacios amplios para reuniones.\n\nEl Sheraton Kauai Resort tambi?n alberga restaurantes preciosos frente al mar, con vistas impresionantes al oc?ano Pac?fico y la playa de Poipu.",
+                "direccion": "2440 Hoonani Road, Poipu, Koloa, HI 96756, Estados Unidos",
+                "createdAt": "2024-03-06T21:42:23.684Z",
+                "updatedAt": "2024-03-14T15:35:29.494Z",
+                "publishedAt": "2024-03-06T21:42:24.940Z"
+            }
+        },
+        {
+            "id": 16,
+            "attributes": {
+                "nombre": "JOHNWOOD HOTEL by Bolton",
+                "descripcion": "JOHNWOOD HOTEL by Bolton est? en Wuse, a 4,4 km de Magic Land Abuja, y dispone de alojamiento con piscina al aire libre, parking privado gratis, centro de fitness y restaurante. Todas las opciones de alojamiento de este hotel de 5 estrellas tienen vistas a la ciudad, sauna y ba?era de hidromasaje. El alojamiento ofrece recepci?n 24 horas, traslado para ir o volver del aeropuerto, servicio de habitaciones y wifi gratis.",
+                "direccion": "No 6 Sakode street Wuse Zone 5, Abuja, 904101 Wuse, Nigeria ",
+                "createdAt": "2024-03-14T18:55:28.055Z",
+                "updatedAt": "2024-03-14T19:11:36.466Z",
+                "publishedAt": "2024-03-14T19:11:36.462Z"
+            }
+        },
+        {
+            "id": 17,
+            "attributes": {
+                "nombre": "Transcorp Hilton Abuja",
+                "descripcion": "El Transcorp Hilton Abuja se encuentra en Abuya y ofrece piscina al aire libre y vistas a las monta?as. Los hu?spedes pueden disfrutar del restaurante del establecimiento.\n\nTodas las habitaciones de este hotel disponen de aire acondicionado y TV de pantalla plana con canales v?a sat?lite. Algunas unidades tienen una zona de estar para su comodidad. Cada habitaci?n dispone de ba?o privado equipado con ba?era y bidet.\n\nHay servicio de traslado gratuito, recepci?n 24 horas, tienda de regalos y tiendas en el establecimiento.",
+                "direccion": " 1 Aguiyi Ironsi Street Maitama, 900001 Abuja, Nigeria",
+                "createdAt": "2024-03-14T18:56:37.825Z",
+                "updatedAt": "2024-03-14T21:25:02.419Z",
+                "publishedAt": "2024-03-14T21:25:02.415Z"
+            }
+        },
+        {
+            "id": 19,
+            "attributes": {
+                "nombre": "The Best Kept Secret",
+                "descripcion": "The Best Kept Secret se encuentra en Hanmer Springs, en la regi?n de Canterbury, y dispone de jard?n. Se ofrece wifi gratis en todo el alojamiento y parking privado en el propio alojamiento.\n\nLa casa o chalet cuenta con 3 dormitorios, una cocina con nevera y lavavajillas, y 2 ba?os con ducha, secador de pelo y lavadora.",
+                "direccion": "132 Jacks Pass Road, 7334 Hanmer Springs, Nueva Zelanda",
+                "createdAt": "2024-03-14T19:01:07.186Z",
+                "updatedAt": "2024-03-14T19:17:16.078Z",
+                "publishedAt": "2024-03-14T19:17:16.074Z"
+            }
+        },
+        {
+            "id": 13,
+            "attributes": {
+                "nombre": "B?rgenstock Hotel & Alpine Spa",
+                "descripcion": "Situado a 450 metros sobre el lago de Lucerna, en el cant?n de Nidwalden, cerca de Lucerna, este hotel de 5 estrellas le espera con una combinaci?n de confort moderno y un ambiente tradicional suizo.\n\nEl hotel B?rgenstock est? situado en la plaza, en el coraz?n del B?rgenstock Resort, al lado del funicular de B?rgenstock, que baja hasta el muelle de embarque (conexiones con Lucerna).\n\nEl complejo se encuentra en la monta?a B?rgenberg y ofrece varios restaurantes con terrazas, as? como vistas panor?micas del pintoresco lago y las monta?as de la Suiza central.",
+                "direccion": " Burgenstock Resort, 6363 B?rgenstock, Suiza",
+                "createdAt": "2024-03-14T18:47:51.716Z",
+                "updatedAt": "2024-03-14T19:38:11.551Z",
+                "publishedAt": "2024-03-14T19:38:11.547Z"
+            }
+        },
+        {
+            "id": 11,
+            "attributes": {
+                "nombre": "The Plaza",
+                "descripcion": "Este hotel de fama internacional est? ubicado en Manhattan, a solo unos pasos de varias tiendas de primera categor?a, en la intersecci?n entre Central Park y la Quinta Avenida.\n\nLas habitaciones del establecimiento The Plaza son amplias y lujosas. Disponen de ba?o moderno con accesorios chapados en oro de 24 quilates y ducha independiente de efecto lluvia.\n\nEl The Plaza Hotel alberga el restaurante The Palm Court, unos de los mejores lugares de Nueva York para tomar una merienda inglesa con t?.",
+                "direccion": "768 5th Avenue, Nueva York, NY 10019, Estados Unidos",
+                "createdAt": "2024-03-14T18:42:43.930Z",
+                "updatedAt": "2024-03-14T21:19:11.227Z",
+                "publishedAt": "2024-03-14T21:19:11.219Z"
+            }
+        },
+        {
+            "id": 14,
+            "attributes": {
+                "nombre": " Miekoj?rvi Resort",
+                "descripcion": "Esta villa, situada en Pello, presenta un interior de dise?o finland?s y ofrece karaoke y sistema home cinema. El lago est? a solo 20 metros. Incluye conexi?n WiFi gratuita y aire acondicionado.\n\nEste alojamiento independiente dispone de cocina completa con microondas y lavavajillas y ba?o privado con ducha, bidet y secador de pelo. Adem?s, los patios gozan de vistas al jard?n y al lago.",
+                "direccion": " Pientie 3 E, 95780 Pello, Finlandia",
+                "createdAt": "2024-03-14T18:50:39.097Z",
+                "updatedAt": "2024-03-14T19:31:26.234Z",
+                "publishedAt": "2024-03-14T19:31:26.230Z"
+            }
+        },
+        {
+            "id": 8,
+            "attributes": {
+                "nombre": "Palazzo Versace Dubai",
+                "descripcion": "El establecimiento Palazzo Versace Dubai recuerda el estilo de los palacios italianos del siglo XVI y cuenta con una entrada de techo alto, jardines paisajistas y muebles italianos de calidad.\n\nEl establecimiento Palazzo Versace Dubai est? situado en la zona cultural, a menos de 15 minutos del aeropuerto internacional de Dub?i y a 8 minutos del Burj Khalifa y el centro de Dub?i, a orillas del hist?rico Dubai Creek.\n\nEl Palazzo Versace Hotel de Dub?i dispone de 215 habitaciones y suites y 169 alojamientos con muebles y tejidos ?nicos, dise?ados a medida por la Casa Versace exclusivamente para el hotel.",
+                "direccion": "Jaddaf Waterfront, Burj Dub?i, Dub?i, Emiratos ?rabes Unidos ?",
+                "createdAt": "2024-03-14T15:43:28.787Z",
+                "updatedAt": "2024-03-14T20:55:43.231Z",
+                "publishedAt": "2024-03-14T20:55:27.982Z"
+            }
+        },
+        {
+            "id": 15,
+            "attributes": {
+                "nombre": "Hilton Buenos Aires",
+                "descripcion": "El Hilton Buenos Aires ofrece alojamiento c?modo con vistas a la ciudad y al r?o en el elegante barrio de Puerto Madero. El hotel dispone de instalaciones de spa, centro de fitness, piscina en la azotea y un impresionante atrio de cristal en el vest?bulo.\n\nLas habitaciones del Hilton Buenos Aires son c?modas, amplias, tienen suelo de moqueta y una decoraci?n cl?sica y ofrecen instalaciones modernas. Las habitaciones executive ofrecen acceso exclusivo al sal?n executive.",
+                "direccion": "Macacha Guemes 351, Puerto Madero, C1106BKG Buenos Aires, Argentina",
+                "createdAt": "2024-03-14T18:53:40.526Z",
+                "updatedAt": "2024-03-14T20:22:25.112Z",
+                "publishedAt": "2024-03-14T20:22:25.107Z"
+            }
+        },
+        {
+            "id": 12,
+            "attributes": {
+                "nombre": "Hotel The Peninsula Paris",
+                "descripcion": "El Peninsula est? a solo 400 metros del Arco de Triunfo y dispone de spa, piscina de 22 metros cubierta y restaurante en la azotea, con vistas de 360? sobre Par?s. Las habitaciones est?ndar incluyen llamadas de larga distancia y conexi?n WiFi gratuitas. El estadio Parc des Princes est? a solo 15 minutos en coche.\n\nLas 200 habitaciones y suites del hotel est?n decoradas con obras de arte y mobiliario elegante, y ofrecen vestidor independiente amplio con mucho espacio para ropa y equipaje. Los ba?os son amplios y de m?rmol, y tienen TV integrado, secador de u?as, art?culos de aseo de lujo Oscar de la Renta y ducha de efecto lluvia y ba?era profunda separadas.\n",
+                "direccion": "19 avenue Kleber, Passy - 16? distrito, 75116 Par?s, Francia",
+                "createdAt": "2024-03-14T18:44:47.481Z",
+                "updatedAt": "2024-03-14T20:39:38.233Z",
+                "publishedAt": "2024-03-14T20:39:38.230Z"
+            }
+        },
+        {
+            "id": 10,
+            "attributes": {
+                "nombre": "The Dominick Hotel",
+                "descripcion": "Este hotel de 46 plantas, situado en Manhattan, ofrece un spa de servicio completo, 4 restaurantes y habitaciones con minibar personalizado y ventanales.\n\nEl The Dominick Hotel dispone de habitaciones contempor?neas de ambiente relajante con muebles hechos a medida, TV de pantalla plana de 42 pulgadas y soporte para iPod. El ba?o es de m?rmol italiano e incluye un tocador con TV.\n\nEn la 7? planta hay una piscina de temporada al aire libre con un bar y vistas a la ciudad. El hotel tambi?n alberga un centro de fitness y servicios de negocios. Hay WiFi gratuita. Se ofrece WiFi superior o de platino, con m?s ancho de banda, por un suplemento.",
+                "direccion": "246 Spring Street, SoHo, Nueva York, NY 10013, Estados Unidos",
+                "createdAt": "2024-03-14T18:39:34.756Z",
+                "updatedAt": "2024-03-14T21:12:34.146Z",
+                "publishedAt": "2024-03-14T21:12:34.142Z"
+            }
+        },
+        {
+            "id": 7,
+            "attributes": {
+                "nombre": "Jumeirah Beach Hotel",
+                "descripcion": "Este lujoso hotel de 5 estrellas est? ubicado en Dub?i y ofrece playa privada, 5 piscinas y m?s de 10 restaurantes y bares. Los hu?spedes alojados en cualquier habitaci?n del Jumeirah Beach Hotel disfrutan de acceso directo gratuito ilimitado al Wild Wadi Waterpark?.\n\nTodas las habitaciones, suites y villas del hotel son amplias y disponen de ventanales con vistas al golfo P?rsico y al Burj Al Arab Jumeirah. Incluyen TV HD de alta definici?n interactiva con pantalla LCD panor?mica, servicio de cobertura por las noches y WiFi gratuita.\n\nEl Jumeirah Beach Hotel ofrece una amplia variedad de cocina internacional, como restaurantes galardonados franceses y brit?nicos. Los hu?spedes pueden disfrutar de refrescos y happy hour en la planta 24, con vistas a la playa y al perfil urbano.",
+                "direccion": "Jumeirah Beach Road, Umm Suqeim, Dub?i, Emiratos ?rabes Unidos",
+                "createdAt": "2024-03-14T15:40:06.719Z",
+                "updatedAt": "2024-03-14T20:56:12.199Z",
+                "publishedAt": "2024-03-14T20:50:18.818Z"
+            }
+        },
+        {
+            "id": 5,
+            "attributes": {
+                "nombre": "The Capitol Hotel Tokyu",
+                "descripcion": "El Capitol Hotel Tokyu fue dise?ado por el arquitecto Kengo Kuma y cuenta con 3 restaurantes, piscina cubierta en la planta 14 y acceso directo a 4 l?neas de metro. Las habitaciones son amplias para los est?ndares de Tokio y tienen vistas de la ciudad. Hay aparcamiento privado de pago y WiFi gratuita en todas las instalaciones.\n\nLas habitaciones del Tokyu Capitol Hotel presentan un dise?o sutil que combina lo antiguo con lo moderno e incluyen paneles japoneses y TV de pantalla plana grande. Tambi?n tienen minibar y ba?o privado grande con ba?era. Se proporcionan art?culos de aseo gratuitos, zapatillas y secador de pelo.\n\nEl establecimiento cuenta con ba?era de hidromasaje y centro de fitness con vistas a Tokio. El spa Carju Rajah TIADO ofrece servicio de masajes. Tambi?n hay sal?n de belleza, estudio fotogr?fico y otras tiendas. El centro de negocios, ubicado en la 3.? planta, cuenta con ordenador y servicio de fotocopias.",
+                "direccion": "100-0014 Prefectura de Tokio, Chiyoda-ku Nagatacho 2-10-3 , Jap?n ?",
+                "createdAt": "2024-03-14T15:33:14.635Z",
+                "updatedAt": "2024-03-14T21:04:17.744Z",
+                "publishedAt": "2024-03-14T21:04:17.741Z"
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 25,
+            "pageCount": 1,
+            "total": 16
+        }
+    }
