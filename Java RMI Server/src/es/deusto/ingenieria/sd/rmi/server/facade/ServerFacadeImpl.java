@@ -10,6 +10,7 @@ import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioHotelProvider;
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioHotelProviderImpl;
+import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacade{
 

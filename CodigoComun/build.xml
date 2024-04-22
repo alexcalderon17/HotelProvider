@@ -1,0 +1,37 @@
+<project name="codigoComun" default="package" basedir=".">
+    <!-- Define some property placeholders -->
+    <property name="src.dir" value="src" />
+    <property name="build.dir" value="build" />
+    <property name="dist.dir" value="dist" />
+
+    <!-- Initialize directory structure -->
+    <target name="init">
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${dist.dir}" />
+    </target>
+
+    <!-- Compile the Java source files -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}">
+            <include name="**/*.java" />
+            <classpath>
+                <!-- Include additional JARs if necessary -->
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Package the compiled classes into a JAR -->
+    <target name="package" depends="compile">
+        <jar destfile="${dist.dir}/codigo-comun.jar" basedir="${build.dir}">
+            <manifest>
+                <!-- Optionally include a manifest file or entries -->
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Clean up build directories -->
+    <target name="clean">
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+</project>

@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.rmi.server.facade;
+package es.deusto.ingenieria.sd.rmi.comun.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

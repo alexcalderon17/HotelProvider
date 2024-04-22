@@ -1,0 +1,16 @@
+<project name="buildGeneral" default="build-all">
+    <target name="build-codigo-comun">
+        <ant dir="CodigoComun" target="package" />
+    </target>
+
+    <target name="ejecutar-servidor-y-cliente">
+        <parallel>
+            <ant dir="Java RMI Server" target="server" />
+            <ant dir="Java RMI Puertas" target="serverPuertas" />
+            <ant dir="Java RMI Client" target="clientUsuarios" />
+        </parallel>
+    </target>
+    <!-- Va a llamar primero al de la linea 2 luego al de la 6 y luego al de la 10 --> 
+    <target name="build-all" depends="build-codigo-comun,ejecutar-servidor-y-cliente">
+    </target>
+</project>
