@@ -9,6 +9,7 @@ import java.util.List;
 import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioHotelProvider;
+import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioHotelProviderImpl;
 
 public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacade{
 
@@ -17,6 +18,7 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
 
     protected ServerFacadeImpl() throws RemoteException {
         super();
+        this.servicioHotelProvider = new ServicioHotelProviderImpl();
         //TODO Auto-generated constructor stub
     }
 
