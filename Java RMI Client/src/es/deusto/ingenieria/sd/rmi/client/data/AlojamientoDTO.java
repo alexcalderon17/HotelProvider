@@ -1,12 +1,11 @@
 package es.deusto.ingenieria.sd.rmi.server.dto;
 
-public class HabitacionDTO {
+public class AlojamientoDTO {
 
     private int id;
     private String nombre;
     private String descripcion;
-    private int aforo;
-    private Image descripcion;
+    private String direccion;
     
     public int getId() {
         return id;
@@ -26,11 +25,14 @@ public class HabitacionDTO {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public int getAforo() {
-        return aforo;
+    public String getDireccion() {
+        return direccion;
     }
-    public void setAforo(int aforo) {
-        this.aforo = aforo;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
+    
+
+
 
 }
