@@ -6,7 +6,7 @@ public class HabitacionDTO {
     private String nombre;
     private String descripcion;
     private int aforo;
-    private Image descripcion;
+    //private Image descripcion;
     
     public int getId() {
         return id;
