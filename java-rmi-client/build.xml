@@ -9,7 +9,7 @@
     <property name="server.IP" value="127.0.0.1"/> 
     <property name="server.Name" value="BackendServer"/>
     <property name="policy.file" location="security/java.policy"/>    
-    <property name="codigo-comun.jar" value="../CodigoComun/dist/codigo-comun.jar"/>    
+    <property name="codigo-comun.jar" value="../codigo-comun/dist/codigo-comun.jar"/>    
 
     <path id="classpath">
         <pathelement location="${build.dir}"/>

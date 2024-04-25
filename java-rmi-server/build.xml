@@ -7,6 +7,8 @@
 	<property name="server.port" value="2001"/> 
 	<property name="server.IP" value="127.0.0.1"/>
 	<property name="server.Name" value="BackendServer"/>
+    <property name="codigo-comun.jar" value="../codigo-comun/dist/codigo-comun.jar"/>
+    <property name="policy.file" location="security/java.policy"/>
 
     <path id="classpath">
         <fileset dir="${lib.dir}">
@@ -14,19 +16,18 @@
         </fileset>
         <pathelement location="${bin.dir}"/>
         <pathelement location="${resources.dir}"/>
-         <pathelement location="${codigo-comun.jar}"/>
+        <pathelement location="${codigo-comun.jar}"/>
     </path>
-	
-    <target name="1.compile" description="Builds the source code">
+
+    <target name="compile" description="Builds the source code">
     	<delete dir="${bin.dir}"/>
     	<mkdir dir="${bin.dir}"/>
-    	
     	<javac srcdir="${src.dir}" destdir="${bin.dir}" classpathref="classpath" includeantruntime="false" fork="true">
             <include name="**/*.java"/>
          </javac>
     </target>
 		
-	<target name="2.enhance-classes" depends="1.compile" description="Adds JDO code to the persisten compiled classes">
+	<target name="enhance-classes" depends="compile" description="Adds JDO code to the persisten compiled classes">
     	<taskdef name="enhancer" classpathref="classpath" classname="org.datanucleus.enhancer.EnhancerTask"/>
    		<enhancer classpathref="classpath" failonerror="true">
             <sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties"/>
@@ -36,7 +37,7 @@
    		</enhancer>
     </target>
 
-    <target name="3.create-db-schema" depends="2.enhance-classes" description="Creates DB Schema on the DB Server">
+    <target name="create-db-schema" depends="enhance-classes" description="Creates DB Schema on the DB Server">
         <taskdef name="schematool" classpathref="classpath" classname="org.datanucleus.store.schema.SchemaToolTask"/>
     	<schematool mode="create" classpathref="classpath" props="datanucleus.properties" failonerror="true">
             <sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties"/>
@@ -46,8 +47,9 @@
         </schematool>
     </target>
 
-	<target name="server" description="Runs the example">
-        <java classname="es.deusto.ingenieria.sd.rmi.server.facade.ServerFacadeImpl" classpathref="classpath" fork="true">
+	<target name="server" depends="create-db-schema" description="Runs the example">
+        <java classname="es.deusto.ingenieria.sd.rmi.server.facade.ServerFacadeImpl" fork="true">
+            <classpath refid="classpath"/>
         	<jvmarg value="-Dlog4j.configuration=log4j.properties"/>
             <jvmarg value="-Djava.rmi.server.codebase=file:${bin.dir}/"/>
 			<jvmarg value="-Djava.security.policy=${policy.file}"/>			
@@ -57,7 +59,7 @@
 		</java>
     </target>
 	
-	<target name="5.delete-db-schema" depends="2.enhance-classes" description="Drops DB sechema from the DB Server">
+	<target name="delete-db-schema" depends="enhance-classes" description="Drops DB sechema from the DB Server">
 		<taskdef name="schematool" classpathref="classpath" classname="org.datanucleus.store.schema.SchemaToolTask"/>
     	<schematool mode="delete" classpathref="classpath" props="datanucleus.properties" failonerror="true">            
     	   	<sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties"/>
@@ -67,4 +69,3 @@
         </schematool>
 	</target>
 </project>
-

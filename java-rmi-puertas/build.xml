@@ -4,11 +4,12 @@
 	<property name="source.dir" location="src"/>
    	<property name="build.dir" location="bin"/>
 	<property name="dist.dir" location="dist"/>
+	<property name="lib.dir" location="lib"/>
 	<property name="server.port" value="1099"/> 
 	<property name="server.IP" value="127.0.0.1"/> 
 	<property name="server.Name" value="PuertasServer"/>
 	<property name="policy.file" location="security/java.policy"/>	
-	<property name="codigo-comun.jar" value="../CodigoComun/dist/codigo-comun.jar"/> 
+	<property name="codigo-comun.jar" value="../codigo-comun/dist/codigo-comun.jar"/> 
 
 	<path id="classpath">
         <pathelement location="${build.dir}"/>
