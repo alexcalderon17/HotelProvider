@@ -1,0 +1,66 @@
+package es.deusto.ingenieria.sd.rmi.server.servicios.impl;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
+import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.Reserva;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
+
+
+public class ServicioReservaImpl implements ServicioReserva{
+
+    @Override
+    public Reserva crearReserva(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
+        // Crear un nuevo objeto Reserva con los datos proporcionados
+        return new Reserva(clienteID, alojamiento, fechaInicio, fechaFin);
+    }
+
+    
+    @Override
+    public void cancelarReserva(Reserva reserva) {
+        if (!reserva.isEstaCancelada()) {
+            reserva.setEstaCancelada(true);
+            System.out.println("La reserva ha sido cancelada exitosamente.");
+        } else {
+            System.out.println("Esta reserva ya estaba cancelada.");
+        }
+    }
+
+    @Override
+    public boolean modificarReserva(String reservaID, Date nuevaFechaInicio, Date nuevaFechaFin) {
+        HashMap<String, Reserva> reservas = new HashMap<>();
+
+        Reserva reserva = reservas.get(reservaID);
+        if (reserva != null && !reserva.isEstaCancelada()) {
+            reserva.setFechaInicio(nuevaFechaInicio);
+            reserva.setFechaFin(nuevaFechaFin);
+            System.out.println("Reserva modificada exitosamente.");
+            return true;
+        } else if (reserva == null) {
+            System.out.println("No se encontró la reserva con ID: " + reservaID);
+            return false;
+        } else {
+            System.out.println("No se puede modificar una reserva cancelada.");
+            return false;
+        }
+    }
+
+   // @Override
+    //public List<Reserva> obtenerReservasUsuario (String usuarioID){
+
+    //}
+}
+
+

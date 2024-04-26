@@ -4,13 +4,82 @@ import java.util.Date;
 import lombok.*;
 import javax.jdo.annotations.PersistenceCapable;
 import java.io.Serializable;
+import java.util.Date;
 
 @PersistenceCapable
 @AllArgsConstructor
-public class Reserva implements Serializable {
-	private static final long serialVersionUID = 227L;
-	private int id;
+
+
+
+public class Reserva {
+    private String reservaID;
+    private String clienteID;
+    private String alojamiento;
+    private Date fechaInicio;
+    private Date fechaFin;
+    private boolean estaCancelada;
+
+    public Reserva(String reservaID, String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
+        this.reservaID = reservaID;
+        this.clienteID = clienteID;
+        this.alojamiento = alojamiento;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estaCancelada = false;
+    }
+
+	
+    public Reserva( String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
+        
+        this.clienteID = clienteID;
+        this.alojamiento = alojamiento;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        
+    }
+
+    
+    public String getReservaID() {
+        return reservaID;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public boolean isEstaCancelada() {
+        return estaCancelada;
+    }
+	public void setEstaCancelada(boolean estaCancelada) {
+        this.estaCancelada = estaCancelada;
+    }
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+               "reservaID='" + reservaID + '\'' +
+               ", clienteID='" + clienteID + '\'' +
+               ", alojamiento='" + alojamiento + '\'' +
+               ", fechaInicio=" + fechaInicio +
+               ", fechaFin=" + fechaFin +
+               ", estaCancelada=" + estaCancelada +
+               '}';
+    }
 }
+
+
 /*
  * public class Reserva {
  * private int id;
