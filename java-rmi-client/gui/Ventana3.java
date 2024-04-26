@@ -11,30 +11,23 @@ public class Ventana3 extends JFrame {
     private Ventana1 padre;
 
     public Ventana3(Ventana1 padre) {
-    	this.padre=padre;
-    	
-        //super("Filtros de Búsqueda");
+        this.padre = padre;
 
-        // Configurar la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
 
-        // Crear componentes
         destinoComboBox = new JComboBox<>();
         fechaLlegadaField = new JTextField(10);
         fechaSalidaField = new JTextField(10);
         viajerosComboBox = new JComboBox<>();
 
-        // Llenar el ComboBox de viajeros
         for (int i = 1; i <= 10; i++) {
             viajerosComboBox.addItem(i);
         }
 
-        // Obtener destinos de la base de datos y llenar el ComboBox
         obtenerDestinosDeBD();
 
-        // Crear el botón de búsqueda
         JButton buscarButton = new JButton("Buscar");
         buscarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -48,7 +41,6 @@ public class Ventana3 extends JFrame {
             }
         });
 
-        // Configurar el diseño de la ventana con GridBagLayout
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -57,10 +49,10 @@ public class Ventana3 extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
 
         panel.add(new JLabel("Destino:"), gbc);
-        gbc.gridx = 1; // Mover al próximo columna
+        gbc.gridx = 1;
         panel.add(destinoComboBox, gbc);
-        gbc.gridx = 0; // Restaurar a la columna original
-        gbc.gridy++; // Mover a la próxima fila
+        gbc.gridx = 0;
+        gbc.gridy++;
         panel.add(new JLabel("Fecha de Llegada:"), gbc);
         gbc.gridx = 1;
         panel.add(fechaLlegadaField, gbc);
@@ -83,10 +75,6 @@ public class Ventana3 extends JFrame {
     }
 
     private void obtenerDestinosDeBD() {
-        // Aquí debes implementar la lógica para conectar a la base de datos
-        // y obtener los destinos disponibles, luego agregarlos al ComboBox
-        // Aquí se incluye un ejemplo básico sin conexión a base de datos
-        // que puedes reemplazar con tu lógica real
         ArrayList<String> destinos = new ArrayList<>();
         destinos.add("Destino 1");
         destinos.add("Destino 2");
@@ -97,5 +85,11 @@ public class Ventana3 extends JFrame {
         }
     }
 
-  
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new Ventana3(null).setVisible(true);
+            }
+        });
+    }
 }
