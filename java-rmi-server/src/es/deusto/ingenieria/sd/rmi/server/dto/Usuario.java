@@ -1,7 +1,12 @@
 package es.deusto.ingenieria.sd.rmi.server.dto;
 
-public class Usuario{
+import lombok.*;
+import javax.jdo.annotations.PersistenceCapable;
 
+@PersistenceCapable
+@AllArgsConstructor
+
+public class Usuario{
     private String nombre;
     private String apellido;
     private String DNI;
@@ -9,7 +14,4 @@ public class Usuario{
     private String telefono;
     private String password;
     private int codPostal;
-
-    
-    
 }

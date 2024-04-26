@@ -1,5 +1,11 @@
 package es.deusto.ingenieria.sd.rmi.server.dto;
 
+import lombok.*;
+import javax.jdo.annotations.PersistenceCapable;
+
+@PersistenceCapable
+@AllArgsConstructor
+
 public class HabitacionDTO {
 
     private int id;
