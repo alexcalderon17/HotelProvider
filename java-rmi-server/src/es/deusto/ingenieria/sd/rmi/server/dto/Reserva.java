@@ -9,8 +9,6 @@ import java.util.Date;
 @PersistenceCapable
 @AllArgsConstructor
 
-
-
 public class Reserva {
     private String reservaID;
     private String clienteID;
@@ -18,6 +16,10 @@ public class Reserva {
     private Date fechaInicio;
     private Date fechaFin;
     private boolean estaCancelada;
+
+    public Reserva() {
+
+    }
 
     public Reserva(String reservaID, String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
         this.reservaID = reservaID;
@@ -28,17 +30,15 @@ public class Reserva {
         this.estaCancelada = false;
     }
 
-	
-    public Reserva( String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
-        
+    public Reserva(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
+
         this.clienteID = clienteID;
         this.alojamiento = alojamiento;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        
+
     }
 
-    
     public String getReservaID() {
         return reservaID;
     }
@@ -59,26 +59,34 @@ public class Reserva {
         this.fechaFin = fechaFin;
     }
 
+    public String getAlojamiento() {
+        return alojamiento;
+    }
+
+    public void setAlojamiento(String alojamiento) {
+        this.alojamiento = alojamiento;
+    }
+
     public boolean isEstaCancelada() {
         return estaCancelada;
     }
-	public void setEstaCancelada(boolean estaCancelada) {
+
+    public void setEstaCancelada(boolean estaCancelada) {
         this.estaCancelada = estaCancelada;
     }
 
     @Override
     public String toString() {
         return "Reserva{" +
-               "reservaID='" + reservaID + '\'' +
-               ", clienteID='" + clienteID + '\'' +
-               ", alojamiento='" + alojamiento + '\'' +
-               ", fechaInicio=" + fechaInicio +
-               ", fechaFin=" + fechaFin +
-               ", estaCancelada=" + estaCancelada +
-               '}';
+                "reservaID='" + reservaID + '\'' +
+                ", clienteID='" + clienteID + '\'' +
+                ", alojamiento='" + alojamiento + '\'' +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", estaCancelada=" + estaCancelada +
+                '}';
     }
 }
-
 
 /*
  * public class Reserva {

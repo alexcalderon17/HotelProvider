@@ -11,19 +11,20 @@ import java.util.Date;
 
 public class ReservaDAO {
 
-    PersistenceManagerFactory persistentManagerFactory = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+    PersistenceManagerFactory persistentManagerFactory = JDOHelper
+            .getPersistenceManagerFactory("datanucleus.properties");
 
     public void insertarReserva(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
         PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            Reserva reserva = new Reserva();  // Creación del objeto sin inicializar los atributos en el constructor
-            reserva.setClienteID(clienteID);
+            Reserva reserva = new Reserva(); // Creación del objeto sin inicializar los atributos en el constructor
+
             reserva.setAlojamiento(alojamiento);
             reserva.setFechaInicio(fechaInicio);
             reserva.setFechaFin(fechaFin);
-            reserva.setEstaCancelada(false);  // Asumiendo que una nueva reserva no está cancelada por defecto
+            reserva.setEstaCancelada(false); // Asumiendo que una nueva reserva no está cancelada por defecto
 
             pm.makePersistent(reserva);
             System.out.println("+ Inserted reserva into db: " + reserva.getReservaID());
@@ -38,60 +39,58 @@ public class ReservaDAO {
         }
     }
 
-    //  public Reserva selectReserva(String reservaID) {
-    //    PersistenceManager pm = pmf.getPersistenceManager();
-    //    try {
-     //       return pm.getObjectById(Reserva.class, reservaID);
-     //   } finally {
-     //       pm.close();
-     //   }
-    }
+    // public Reserva selectReserva(String reservaID) {
+    // PersistenceManager pm = pmf.getPersistenceManager();
+    // try {
+    // return pm.getObjectById(Reserva.class, reservaID);
+    // } finally {
+    // pm.close();
+    // }
 
-    public List
+    public void actualizarReserva(String reservaID, String alojamiento, Date fechaInicio, Date fechaFin,
+            boolean estaCancelada) {
+        PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try {
+            tx.begin();
+            Reserva reserva = pm.getObjectById(Reserva.class, reservaID);
+            if (reserva != null) {
 
-
-    public void actualizarReserva(String reservaID, String clienteID, String alojamiento, Date fechaInicio, Date fechaFin, boolean estaCancelada) {
-            PersistenceManager pm = pmf.getPersistenceManager();
-            Transaction tx = pm.currentTransaction();
-            try {
-                tx.begin();
-                Reserva reserva = pm.getObjectById(Reserva.class, reservaID);
-                if (reserva != null) {
-                    reserva.setClienteID(clienteID);
-                    reserva.setAlojamiento(alojamiento);
-                    reserva.setFechaInicio(fechaInicio);
-                    reserva.setFechaFin(fechaFin);
-                    reserva.setEstaCancelada(estaCancelada);
-                    pm.makePersistent(reserva);
-                }
-                tx.commit();
-            } catch (Exception e) {
-                System.err.println("DBException: " + e.getMessage());
-            } finally {
-                if (tx.isActive()) {
-                    tx.rollback();
-                }
-                pm.close();
+                reserva.setAlojamiento(alojamiento);
+                reserva.setFechaInicio(fechaInicio);
+                reserva.setFechaFin(fechaFin);
+                reserva.setEstaCancelada(estaCancelada);
+                pm.makePersistent(reserva);
             }
-        }
-
-        public void borrarReserva(String reservaID) {
-            PersistenceManager pm = pmf.getPersistenceManager();
-            Transaction tx = pm.currentTransaction();
-            try {
-                tx.begin();
-                Reserva reserva = pm.getObjectById(Reserva.class, reservaID);
-                if (reserva != null) {
-                     pm.deletePersistent(reserva);
-                }
-                tx.commit();
-            } catch (Exception e) {
-                System.err.println("DBException: " + e.getMessage());
-            } finally {
-                if (tx.isActive()) {
-                    tx.rollback();
-                }
-                pm.close();
+            tx.commit();
+        } catch (Exception e) {
+            System.err.println("DBException: " + e.getMessage());
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
             }
+            pm.close();
         }
     }
+
+    public void borrarReserva(String reservaID) {
+        PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try {
+            tx.begin();
+            Reserva reserva = pm.getObjectById(Reserva.class, reservaID);
+            if (reserva != null) {
+                pm.deletePersistent(reserva);
+            }
+            tx.commit();
+        } catch (Exception e) {
+            System.err.println("DBException: " + e.getMessage());
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+}
