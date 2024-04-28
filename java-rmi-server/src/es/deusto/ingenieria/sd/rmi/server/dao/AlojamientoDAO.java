@@ -1,6 +1,6 @@
 package es.deusto.ingenieria.sd.rmi.server.dao;
 
-import es.deusto.ingenieria.sd.rmi.server.dto.Alojamiento;
+import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -18,7 +18,7 @@ public class AlojamientoDAO {
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            Alojamiento alojamiento = new Alojamiento(); // Creación del objeto sin inicializar los atributos en el constructor
+            AlojamientoDTO alojamiento = new AlojamientoDTO(); // Creación del objeto sin inicializar los atributos en el constructor
 
             alojamiento.setId(id);
             alojamiento.setNombre(nombre);
@@ -26,7 +26,7 @@ public class AlojamientoDAO {
             alojamiento.setDireccion(direccion); // Asumiendo que una nueva alojamiento no está cancelada por defecto
 
             pm.makePersistent(alojamiento);
-            System.out.println("+ Inserted alojamiento into db: " + alojamiento.getAlojamientoID());
+            System.out.println("+ Inserted alojamiento into db: " + alojamiento.getId());
             tx.commit();
         } catch (Exception e) {
             System.err.println("DBException: " + e.getMessage());
@@ -51,11 +51,11 @@ public class AlojamientoDAO {
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            Alojamiento alojamiento = pm.getObjectById(Alojamiento.class, AlojamientoID);
+            AlojamientoDTO alojamiento = pm.getObjectById(AlojamientoDTO.class, id);
             if (alojamiento != null) {
 
                 alojamiento.setId(id);
-                alojamiento.setDNI(nombre);
+                alojamiento.setNombre(nombre);
                 alojamiento.setDescripcion(descripcion);
                 alojamiento.setDireccion(direccion);
                 pm.makePersistent(alojamiento);
@@ -74,9 +74,10 @@ public class AlojamientoDAO {
     public void borrarAlojamiento(int AlojamientoID) {
         PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
+
         try {
             tx.begin();
-            Alojamiento alojamiento = pm.getObjectById(Alojamiento.class, AlojamientoID);
+            AlojamientoDTO alojamiento = pm.getObjectById(AlojamientoDTO.class, AlojamientoID);
             if (alojamiento != null) {
                 pm.deletePersistent(alojamiento);
             }

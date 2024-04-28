@@ -25,6 +25,9 @@ public class AlojamientoDTO {
      * this.direccion = direccion;
      * }
      */
+    public AlojamientoDTO() {
+        
+    }
 
     public int getId() {
         return id;
