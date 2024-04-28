@@ -5,7 +5,7 @@ import javax.jdo.annotations.PersistenceCapable;
 
 @PersistenceCapable
 @AllArgsConstructor
-public class Usuario {
+public class UsuarioDTO {
     private String nombre;
     private String apellido;
     private String DNI;

@@ -1,6 +1,6 @@
 package es.deusto.ingenieria.sd.rmi.server.dao;
 
-import es.deusto.ingenieria.sd.rmi.server.dto.Reserva;
+import es.deusto.ingenieria.sd.rmi.server.dto.ReservaDTO;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -19,7 +19,7 @@ public class ReservaDAO {
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            Reserva reserva = new Reserva(); // Creación del objeto sin inicializar los atributos en el constructor
+            ReservaDTO reserva = new ReservaDTO(); // Creación del objeto sin inicializar los atributos en el constructor
 
             reserva.setAlojamiento(alojamiento);
             reserva.setFechaInicio(fechaInicio);
@@ -53,7 +53,7 @@ public class ReservaDAO {
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            Reserva reserva = pm.getObjectById(Reserva.class, reservaID);
+            ReservaDTO reserva = pm.getObjectById(ReservaDTO.class, reservaID);
             if (reserva != null) {
 
                 reserva.setAlojamiento(alojamiento);
@@ -78,7 +78,7 @@ public class ReservaDAO {
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            Reserva reserva = pm.getObjectById(Reserva.class, reservaID);
+            ReservaDTO reserva = pm.getObjectById(ReservaDTO.class, reservaID);
             if (reserva != null) {
                 pm.deletePersistent(reserva);
             }
