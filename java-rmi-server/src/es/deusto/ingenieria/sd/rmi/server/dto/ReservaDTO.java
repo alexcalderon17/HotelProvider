@@ -9,7 +9,7 @@ import java.util.Date;
 @PersistenceCapable
 @AllArgsConstructor
 
-public class Reserva {
+public class ReservaDTO {
     private String reservaID;
     private String clienteID;
     private String alojamiento;
@@ -17,11 +17,11 @@ public class Reserva {
     private Date fechaFin;
     private boolean estaCancelada;
 
-    public Reserva() {
+    public ReservaDTO() {
 
     }
 
-    public Reserva(String reservaID, String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
+    public ReservaDTO(String reservaID, String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
         this.reservaID = reservaID;
         this.clienteID = clienteID;
         this.alojamiento = alojamiento;
@@ -30,7 +30,7 @@ public class Reserva {
         this.estaCancelada = false;
     }
 
-    public Reserva(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
+    public ReservaDTO(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
 
         this.clienteID = clienteID;
         this.alojamiento = alojamiento;

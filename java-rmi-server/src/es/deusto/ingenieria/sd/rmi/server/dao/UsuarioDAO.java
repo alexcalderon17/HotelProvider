@@ -7,7 +7,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
-import es.deusto.ingenieria.sd.rmi.server.dto.Usuario;
+import es.deusto.ingenieria.sd.rmi.server.dto.UsuarioDTO;
 
 public class UsuarioDAO {
 
@@ -23,7 +23,7 @@ public class UsuarioDAO {
         try {
             transaction.begin();
 
-            Usuario usuario = new Usuario(nombre, apellido, DNI, correo, telefono, password, codPostal);
+            UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, DNI, correo, telefono, password, codPostal);
             /*
              * SETTERS
              */
@@ -51,7 +51,7 @@ public class UsuarioDAO {
         Transaction transaction = persistentManager.currentTransaction();
         try {
             transaction.begin();
-            Usuario usuario = persistentManager.getObjectById(Usuario.class, correo);
+            UsuarioDTO usuario = persistentManager.getObjectById(UsuarioDTO.class, correo);
             if (usuario != null) {
 
                 // alojamiento.setAlojamiento(alojamiento);
@@ -81,7 +81,7 @@ public class UsuarioDAO {
 
         try {
             transaction.begin();
-            Usuario usuario = persistentManager.getObjectById(Usuario.class, correo);
+            UsuarioDTO usuario = persistentManager.getObjectById(UsuarioDTO.class, correo);
             if (usuario != null) {
                 persistentManager.deletePersistent(usuario);
             }
