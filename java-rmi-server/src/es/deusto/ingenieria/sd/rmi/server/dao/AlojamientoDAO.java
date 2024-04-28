@@ -1,93 +1,94 @@
-<<<<<<< Updated upstream
-PersistenceManagerFactory persistentManagerFactory = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
-
-    public void insertarAlojamientoBD(String nombre, String descripcion, String direccion) {
-        PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
-        Transaction transaction = persistentManager.currentTransaction();
-
-        try {
-            transaction.begin();
-
-            AlojamientoDTO alojamiento = new AlojamientoDTO();
-            alojamiento.setNombre(nombre);
-            alojamiento.setDescripcion(descripcion);
-            alojamiento.setDireccion(direccion);
-
-            persistentManager.makePersistent(alojamiento);
-
-            System.out.println("+ Inserted alojamiento into db: " + alojamiento.getNombre);
-
-            transaction.commit();
-
-        } catch (Exception e) {
-            System.err.println("DBException");
-        } finally {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            persistentManager.close();
-        }
-=======
 package es.deusto.ingenieria.sd.rmi.server.dao;
 
-import javax.jdo.Extent;
+import es.deusto.ingenieria.sd.rmi.server.dto.Alojamiento;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
 import javax.jdo.Transaction;
-import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
+import javax.jdo.Query;
+import java.util.List;
+import java.util.Date;
 
 public class AlojamientoDAO {
 
-    PersistenceManagerFactory persistentManagerFactory = JDOHelper
-            .getPersistenceManagerFactory("datanucleus.properties");
+    PersistenceManagerFactory persistentManagerFactory = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 
-    public void insertarAlojamientoBD(int id, String nombre, String descripcion, String direccion) {
-        PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
-        Transaction transaction = persistentManager.currentTransaction();
-
+    public void insertarAlojamiento(int id, String nombre, String descripcion, String direccion) {
+        PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
         try {
-            transaction.begin();
+            tx.begin();
+            Alojamiento alojamiento = new Alojamiento(); // Creación del objeto sin inicializar los atributos en el constructor
 
-            AlojamientoDTO alojamiento = new AlojamientoDTO(id, nombre, descripcion, direccion);
             alojamiento.setId(id);
             alojamiento.setNombre(nombre);
             alojamiento.setDescripcion(descripcion);
-            alojamiento.setDireccion(direccion);
+            alojamiento.setDireccion(direccion); // Asumiendo que una nueva alojamiento no está cancelada por defecto
 
-            persistentManager.makePersistent(alojamiento);
-
-            System.out.println("+ Inserted alojamiento into db: " + alojamiento.getNombre);
-
-            transaction.commit();
-
+            pm.makePersistent(alojamiento);
+            System.out.println("+ Inserted alojamiento into db: " + alojamiento.getAlojamientoID());
+            tx.commit();
         } catch (Exception e) {
-            System.err.println("DBException");
+            System.err.println("DBException: " + e.getMessage());
         } finally {
-            if (transaction.isActive()) {
-                transaction.rollback();
+            if (tx.isActive()) {
+                tx.rollback();
             }
-            persistentManager.close();
+            pm.close();
         }
+    }
 
+    // public Alojamiento selectAlojamiento(String AlojamientoID) {
+    // PersistenceManager pm = pmf.getPersistenceManager();
+    // try {
+    // return pm.getObjectById(Alojamiento.class, AlojamientoID);
+    // } finally {
+    // pm.close();
+    // }
+
+    public void actualizarAlojamiento(int id, String nombre, String descripcion, String direccion) {
+        PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try {
+            tx.begin();
+            Alojamiento alojamiento = pm.getObjectById(Alojamiento.class, AlojamientoID);
+            if (alojamiento != null) {
+
+                alojamiento.setId(id);
+                alojamiento.setDNI(nombre);
+                alojamiento.setDescripcion(descripcion);
+                alojamiento.setDireccion(direccion);
+                pm.makePersistent(alojamiento);
+            }
+            tx.commit();
+        } catch (Exception e) {
+            System.err.println("DBException: " + e.getMessage());
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    public void borrarAlojamiento(int AlojamientoID) {
+        PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try {
+            tx.begin();
+            Alojamiento alojamiento = pm.getObjectById(Alojamiento.class, AlojamientoID);
+            if (alojamiento != null) {
+                pm.deletePersistent(alojamiento);
+            }
+            tx.commit();
+        } catch (Exception e) {
+            System.err.println("DBException: " + e.getMessage());
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            pm.close();
+        }
     }
 
 }
-
-// public void insertarAlojamiento(){
-// PersistenceManagerFactory persistentManagerFactory =
-// JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
-
-// PersistenceManager persistentManager =
-// persistentManagerFactory.getPersistenceManager();
-// Transaction transaction = persistentManager.currentTransaction();
-
-// try{
-// transaction.begin();
-
-// }
-// }
-
-// }
->>>>>>> Stashed changes
