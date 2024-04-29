@@ -3,7 +3,7 @@ package es.deusto.ingenieria.sd.rmi.server.servicios;
 import java.util.List;
 import java.util.Date;
 
-import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ReservaDTO;
 

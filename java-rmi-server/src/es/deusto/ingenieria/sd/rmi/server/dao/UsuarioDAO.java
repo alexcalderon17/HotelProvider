@@ -12,7 +12,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.UsuarioDTO;
 
 public class UsuarioDAO {

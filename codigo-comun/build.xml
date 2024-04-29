@@ -3,7 +3,8 @@
     <property name="src.dir" value="src" />
     <property name="build.dir" value="build" />
     <property name="dist.dir" value="dist" />
-
+    <property name="lib.dir" location="lib"/>
+    
     <!-- Initialize directory structure -->
     <target name="init">
         <mkdir dir="${build.dir}" />
@@ -15,7 +16,8 @@
         <javac srcdir="${src.dir}" destdir="${build.dir}">
             <include name="**/*.java" />
             <classpath>
-                <!-- Include additional JARs if necessary -->
+                <!-- Include all JARs from the lib directory -->
+                <fileset dir="${lib.dir}" includes="**/*.jar"/>
             </classpath>
         </javac>
     </target>

@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.rmi.server.dao;
+/*package es.deusto.ingenieria.sd.rmi.server.dao;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
@@ -21,7 +21,7 @@ public class HabitacionesDAO {
             transaction.begin();
 
             HabitacionDTO habitacion = new HabitacionDTO(id, nombre, descripcion, aforo);
-            /* SETTERS */
+             SETTERS 
 
             persistentManager.makePersistent(habitacion);
 
@@ -85,4 +85,4 @@ public class HabitacionesDAO {
             persistentManager.close();
         }
     }
-}
+} */

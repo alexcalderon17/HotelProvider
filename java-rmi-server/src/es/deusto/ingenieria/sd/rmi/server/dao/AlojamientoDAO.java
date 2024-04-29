@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.rmi.server.dao;
+/*package es.deusto.ingenieria.sd.rmi.server.dao;
 
 import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
 import javax.jdo.JDOHelper;
@@ -92,4 +92,4 @@ public class AlojamientoDAO {
         }
     }
 
-}
+}*/
