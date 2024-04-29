@@ -6,5 +6,5 @@ import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 
 public interface ServicioLogin {
-    
+
 }

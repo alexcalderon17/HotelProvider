@@ -18,8 +18,7 @@ import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
 
-
-public class ServicioReservaImpl implements ServicioReserva{
+public class ServicioReservaImpl implements ServicioReserva {
 
     @Override
     public ReservaDTO crearReserva(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
@@ -27,7 +26,6 @@ public class ServicioReservaImpl implements ServicioReserva{
         return new ReservaDTO(clienteID, alojamiento, fechaInicio, fechaFin);
     }
 
-    
     @Override
     public void cancelarReserva(ReservaDTO reserva) {
         if (!reserva.isEstaCancelada()) {
@@ -57,10 +55,8 @@ public class ServicioReservaImpl implements ServicioReserva{
         }
     }
 
-   // @Override
-    //public List<Reserva> obtenerReservasUsuario (String usuarioID){
+    // @Override
+    // public List<Reserva> obtenerReservasUsuario (String usuarioID){
 
-    //}
+    // }
 }
-
-

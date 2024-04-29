@@ -7,5 +7,6 @@ import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 
 public interface ServicioAlojamientos {
     List<HabitacionDTO> obtenerHabitaciones();
+
     String obtenerAlojamientos();
 }

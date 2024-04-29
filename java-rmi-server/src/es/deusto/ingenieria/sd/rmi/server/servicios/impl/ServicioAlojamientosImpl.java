@@ -22,7 +22,7 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
     public ServicioAlojamientosImpl() {
         super();
     }
-    
+
     @Override
     public List<HabitacionDTO> obtenerHabitaciones() {
         // TODO Auto-generated method stub
@@ -33,31 +33,27 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
     public String obtenerAlojamientos() {
         System.out.println("obteniendo apartamentos");
         String respuesta = null;
-       
+
         HttpRequest request;
         try {
             request = HttpRequest.newBuilder()
-                .uri(new URI(HOTEL_PROVIDER_ALOJAMIENTOS_URL))
-                .header("Authorization", "Bearer " + HOTEL_PROVIDER_API_TOKEN)
-                .build();
-        HttpResponse<String> response;
-        
+                    .uri(new URI(HOTEL_PROVIDER_ALOJAMIENTOS_URL))
+                    .header("Authorization", "Bearer " + HOTEL_PROVIDER_API_TOKEN)
+                    .build();
+            HttpResponse<String> response;
+
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            if(response.statusCode() == 200){ //200 Exitoso
+            if (response.statusCode() == 200) { // 200 Exitoso
                 respuesta = response.body();
                 return respuesta;
-            }else{
+            } else {
                 System.out.println("error codigo:" + response.statusCode());
             }
-        } catch (IOException | URISyntaxException | InterruptedException  e) {
+        } catch (IOException | URISyntaxException | InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } 
-        return respuesta; 
+        }
+        return respuesta;
     }
-
-
-
-
 
 }

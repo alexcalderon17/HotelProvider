@@ -9,9 +9,11 @@ import java.util.List;
 
 public interface ServerFacade extends Remote {
 
-   // List<HabitacionDTO> obtenerHabitaciones() throws RemoteException;
+    // List<HabitacionDTO> obtenerHabitaciones() throws RemoteException;
     String obtenerAlojamientos() throws RemoteException;
+
     boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException;
-    void registrarse(String usuario, String contrasenya) throws RemoteException; 
+
+    void registrarse(String usuario, String contrasenya) throws RemoteException;
 
 }
