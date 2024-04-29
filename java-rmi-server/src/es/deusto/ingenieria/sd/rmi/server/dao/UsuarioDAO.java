@@ -1,5 +1,11 @@
 package es.deusto.ingenieria.sd.rmi.server.dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
@@ -10,6 +16,10 @@ import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.UsuarioDTO;
 
 public class UsuarioDAO {
+
+    private static final String URL = "jdbc:mysql://viaduct.proxy.rlwy.net:40532/railway";
+    private static final String MyUserBD = "root";
+    private static final String MyPassBD = "CkVoSrQWwvFYZFFHYeJAvePmMAQihtJL"; // ¿cuanto de seguro ess?
 
     PersistenceManagerFactory persistentManagerFactory = JDOHelper
             .getPersistenceManagerFactory("datanucleus.properties");
@@ -94,5 +104,24 @@ public class UsuarioDAO {
             }
             persistentManager.close();
         }
+    }
+
+    public boolean verificarLogin(String correo, String password) {
+        boolean loginExitoso = false;
+        String sql = "SELECT * FROM USUARIO WHERE correo = ? AND password = ?";
+        try (Connection conn = DriverManager.getConnection(URL, MyUserBD, MyPassBD);
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, correo);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { // Si hay siguiente linea = que hay linea con esos datos de logeo
+                    loginExitoso = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return loginExitoso;
+
     }
 }
