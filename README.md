@@ -5,6 +5,8 @@ La interacción entre el backend y los frontends se realiza a través de Java RM
 
 ## Ejecución 
 
+Para facilitar la gestión y ejecución del proyecto, hemos implementado un comando centralizado, ant build-all, que permite iniciar simultáneamente los tres componentes clave del sistema: el servidor principal (java-rmi-server), el servidor de puertas (java-rmi-puertas), y el cliente de usuarios (java-rmi-client). Este comando compila primero los códigos comunes necesarios para todos los componentes y luego lanza los servidores y el cliente en paralelo, proporcionando una manera rápida y eficaz de verificar la interacción completa del sistema. 
+
 
 ## Uso 
 
