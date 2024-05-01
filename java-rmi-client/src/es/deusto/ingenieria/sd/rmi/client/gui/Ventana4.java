@@ -56,7 +56,7 @@ public class Ventana4 extends JFrame {
             String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
             stubServer = (ServerFacade) registry.lookup(name);
             List<AlojamientoAtributes> alojamientos = stubServer.obtenerAlojamientos();
-            // Crear la ventana y mostrar los apartamentos
+            
             SwingUtilities.invokeLater(() -> {
                 Ventana4 ventana = new Ventana4(alojamientos);
                 ventana.setVisible(true);

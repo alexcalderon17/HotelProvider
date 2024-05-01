@@ -32,9 +32,7 @@ public class Ventana3 extends JFrame {
         JButton buscarButton = new JButton("Buscar");
         buscarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aqui puedes llamar al metodo getAlojamientos del controlador
-                // pasando los valores de los filtros como argumentos
-                // por ejemplo:
+                
                 // controller.getAlojamientos(destinoComboBox.getSelectedItem(),
                 //                            fechaLlegadaField.getText(),
                 //                            fechaSalidaField.getText(),

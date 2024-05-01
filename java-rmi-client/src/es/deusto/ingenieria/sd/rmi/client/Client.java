@@ -24,9 +24,7 @@ public class Client {
 		//}
 
 		ServerFacade stubServer = null;
-		/**
-		 * Try test message
-		 */
+		
 		try 
 		{
 			Registry registry = LocateRegistry.getRegistry(((Integer.valueOf(args[1]))));

@@ -40,29 +40,29 @@ public class Ventana2 extends JFrame {
         this.padre = padre;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 330, 400); // Adjusted to better fit the registration fields
+        setBounds(100, 100, 330, 400); 
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10)); // Adjusted padding
+        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10)); 
         contentPane.setLayout(new GridBagLayout());
-        contentPane.setBackground(Color.WHITE); // Set the background color to white
+        contentPane.setBackground(Color.WHITE); 
         setContentPane(contentPane);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Label "Registrate!" at the top
+        
         JLabel lblRegistrate = new JLabel("Registrate!");
-        lblRegistrate.setFont(new Font("Tahoma", Font.BOLD, 18)); // Set the font and size
+        lblRegistrate.setFont(new Font("Tahoma", Font.BOLD, 18)); 
         lblRegistrate.setHorizontalAlignment(JLabel.CENTER);
-        gbc.insets = new Insets(10, 0, 20, 0); // Spacing for the title
+        gbc.insets = new Insets(10, 0, 20, 0); 
         gbc.anchor = GridBagConstraints.CENTER;
         contentPane.add(lblRegistrate, gbc);
 
-        // Reset insets to default for other components
+      
         gbc.insets = new Insets(2, 0, 2, 0);
 
-        // Nombre label and text field
+        
         addLabelAndTextField("NOMBRE", gbc);
         addLabelAndTextField("APELLIDO", gbc);
         addLabelAndTextField("CORREO ELECTRoNICO", gbc);
@@ -70,7 +70,7 @@ public class Ventana2 extends JFrame {
         addLabelAndTextField("DNI", gbc);
         addLabelAndTextField("CONTRASENA", gbc);
 
-        // Register button
+       
         JButton btnRegister = new JButton("Registrarse");
         btnRegister.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -84,25 +84,24 @@ public class Ventana2 extends JFrame {
                 String contrasena = textFieldContrasena.getText();
                 int codPostal = 0; // prueba
 
-                // Verificar que el listener no sea nulo y luego llamar al método
-                // registrarUsuario
+               
                 if (serverFacade != null) {
                     // serverFacade.registrarse(nombre, apellido, dni, email, telefono, contrasena,
                     // codPostal); ¿¿ERROR QEU TIENE DOS ATRIBUTOS EN SERVERFACADE PERO NO??
                 }
 
-                // Cerrar esta ventana
+                
                 setVisible(false);
             }
         });
-        btnRegister.setForeground(new Color(0, 0, 255)); // Set the button text to blue
+        btnRegister.setForeground(new Color(0, 0, 255)); 
         GridBagConstraints gbc_btnRegister = new GridBagConstraints();
         gbc.insets = new Insets(10, 0, 0, 0);
-        gbc.fill = GridBagConstraints.NONE; // Do not let the button fill the space
-        gbc.anchor = GridBagConstraints.CENTER; // Align the button to the left
+        gbc.fill = GridBagConstraints.NONE; 
+        gbc.anchor = GridBagConstraints.CENTER; 
         contentPane.add(btnRegister, gbc);
 
-        // Back button
+        
         JButton btnAtrs = new JButton("ATRAS");
         btnAtrs.setFont(new Font("Tahoma", Font.PLAIN, 12));
         btnAtrs.addActionListener(new ActionListener() {
@@ -113,21 +112,19 @@ public class Ventana2 extends JFrame {
             }
         });
         gbc.insets = new Insets(-20, -200, 0, 0);
-        gbc.fill = GridBagConstraints.NONE; // Do not let the button fill the space
-        gbc.anchor = GridBagConstraints.CENTER; // Align the button to the left
+        gbc.fill = GridBagConstraints.NONE; 
+        gbc.anchor = GridBagConstraints.CENTER; 
         contentPane.add(btnAtrs, gbc);
     }
 
-    /**
-     * Helper method to add a label and a text field to the panel.
-     */
+    
     private void addLabelAndTextField(String labelText, GridBagConstraints gbc) {
         JLabel label = new JLabel(labelText);
-        label.setFont(new Font("Tahoma", Font.BOLD, 11)); // Set the font
+        label.setFont(new Font("Tahoma", Font.BOLD, 11)); 
         contentPane.add(label, gbc);
 
         JTextField textField = new JTextField(10);
-        textField.setBorder(new MatteBorder(1, 1, 1, 1, Color.GRAY)); // Set border for the text fields
+        textField.setBorder(new MatteBorder(1, 1, 1, 1, Color.GRAY)); 
         contentPane.add(textField, gbc);
     }
 
@@ -135,8 +132,7 @@ public class Ventana2 extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Ventana2 frame = new Ventana2(null); // Puedes pasar null o una referencia a otra ventana como
-                                                         // argumento
+                    Ventana2 frame = new Ventana2(null); 
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

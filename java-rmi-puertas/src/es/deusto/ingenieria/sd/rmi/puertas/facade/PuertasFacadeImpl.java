@@ -11,7 +11,7 @@ public class PuertasFacadeImpl extends UnicastRemoteObject implements PuertasFac
 
     protected PuertasFacadeImpl() throws RemoteException {
         super();
-        //TODO Auto-generated constructor stub
+        
     }
 
     @Override
@@ -30,9 +30,7 @@ public class PuertasFacadeImpl extends UnicastRemoteObject implements PuertasFac
 		//}
 		String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
 		try {	
-			// está configurando un servidor RMI, registrándolo en un registro local para que
-			// los clientes puedan encontrarlo y preparándolo para aceptar y manejar llamadas 
-			//de métodos remotos de dichos clientes.
+			
 			PuertasFacade serverFacade = new PuertasFacadeImpl();
 			Registry registry = LocateRegistry.createRegistry((Integer.valueOf(args[1])));
 			registry.rebind(name, serverFacade);

@@ -19,12 +19,11 @@ public class ReservaDAO {
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            ReservaDTO reserva = new ReservaDTO(); // Creación del objeto sin inicializar los atributos en el constructor
-
+            ReservaDTO reserva = new ReservaDTO(); 
             reserva.setAlojamiento(alojamiento);
             reserva.setFechaInicio(fechaInicio);
             reserva.setFechaFin(fechaFin);
-            reserva.setEstaCancelada(false); // Asumiendo que una nueva reserva no está cancelada por defecto
+            reserva.setEstaCancelada(false); 
 
             pm.makePersistent(reserva);
             System.out.println("+ Inserted reserva into db: " + reserva.getReservaID());
@@ -39,13 +38,7 @@ public class ReservaDAO {
         }
     }
 
-    // public Reserva selectReserva(String reservaID) {
-    // PersistenceManager pm = pmf.getPersistenceManager();
-    // try {
-    // return pm.getObjectById(Reserva.class, reservaID);
-    // } finally {
-    // pm.close();
-    // }
+   
 
     public void actualizarReserva(String reservaID, String alojamiento, Date fechaInicio, Date fechaFin,
             boolean estaCancelada) {

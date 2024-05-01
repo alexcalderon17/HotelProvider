@@ -9,10 +9,7 @@ import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 public class RMIServiceLocator {
 
   private static RMIServiceLocator INSTANCE;
-  /**
-   * The Cache - Limitation: one server at a time
-   * Proposed improvement: list of services
-   */
+  
 
   ServerFacade stubServer = null;
 

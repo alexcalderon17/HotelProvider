@@ -45,7 +45,7 @@ public class Ventana1 extends JFrame {
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setBackground(Color.WHITE); // Set the background color to white
+        contentPane.setBackground(Color.WHITE); 
         setContentPane(contentPane);
         GridBagLayout gbl_contentPane = new GridBagLayout();
         contentPane.setLayout(gbl_contentPane);
@@ -54,7 +54,7 @@ public class Ventana1 extends JFrame {
         lblWelcome.setHorizontalAlignment(JLabel.CENTER);
         GridBagConstraints gbc_lblWelcome = new GridBagConstraints();
         gbc_lblWelcome.gridwidth = 2;
-        gbc_lblWelcome.insets = new Insets(20, 0, 20, 0); // Top padding to separate from the top
+        gbc_lblWelcome.insets = new Insets(20, 0, 20, 0); 
         gbc_lblWelcome.gridx = 0;
         gbc_lblWelcome.gridy = 0;
         contentPane.add(lblWelcome, gbc_lblWelcome);
@@ -68,9 +68,9 @@ public class Ventana1 extends JFrame {
         contentPane.add(lblEmail, gbc_lblEmail);
 
         textFieldEmail = new JTextField();
-        textFieldEmail.setBorder(new LineBorder(Color.GRAY, 1)); // Set the text field border
+        textFieldEmail.setBorder(new LineBorder(Color.GRAY, 1)); 
         GridBagConstraints gbc_textFieldEmail = new GridBagConstraints();
-        gbc_textFieldEmail.insets = new Insets(0, 0, 5, 20); // Right padding to separate from the right edge
+        gbc_textFieldEmail.insets = new Insets(0, 0, 5, 20); 
         gbc_textFieldEmail.fill = GridBagConstraints.HORIZONTAL;
         gbc_textFieldEmail.gridx = 1;
         gbc_textFieldEmail.gridy = 1;
@@ -86,9 +86,9 @@ public class Ventana1 extends JFrame {
         contentPane.add(lblPassword, gbc_lblPassword);
 
         textFieldPassword = new JTextField();
-        textFieldPassword.setBorder(new LineBorder(Color.GRAY, 1)); // Set the text field border
+        textFieldPassword.setBorder(new LineBorder(Color.GRAY, 1)); 
         GridBagConstraints gbc_textFieldPassword = new GridBagConstraints();
-        gbc_textFieldPassword.insets = new Insets(0, 0, 20, 20); // Bottom and right padding
+        gbc_textFieldPassword.insets = new Insets(0, 0, 20, 20); 
         gbc_textFieldPassword.fill = GridBagConstraints.HORIZONTAL;
         gbc_textFieldPassword.gridx = 1;
         gbc_textFieldPassword.gridy = 2;
@@ -118,7 +118,7 @@ public class Ventana1 extends JFrame {
                setVisible(false);
         	}
         });
-        btnRegister.setForeground(new Color(0, 0, 255)); // Set the button text to blue
+        btnRegister.setForeground(new Color(0, 0, 255)); 
         GridBagConstraints gbc_btnRegister = new GridBagConstraints();
         gbc_btnRegister.gridwidth = 2;
         gbc_btnRegister.gridx = 0;
@@ -131,16 +131,15 @@ public class Ventana1 extends JFrame {
        // setVisible(false); // Ocultar la Ventana1 actual
     }
 
-    // Metodo main para iniciar la aplicacion
+   
     public static void main(String[] args) {
         RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
-        // Utiliza EventQueue.invokeLater para asegurarte de que la creacion de la interfaz de usuario
-        // se realiza en el hilo de despacho de eventos de Swing para evitar problemas de concurrencia
+        
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Ventana1 frame = new Ventana1(); // Crea una instancia de tu ventana
-                    frame.setVisible(true); // Haz visible la ventana
+                    Ventana1 frame = new Ventana1(); 
+                    frame.setVisible(true); 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

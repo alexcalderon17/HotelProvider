@@ -19,12 +19,12 @@ public class UsuarioDAO {
 
     private static final String URL = "jdbc:mysql://viaduct.proxy.rlwy.net:40532/railway";
     private static final String MyUserBD = "root";
-    private static final String MyPassBD = "CkVoSrQWwvFYZFFHYeJAvePmMAQihtJL"; // ¿cuanto de seguro ess?
+    private static final String MyPassBD = "CkVoSrQWwvFYZFFHYeJAvePmMAQihtJL"; 
 
     PersistenceManagerFactory persistentManagerFactory = JDOHelper
             .getPersistenceManagerFactory("datanucleus.properties");
 
-    // INSERTAR USUARIO relacionado con registrarse ver como
+   
     public void insertarUsuarioDTODB(String nombre, String apellido, String DNI, String correo, String telefono,
             String password, int codPostal) {
         PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
@@ -34,9 +34,7 @@ public class UsuarioDAO {
             transaction.begin();
 
             UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, DNI, correo, telefono, password, codPostal);
-            /*
-             * SETTERS
-             */
+          
 
             persistentManager.makePersistent(usuario);
 
@@ -64,7 +62,7 @@ public class UsuarioDAO {
             UsuarioDTO usuario = persistentManager.getObjectById(UsuarioDTO.class, correo);
             if (usuario != null) {
 
-                // alojamiento.setAlojamiento(alojamiento);
+               
                 usuario.setNombre(nombre);
                 usuario.setApellido(apellido);
                 usuario.setDNI(DNI);
@@ -114,7 +112,7 @@ public class UsuarioDAO {
             stmt.setString(1, correo);
             stmt.setString(2, password);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) { // Si hay siguiente linea = que hay linea con esos datos de logeo
+                if (rs.next()) { 
                     loginExitoso = true;
                 }
             }

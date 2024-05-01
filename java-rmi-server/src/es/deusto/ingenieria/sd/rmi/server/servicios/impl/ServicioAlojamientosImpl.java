@@ -50,7 +50,7 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
             HttpResponse<String> response;
 
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() == 200) { // 200 Exitoso
+            if (response.statusCode() == 200) { 
                 ApiResponse<AlojamientoAtributes> alojamientoApiRespuesta = objectMapper.readValue(response.body(),
                         objectMapper.getTypeFactory().constructParametricType(ApiResponse.class,
                                 AlojamientoAtributes.class));
@@ -64,7 +64,7 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
                 System.out.println("error codigo:" + response.statusCode());
             }
         } catch (IOException | URISyntaxException | InterruptedException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         return respuesta;

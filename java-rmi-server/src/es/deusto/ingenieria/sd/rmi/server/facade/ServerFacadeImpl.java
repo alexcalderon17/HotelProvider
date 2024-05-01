@@ -20,12 +20,12 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     protected ServerFacadeImpl() throws RemoteException {
         super();
         this.servicioHotelProvider = new ServicioAlojamientosImpl();
-        // TODO Auto-generated constructor stub
+       
     }
 
     // @Override
     public List<HabitacionDTO> obtenerHabitaciones() throws RemoteException {
-        // estamos llamando al metodo que de verdad lo hace (en la carpeta servicios)
+       
         return servicioHotelProvider.obtenerHabitaciones();
     }
 
@@ -36,13 +36,13 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
 
     @Override
     public boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'iniciarSesion'");
     }
 
     @Override
     public void registrarse(String usuario, String contrasenya) throws RemoteException {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'registrarse'");
     }
 
@@ -51,16 +51,10 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
             System.out.println("usage: java [policy] [codebase] server.Server [host] [port] [server]");
             System.exit(0);
         }
-        // if (System.getSecurityManager() == null) {
-        // System.setSecurityManager(new SecurityManager());
-        // }
+        
         String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
         try {
-            // está configurando un servidor RMI, registrándolo en un registro local para
-            // que
-            // los clientes puedan encontrarlo y preparándolo para aceptar y manejar
-            // llamadas
-            // de métodos remotos de dichos clientes.
+            
             ServerFacade serverFacade = new ServerFacadeImpl();
             Registry registry = LocateRegistry.createRegistry((Integer.valueOf(args[1])));
             registry.rebind(name, serverFacade);

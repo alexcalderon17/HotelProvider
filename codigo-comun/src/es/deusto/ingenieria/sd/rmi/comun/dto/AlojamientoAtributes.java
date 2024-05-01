@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AlojamientoAtributes  implements Serializable{ //que se puede convertir en codigo bytes??
+public class AlojamientoAtributes  implements Serializable{ 
 
     private String nombre;
     private String descripcion;
