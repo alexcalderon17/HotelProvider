@@ -30,7 +30,7 @@
     </target>
 
     <target name="clientUsuarios" depends="build" description="Runs the Client">
-        <java classname="es.deusto.ingenieria.sd.rmi.client.gui.Ventana1" fork="true">
+        <java classname="es.deusto.ingenieria.sd.rmi.client.gui.Ventana4" fork="true">
             <classpath refid="classpath"/>
             <jvmarg value="-Djava.rmi.client.codebase=file:${build.dir}/"/>
             <jvmarg value="-Djava.security.policy=${policy.file}"/>           
