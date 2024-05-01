@@ -21,28 +21,25 @@ public class Ventana4 extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Descripcion");
         model.addColumn("Direccion");
 
-    
         int id = 0;
 
         for (AlojamientoAtributes alojamiento : alojamientos) {
             id++;
             model.addRow(
-                    
-                    new Object[] { id, alojamiento.getNombre(), alojamiento.getDescripcion(), alojamiento.getDireccion() });
+
+                    new Object[] { id, alojamiento.getNombre(), alojamiento.getDescripcion(),
+                            alojamiento.getDireccion() });
         }
 
-        
         tablaApartamentos = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(tablaApartamentos);
 
-        
         getContentPane().add(scrollPane, BorderLayout.CENTER);
     }
 
