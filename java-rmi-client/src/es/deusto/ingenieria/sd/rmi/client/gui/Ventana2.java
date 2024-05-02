@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 import javax.swing.JLabel;
@@ -74,8 +76,8 @@ public class Ventana2 extends JFrame {
         JButton btnRegister = new JButton("Registrarse");
         btnRegister.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                padre.setVisible(true);
-                setVisible(false);
+                //padre.setVisible(true);
+               // setVisible(false);
                 String nombre = textFieldNombre.getText();
                 String apellido = textFieldApellido.getText();
                 String email = textFieldEmail.getText();
@@ -85,10 +87,15 @@ public class Ventana2 extends JFrame {
                 int codPostal = 0; // prueba
 
                
-                if (serverFacade != null) {
-                    // serverFacade.registrarse(nombre, apellido, dni, email, telefono, contrasena,
-                    // codPostal); ¿¿ERROR QEU TIENE DOS ATRIBUTOS EN SERVERFACADE PERO NO??
+               if (serverFacade != null) {
+                try {
+                    serverFacade.registrarse(nombre, apellido, dni, email, telefono, contrasena, codPostal); 
+                } catch (RemoteException e) {
+                    // Manejar la excepción aquí, por ejemplo, imprimir un mensaje de error o registrarla.
+                    e.printStackTrace();
                 }
+}
+
 
                 
                 setVisible(false);

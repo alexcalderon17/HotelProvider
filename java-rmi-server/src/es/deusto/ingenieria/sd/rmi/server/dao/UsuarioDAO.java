@@ -12,8 +12,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
-import es.deusto.ingenieria.sd.rmi.server.dto.UsuarioDTO;
 
 public class UsuarioDAO {
 
@@ -122,4 +123,22 @@ public class UsuarioDAO {
         return loginExitoso;
 
     }
+
+    public boolean existeCorreo(String correo) {
+        String sql = "SELECT COUNT(*) FROM usuarios WHERE correo = ?";
+        try (Connection conn = DriverManager.getConnection(URL, MyUserBD, MyPassBD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, correo);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al verificar el correo: " + e.getMessage());
+        }
+        return false;
+    }
+
+
 }

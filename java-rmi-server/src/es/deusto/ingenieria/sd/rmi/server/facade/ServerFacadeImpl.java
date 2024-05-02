@@ -40,11 +40,21 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
         throw new UnsupportedOperationException("Unimplemented method 'iniciarSesion'");
     }
 
+
     @Override
-    public void registrarse(String usuario, String contrasenya) throws RemoteException {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'registrarse'");
-    }
+public void registrarse (String nombre, String apellido, String DNI, String correo, String telefono, String password, int codPostal) throws RemoteException {
+     try {
+         servicioHotelProvider.registrarse(nombre, apellido, DNI, correo, telefono, password, codPostal);
+         // Asume que 'servicioHotelProvider.registrarse()' también ha sido actualizado para lanzar RemoteException
+     } catch (RemoteException e) {
+         throw e;
+     } catch (Exception e) {
+         // Manejar otras excepciones que no sean de tipo RemoteException
+         throw new RemoteException("Error en registrarse: " + e.getMessage(), e);
+     }
+ }
+
+
 
     public static void main(String[] args) {
         if (args.length != 3) {

@@ -16,6 +16,5 @@ public interface ServerFacade extends Remote {
 
     boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException;
 
-    void registrarse(String usuario, String contrasenya) throws RemoteException;
-
+    void registrarse (String nombre, String apellido, String DNI, String correo, String telefono, String password, int codPostal) throws RemoteException;
 }

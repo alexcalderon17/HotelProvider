@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.rmi.server.dto;
+package es.deusto.ingenieria.sd.rmi.comun.dto;
 
 import lombok.*;
 import javax.jdo.annotations.PersistenceCapable;
@@ -14,12 +14,13 @@ public class UsuarioDTO {
     private String password;
     private int codPostal;
 
+
     public String getNombre() {
-        return nombre;
+        return nombre ;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre= nombre;
     }
 
     public String getApellido() {
