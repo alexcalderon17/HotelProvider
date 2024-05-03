@@ -22,8 +22,7 @@ public class UsuarioDAO {
     private static final String MyUserBD = "root";
     private static final String MyPassBD = "CkVoSrQWwvFYZFFHYeJAvePmMAQihtJL"; 
 
-    PersistenceManagerFactory persistentManagerFactory = JDOHelper
-            .getPersistenceManagerFactory("datanucleus.properties");
+    PersistenceManagerFactory persistentManagerFactory = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 
    
     public void insertarUsuarioDTODB(String nombre, String apellido, String DNI, String correo, String telefono,

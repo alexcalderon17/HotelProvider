@@ -1,150 +1,141 @@
 package es.deusto.ingenieria.sd.rmi.client.gui;
 
 import java.awt.EventQueue;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.Font;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
-import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-
-import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
-import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
+import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
+
 public class Ventana2 extends JFrame {
 
-    private JPanel contentPane;
     private JTextField textFieldNombre;
     private JTextField textFieldApellido;
     private JTextField textFieldEmail;
     private JTextField textFieldTelefono;
     private JTextField textFieldDni;
     private JTextField textFieldContrasena;
-   // private Ventana1 padre;
     private ServerFacade serverFacade;
 
     public void setRegistroUsuarioListener(ServerFacade listener) {
         this.serverFacade = listener;
     }
 
-    private void addLabelAndTextField(String labelText, GridBagConstraints gbc) {
-        JLabel label = new JLabel(labelText);
-        label.setFont(new Font("Tahoma", Font.BOLD, 11)); 
-        GridBagConstraints labelGbc = new GridBagConstraints();
-        labelGbc.gridx = 0;
-        labelGbc.gridy = gbc.gridy;
-        labelGbc.anchor = GridBagConstraints.WEST;
-        labelGbc.insets = new Insets(5, 5, 5, 5); // Espaciado entre componentes
-        contentPane.add(label, labelGbc);
-    
-        JTextField textField = new JTextField(10);
-        textField.setBorder(new MatteBorder(1, 1, 1, 1, Color.GRAY)); 
-        GridBagConstraints textFieldGbc = new GridBagConstraints();
-        textFieldGbc.gridx = 1;
-        textFieldGbc.gridy = gbc.gridy;
-        textFieldGbc.fill = GridBagConstraints.HORIZONTAL;
-        textFieldGbc.weightx = 1.0;
-        textFieldGbc.insets = new Insets(5, 5, 5, 5); // Espaciado entre componentes
-        contentPane.add(textField, textFieldGbc);
-    }
-
     public Ventana2() {
-        
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 330, 400); 
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10)); 
-        contentPane.setLayout(new GridBagLayout());
-        contentPane.setBackground(Color.WHITE); 
-        setContentPane(contentPane);
-    
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-    
-        JLabel lblRegistrate = new JLabel("Registrate!");
-        lblRegistrate.setFont(new Font("Tahoma", Font.BOLD, 18)); 
-        lblRegistrate.setHorizontalAlignment(JLabel.CENTER);
-        gbc.insets = new Insets(10, 0, 20, 0); 
-        gbc.anchor = GridBagConstraints.CENTER;
-        contentPane.add(lblRegistrate, gbc);
-    
-        gbc.insets = new Insets(2, 0, 2, 0);
-    
-        // Agregar cada campo de texto utilizando el método addLabelAndTextField
-        addLabelAndTextField("NOMBRE", gbc);
-        addLabelAndTextField("APELLIDO", gbc);
-        addLabelAndTextField("CORREO ELECTRONICO", gbc); // Corregido el texto
-        addLabelAndTextField("NUM TELEFONO", gbc); // Corregido el texto
-        addLabelAndTextField("DNI", gbc);
-        addLabelAndTextField("CONTRASENA", gbc);
+        setBounds(100, 100, 480, 300); 
+        getContentPane().setLayout(null);
+        getContentPane().setBackground(Color.WHITE); 
 
-       
-        JButton btnRegister = new JButton("Registrarse");
-        btnRegister.addActionListener(new ActionListener() {
+        JLabel lblRegistrate = new JLabel("Regístrate!");
+        lblRegistrate.setFont(new Font("Tahoma", Font.BOLD, 18)); 
+        lblRegistrate.setBounds(170, 20, 140, 30);
+        getContentPane().add(lblRegistrate);
+
+        JLabel nombreLabel = new JLabel("Nombre:");
+        nombreLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        nombreLabel.setBounds(20, 70, 80, 30);
+        getContentPane().add(nombreLabel);
+
+        textFieldNombre = new JTextField();
+        textFieldNombre.setBounds(100, 70, 250, 26);
+        getContentPane().add(textFieldNombre);
+        textFieldNombre.setColumns(10);
+
+        JLabel apellidoLabel = new JLabel("Apellidos:");
+        apellidoLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        apellidoLabel.setBounds(20, 110, 80, 30);
+        getContentPane().add(apellidoLabel);
+
+        textFieldApellido = new JTextField();
+        textFieldApellido.setBounds(100, 110, 250, 26);
+        getContentPane().add(textFieldApellido);
+        textFieldApellido.setColumns(10);
+
+        JLabel emailLabel = new JLabel("Email:");
+        emailLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        emailLabel.setBounds(20, 150, 80, 30);
+        getContentPane().add(emailLabel);
+
+        textFieldEmail = new JTextField();
+        textFieldEmail.setBounds(100, 150, 250, 26);
+        getContentPane().add(textFieldEmail);
+        textFieldEmail.setColumns(10);
+
+        JLabel telefonoLabel = new JLabel("Teléfono:");
+        telefonoLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        telefonoLabel.setBounds(20, 190, 80, 30);
+        getContentPane().add(telefonoLabel);
+
+        textFieldTelefono = new JTextField();
+        textFieldTelefono.setBounds(100, 190, 250, 26);
+        getContentPane().add(textFieldTelefono);
+        textFieldTelefono.setColumns(10);
+
+        JLabel dniLabel = new JLabel("DNI:");
+        dniLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        dniLabel.setBounds(20, 230, 80, 30);
+        getContentPane().add(dniLabel);
+
+        textFieldDni = new JTextField();
+        textFieldDni.setBounds(100, 230, 250, 26);
+        getContentPane().add(textFieldDni);
+        textFieldDni.setColumns(10);
+
+        JLabel contrasenaLabel = new JLabel("Contraseña:");
+        contrasenaLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        contrasenaLabel.setBounds(20, 270, 100, 30);
+        getContentPane().add(contrasenaLabel);
+
+        textFieldContrasena = new JTextField();
+        textFieldContrasena.setBounds(130, 270, 250, 26);
+        getContentPane().add(textFieldContrasena);
+        textFieldContrasena.setColumns(10);
+
+        JButton btnRegistrarse = new JButton("Registrarse");
+        btnRegistrarse.setForeground(Color.BLUE);
+        btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        btnRegistrarse.setBounds(380, 270, 130, 30);
+        btnRegistrarse.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                //padre.setVisible(true);
-               setVisible(false);
                 String nombre = textFieldNombre.getText();
                 String apellido = textFieldApellido.getText();
                 String email = textFieldEmail.getText();
                 String telefono = textFieldTelefono.getText();
                 String dni = textFieldDni.getText();
                 String contrasena = textFieldContrasena.getText();
-                int codPostal = 0; // prueba
+                int codPostal = 0; // ¿De dónde proviene este código postal?
 
-               
-               if (serverFacade != null) {
-                try {
-                    serverFacade.registrarse(nombre, apellido, dni, email, telefono, contrasena, codPostal); 
-                } catch (RemoteException e) {
-                    // Manejar la excepción aquí, por ejemplo, imprimir un mensaje de error o registrarla.
-                    e.printStackTrace();
+                if (serverFacade != null) {
+                    try {
+                        serverFacade.registrarse(nombre, apellido, dni, email, telefono, contrasena, codPostal); 
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 }
-}
-
-
-                
-                setVisible(false);
             }
         });
-        btnRegister.setForeground(new Color(0, 0, 255)); 
-        GridBagConstraints gbc_btnRegister = new GridBagConstraints();
-        gbc.insets = new Insets(10, 0, 0, 0);
-        gbc.fill = GridBagConstraints.NONE; 
-        gbc.anchor = GridBagConstraints.CENTER; 
-        contentPane.add(btnRegister, gbc);
+        getContentPane().add(btnRegistrarse);
 
-        
-        JButton btnAtrs = new JButton("ATRAS");
-        btnAtrs.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnAtrs.addActionListener(new ActionListener() {
+        JButton btnAtras = new JButton("Atrás");
+        btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        btnAtras.setBounds(270, 270, 100, 30);
+        btnAtras.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               // padre.setVisible(true);
-                Ventana2.this.setVisible(false);
-                Ventana2.this.dispose();
+                setVisible(false);
+                dispose();
             }
         });
-        gbc.insets = new Insets(-20, -200, 0, 0);
-        gbc.fill = GridBagConstraints.NONE; 
-        gbc.anchor = GridBagConstraints.CENTER; 
-        contentPane.add(btnAtrs, gbc);
+        getContentPane().add(btnAtras);
     }
-
-    
-    
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {

@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,14 +80,14 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
     }
 
     // @Override
-    public void registrarse (String nombre, String apellido, String DNI, String correo, String telefono, String password, int codPostal) throws Exception {
+    public void registrarse (String nombre, String apellido, String DNI, String correo, String telefono, String password, int codPostal) throws RemoteException {
 
         if (correo == null || correo.isEmpty()) {
             throw new IllegalArgumentException("El correo no puede estar vacío.");
         }
 
         if (usuarioDAO.existeCorreo(correo)) {
-            throw new Exception("El correo ya está en uso.");
+            throw new RemoteException("El correo ya está en uso.");
         }
 
         // Aquí podríamos añadir más validaciones, como formato del DNI, longitud de la contraseña, etc.
@@ -95,7 +96,7 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
             usuarioDAO.insertarUsuarioDTODB(nombre, apellido, DNI, correo, telefono, password, codPostal);
             System.out.println("Usuario creado exitosamente.");
         } catch (Exception e) {
-            throw new Exception("Error al crear usuario: " + e.getMessage(), e);
+            throw new RemoteException("Error al crear usuario: " + e.getMessage(), e);
         }
 
 }

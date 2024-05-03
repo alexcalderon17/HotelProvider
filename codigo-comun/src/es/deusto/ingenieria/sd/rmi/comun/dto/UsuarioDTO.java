@@ -6,6 +6,8 @@ import javax.jdo.annotations.PersistenceCapable;
 @PersistenceCapable
 @AllArgsConstructor
 public class UsuarioDTO {
+
+    @PrimaryKey
     private String nombre;
     private String apellido;
     private String DNI;
