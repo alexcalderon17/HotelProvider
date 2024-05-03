@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.rmi.client.gui;
+/*package es.deusto.ingenieria.sd.rmi.client.gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -91,4 +91,4 @@ public class Ventana3 extends JFrame {
             }
         });
     }
-}
+}*/

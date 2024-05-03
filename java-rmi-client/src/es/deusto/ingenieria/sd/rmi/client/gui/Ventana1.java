@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.rmi.client.gui;
+/*package es.deusto.ingenieria.sd.rmi.client.gui;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -147,3 +147,4 @@ public class Ventana1 extends JFrame {
         });
     }
 }
+*/
