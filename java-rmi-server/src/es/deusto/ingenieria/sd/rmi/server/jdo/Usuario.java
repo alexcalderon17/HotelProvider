@@ -10,7 +10,6 @@ import javax.jdo.annotations.PersistenceCapable;
 @Data
 @AllArgsConstructor
 public class Usuario {
-
     
     private String nombre;
     private String apellido;

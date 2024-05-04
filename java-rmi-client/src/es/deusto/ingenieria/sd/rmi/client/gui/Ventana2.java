@@ -112,11 +112,11 @@ public class Ventana2 extends JFrame {
                 String telefono = textFieldTelefono.getText();
                 String dni = textFieldDni.getText();
                 String contrasena = textFieldContrasena.getText();
-                int codPostal = 0; // ¿De dónde proviene este código postal?
-
+                
+                Usuario usuario = new Usuario (nombre, apellido, email, telefono, dni, contrasena);
                 if (serverFacade != null) {
                     try {
-                        serverFacade.registrarse(nombre, apellido, dni, email, telefono, contrasena, codPostal); 
+                        serverFacade.registrarse(usuario); 
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }

@@ -1,14 +1,15 @@
 package es.deusto.ingenieria.sd.rmi.server.manager;
 
 import es.deusto.ingenieria.sd.rmi.server.dao.UsuarioDAO;
+import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 
 public class ClienteManager {
 
-    UsuarioDAO u;
+    UsuarioDAO usuarioDAO;
 
     public void registrarse(String nombre, String apellido, String DNI, String correo, String telefono, String password) {
-        u.insertarUsuarioDTODB(nombre, apellido, DNI, correo, telefono, password);
-
+        Usuario usuario = new Usuario(nombre, apellido, DNI, correo, telefono, password);
+        usuarioDAO.insertarUsuarioDTODB(usuario);
     }
 
 }

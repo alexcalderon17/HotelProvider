@@ -13,5 +13,5 @@ public interface ServicioAlojamientos {
     List<AlojamientoAtributes> obtenerAlojamientos();
 
     
-    void registrarse(String nombre, String apellido, String DNI, String correo, String telefono, String password) throws RemoteException;
+    
 }

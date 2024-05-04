@@ -27,25 +27,19 @@ public class UsuarioDAO {
     PersistenceManagerFactory persistentManagerFactory = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 
    
-    public void insertarUsuarioDTODB(String nombre, String apellido, String DNI, String correo, String telefono,
-            String password) {
+    public boolean insertarUsuarioDTODB(Usuario usuario) {
         System.out.println("Empezando metodo de insertarUsuarioDTODB en UsuarioDAO ");
 
+        boolean usuarioCreado = false;
         PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
         Transaction transaction = persistentManager.currentTransaction();
 
         try {
             transaction.begin();
-
-            Usuario usuario = new Usuario(nombre, apellido, DNI, correo, telefono, password);
-          
-
             persistentManager.makePersistent(usuario);
-
             System.out.println("+ Inserted usuario into db: " + usuario.getCorreo());
-
             transaction.commit();
-
+            usuarioCreado = true;
         } catch (Exception e) {
             System.err.println("DBException: " + e.getMessage());
         } finally {
@@ -54,7 +48,7 @@ public class UsuarioDAO {
             }
             persistentManager.close();
         }
-
+        return usuarioCreado;
     }
 
     public void actualizarUsuarioDTODB(String nombre, String apellido, String DNI, String correo, String telefono,

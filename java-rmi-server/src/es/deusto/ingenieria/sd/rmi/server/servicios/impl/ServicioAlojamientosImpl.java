@@ -27,17 +27,10 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
     private static final String HOTEL_PROVIDER_API_TOKEN = "0518ee96193abf0dca7b3a46591653eb2b162f3fb2dd6fa681b65b97e3e00243187a1b6839aac73946715fb62719b12a1eb14afc36018935b935c2dbf293448fc98a5cde5a219fc208a3db97489b2c2c479825f212d87658ff3b369e4951b0b3f101ac8d52330262e60846ae80b45b6799c69371e4f47a548053137ada4ec6e5";
     private ObjectMapper objectMapper = new ObjectMapper();
     private ClienteManager cm;
-    private UsuarioDAO usuarioDAO; 
-
 
     public ServicioAlojamientosImpl() {
         super();
-        this.usuarioDAO = new UsuarioDAO();
     }
-
-   
-
-
 
     @Override
     public List<HabitacionDTO> obtenerHabitaciones() {
@@ -78,28 +71,4 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
         }
         return respuesta;
     }
-
-    @Override
-    public void registrarse(String nombre, String apellido, String DNI, String correo, String telefono, String password) throws RemoteException {
-        System.out.println("Empezando metodo registrarse de servicio Alojamiento");
-
-
-        if (correo == null || correo.isEmpty()) {
-            throw new IllegalArgumentException("El correo no puede estar vacío.");
-        }
-
-        //if (usuarioDAO.existeCorreo(correo)) {
-          //  throw new RemoteException("El correo ya está en uso.");
-       // }
-
-        // Aquí podríamos añadir más validaciones, como formato del DNI, longitud de la contraseña, etc.
-
-        try {
-            usuarioDAO.insertarUsuarioDTODB(nombre, apellido, DNI, correo, telefono, password);
-            System.out.println("Usuario creado exitosamente.");
-        } catch (Exception e) {
-            throw new RemoteException("Error al crear usuario: " + e.getMessage(), e);
-        }
-
-}
 }

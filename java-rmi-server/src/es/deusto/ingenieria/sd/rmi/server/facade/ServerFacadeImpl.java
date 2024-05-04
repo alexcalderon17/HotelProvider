@@ -10,17 +10,20 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
+import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioAlojamientosImpl;
+import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioUsuarioImpl;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacade {
 
     private ServicioAlojamientos servicioAlojamientos;
+    private ServicioUsuario servicioUsuario;
 
     protected ServerFacadeImpl() throws RemoteException {
         super();
         this.servicioAlojamientos = new ServicioAlojamientosImpl();
-
+        this.servicioUsuario = new ServicioUsuarioImpl();
     }
 
     // @Override
@@ -46,11 +49,9 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
         System.out.println("metodo registrarse en ServerfacadeImpl"); //sout
         
         try {
-            servicioAlojamientos.registrarse(nombre, apellido, DNI, correo, telefono, password);
+            servicioUsuario.registrarse(nombre, apellido, DNI, correo, telefono, password);
             // Asume que 'servicioHotelProvider.registrarse()' también ha sido actualizado
             // para lanzar RemoteException
-        } catch (RemoteException e) {
-            throw e;
         } catch (Exception e) {
             // Manejar otras excepciones que no sean de tipo RemoteException
             throw new RemoteException("Error en registrarse: " + e.getMessage(), e);
