@@ -22,7 +22,7 @@ public class ServicioReservaImpl implements ServicioReserva {
 
     @Override
     public ReservaDTO crearReserva(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
-       
+        // Crear un nuevo objeto Reserva con los datos proporcionados
         return new ReservaDTO(clienteID, alojamiento, fechaInicio, fechaFin);
     }
 

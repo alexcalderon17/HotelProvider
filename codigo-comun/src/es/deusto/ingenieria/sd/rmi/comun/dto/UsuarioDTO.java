@@ -6,8 +6,11 @@ import javax.jdo.annotations.PersistenceCapable;
 @PersistenceCapable
 @AllArgsConstructor
 public class UsuarioDTO {
+<<<<<<<< HEAD:codigo-comun/src/es/deusto/ingenieria/sd/rmi/comun/dto/UsuarioDTO.java
 
     @PrimaryKey
+========
+>>>>>>>> 31052769f61c50a3dfe6aae5cad10e4e54d75daa:java-rmi-server/src/es/deusto/ingenieria/sd/rmi/server/dto/UsuarioDTO.java
     private String nombre;
     private String apellido;
     private String DNI;
