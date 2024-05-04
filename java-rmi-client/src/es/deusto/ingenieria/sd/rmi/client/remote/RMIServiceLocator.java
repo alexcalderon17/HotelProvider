@@ -8,10 +8,11 @@ import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class RMIServiceLocator {
 
+  //no pertenece a la instancia pertenece a la clase
   private static RMIServiceLocator INSTANCE;
   
 
-  ServerFacade stubServer = null;
+  ServerFacade serverFacade = null;
 
  
   public RMIServiceLocator(String ip, String port, String serviceName) {
@@ -24,7 +25,7 @@ public class RMIServiceLocator {
     try {
       Registry registry = LocateRegistry.getRegistry(Integer.parseInt(port));
       String name = "//" + ip + ":" + port + "/" + serviceName;
-      this.stubServer = (ServerFacade) registry.lookup(name);
+      this.serverFacade = (ServerFacade) registry.lookup(name);
       System.out.println("* Message coming from the server: '");
     }
 
@@ -37,8 +38,9 @@ public class RMIServiceLocator {
   }
 
   public ServerFacade getService() {
-    return this.stubServer;
+    return this.serverFacade;
   }
+
 
   public static RMIServiceLocator getInstance(){
     if (INSTANCE == null){

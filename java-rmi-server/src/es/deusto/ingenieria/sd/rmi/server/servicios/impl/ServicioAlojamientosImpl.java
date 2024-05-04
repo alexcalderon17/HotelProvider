@@ -79,21 +79,23 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
         return respuesta;
     }
 
-    // @Override
-    public void registrarse (String nombre, String apellido, String DNI, String correo, String telefono, String password, int codPostal) throws RemoteException {
+    @Override
+    public void registrarse(String nombre, String apellido, String DNI, String correo, String telefono, String password) throws RemoteException {
+        System.out.println("Empezando metodo registrarse de servicio Alojamiento");
+
 
         if (correo == null || correo.isEmpty()) {
             throw new IllegalArgumentException("El correo no puede estar vacío.");
         }
 
-        if (usuarioDAO.existeCorreo(correo)) {
-            throw new RemoteException("El correo ya está en uso.");
-        }
+        //if (usuarioDAO.existeCorreo(correo)) {
+          //  throw new RemoteException("El correo ya está en uso.");
+       // }
 
         // Aquí podríamos añadir más validaciones, como formato del DNI, longitud de la contraseña, etc.
 
         try {
-            usuarioDAO.insertarUsuarioDTODB(nombre, apellido, DNI, correo, telefono, password, codPostal);
+            usuarioDAO.insertarUsuarioDTODB(nombre, apellido, DNI, correo, telefono, password);
             System.out.println("Usuario creado exitosamente.");
         } catch (Exception e) {
             throw new RemoteException("Error al crear usuario: " + e.getMessage(), e);

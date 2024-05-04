@@ -13,8 +13,10 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
+
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
+import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
+
 
 public class UsuarioDAO {
 
@@ -26,14 +28,16 @@ public class UsuarioDAO {
 
    
     public void insertarUsuarioDTODB(String nombre, String apellido, String DNI, String correo, String telefono,
-            String password, int codPostal) {
+            String password) {
+        System.out.println("Empezando metodo de insertarUsuarioDTODB en UsuarioDAO ");
+
         PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
         Transaction transaction = persistentManager.currentTransaction();
 
         try {
             transaction.begin();
 
-            UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, DNI, correo, telefono, password, codPostal);
+            Usuario usuario = new Usuario(nombre, apellido, DNI, correo, telefono, password);
           
 
             persistentManager.makePersistent(usuario);
@@ -43,7 +47,7 @@ public class UsuarioDAO {
             transaction.commit();
 
         } catch (Exception e) {
-            System.err.println("DBException");
+            System.err.println("DBException: " + e.getMessage());
         } finally {
             if (transaction.isActive()) {
                 transaction.rollback();
@@ -59,7 +63,7 @@ public class UsuarioDAO {
         Transaction transaction = persistentManager.currentTransaction();
         try {
             transaction.begin();
-            UsuarioDTO usuario = persistentManager.getObjectById(UsuarioDTO.class, correo);
+            Usuario usuario = persistentManager.getObjectById(Usuario.class, correo);
             if (usuario != null) {
 
                
@@ -67,7 +71,7 @@ public class UsuarioDAO {
                 usuario.setApellido(apellido);
                 usuario.setDNI(DNI);
                 usuario.setCorreo(correo);
-                usuario.setCodPostal(codPostal);
+                //usuario.setCodPostal(codPostal);
                 usuario.setTelefono(telefono);
                 usuario.setPassword(password);
                 persistentManager.makePersistent(usuario);
@@ -89,7 +93,7 @@ public class UsuarioDAO {
 
         try {
             transaction.begin();
-            UsuarioDTO usuario = persistentManager.getObjectById(UsuarioDTO.class, correo);
+            Usuario usuario = persistentManager.getObjectById(Usuario.class, correo);
             if (usuario != null) {
                 persistentManager.deletePersistent(usuario);
             }
@@ -124,7 +128,7 @@ public class UsuarioDAO {
     }
 
     public boolean existeCorreo(String correo) {
-        String sql = "SELECT COUNT(*) FROM usuarios WHERE correo = ?";
+        String sql = "SELECT COUNT(*) FROM usuario WHERE correo = ?";
         try (Connection conn = DriverManager.getConnection(URL, MyUserBD, MyPassBD);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, correo);
