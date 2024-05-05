@@ -5,12 +5,14 @@ import lombok.*;
 import javax.jdo.annotations.PersistenceCapable;
 
 
-@PersistenceCapable
-@NoArgsConstructor
+
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
+@PersistenceCapable
 public class Usuario {
-    
+
     private String nombre;
     private String apellido;
     private String DNI;
@@ -18,6 +20,5 @@ public class Usuario {
     private String telefono;
     private String password;
     //private int codPostal;
-
 
 }

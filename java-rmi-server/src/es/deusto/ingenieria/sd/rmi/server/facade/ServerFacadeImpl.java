@@ -7,6 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
@@ -44,12 +45,11 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     }
 
     @Override
-    public void registrarse(String nombre, String apellido, String DNI, String correo, String telefono, String password)
-            throws RemoteException {
+    public void registrarse(UsuarioDTO usuarioDTO) throws RemoteException {
         System.out.println("metodo registrarse en ServerfacadeImpl"); //sout
         
         try {
-            servicioUsuario.registrarse(nombre, apellido, DNI, correo, telefono, password);
+            servicioUsuario.registrarse(usuarioDTO);
             // Asume que 'servicioHotelProvider.registrarse()' también ha sido actualizado
             // para lanzar RemoteException
         } catch (Exception e) {

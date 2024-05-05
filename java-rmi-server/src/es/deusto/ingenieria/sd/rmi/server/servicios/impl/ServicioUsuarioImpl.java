@@ -2,6 +2,7 @@ package es.deusto.ingenieria.sd.rmi.server.servicios.impl;
 
 import java.rmi.RemoteException;
 
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.server.dao.UsuarioDAO;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
@@ -15,11 +16,16 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
    
     @Override
-    public void registrarse(String nombre, String apellido, String DNI, String correo, String telefono, String password) {
+    public void registrarse(UsuarioDTO usuarioDTO) {
         System.out.println("Empezando metodo registrarse de servicio Alojamiento");
-        Usuario usuario = new Usuario(nombre, apellido, DNI, correo, telefono, password);
+        Usuario usuario = Usuario.builder()
+        .nombre(usuarioDTO.getNombre())
+        .apellido(usuarioDTO.getApellido())
+        .correo(usuarioDTO.getCorreo())
+        .telefono(usuarioDTO.getTelefono())
+        .password(usuarioDTO.getPassword())
+        .build();
         validarUsuario(usuario);
-        // Aquí podríamos añadir más validaciones, como formato del DNI, longitud de la contraseña, etc.
 
         try {
             usuarioDAO.insertarUsuarioDTODB(usuario);

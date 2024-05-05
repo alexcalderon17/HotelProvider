@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
@@ -30,80 +31,75 @@ public class Ventana2 extends JFrame {
     }
 
     public Ventana2() {
+        serverFacade = RMIServiceLocator.getInstance().getService();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 480, 300); 
+        setBounds(100, 100, 550, 400); // Aumento tamaño para mejor distribución
         getContentPane().setLayout(null);
-        getContentPane().setBackground(Color.WHITE); 
+        getContentPane().setBackground(Color.WHITE);
 
         JLabel lblRegistrate = new JLabel("Regístrate!");
-        lblRegistrate.setFont(new Font("Tahoma", Font.BOLD, 18)); 
-        lblRegistrate.setBounds(170, 20, 140, 30);
+        lblRegistrate.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblRegistrate.setBounds(200, 10, 150, 30);
         getContentPane().add(lblRegistrate);
 
         JLabel nombreLabel = new JLabel("Nombre:");
-        nombreLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
-        nombreLabel.setBounds(20, 70, 80, 30);
+        nombreLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+        nombreLabel.setBounds(10, 50, 80, 30);
         getContentPane().add(nombreLabel);
 
         textFieldNombre = new JTextField();
-        textFieldNombre.setBounds(100, 70, 250, 26);
+        textFieldNombre.setBounds(120, 50, 300, 26);
         getContentPane().add(textFieldNombre);
-        textFieldNombre.setColumns(10);
 
         JLabel apellidoLabel = new JLabel("Apellidos:");
-        apellidoLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
-        apellidoLabel.setBounds(20, 110, 80, 30);
+        apellidoLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+        apellidoLabel.setBounds(10, 90, 90, 30);
         getContentPane().add(apellidoLabel);
 
         textFieldApellido = new JTextField();
-        textFieldApellido.setBounds(100, 110, 250, 26);
+        textFieldApellido.setBounds(120, 90, 300, 26);
         getContentPane().add(textFieldApellido);
-        textFieldApellido.setColumns(10);
 
         JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
-        emailLabel.setBounds(20, 150, 80, 30);
+        emailLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+        emailLabel.setBounds(10, 130, 80, 30);
         getContentPane().add(emailLabel);
 
         textFieldEmail = new JTextField();
-        textFieldEmail.setBounds(100, 150, 250, 26);
+        textFieldEmail.setBounds(120, 130, 300, 26);
         getContentPane().add(textFieldEmail);
-        textFieldEmail.setColumns(10);
 
         JLabel telefonoLabel = new JLabel("Teléfono:");
-        telefonoLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
-        telefonoLabel.setBounds(20, 190, 80, 30);
+        telefonoLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+        telefonoLabel.setBounds(10, 170, 90, 30);
         getContentPane().add(telefonoLabel);
 
         textFieldTelefono = new JTextField();
-        textFieldTelefono.setBounds(100, 190, 250, 26);
+        textFieldTelefono.setBounds(120, 170, 300, 26);
         getContentPane().add(textFieldTelefono);
-        textFieldTelefono.setColumns(10);
 
         JLabel dniLabel = new JLabel("DNI:");
-        dniLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
-        dniLabel.setBounds(20, 230, 80, 30);
+        dniLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+        dniLabel.setBounds(10, 210, 80, 30);
         getContentPane().add(dniLabel);
 
         textFieldDni = new JTextField();
-        textFieldDni.setBounds(100, 230, 250, 26);
+        textFieldDni.setBounds(120, 210, 300, 26);
         getContentPane().add(textFieldDni);
-        textFieldDni.setColumns(10);
 
         JLabel contrasenaLabel = new JLabel("Contraseña:");
-        contrasenaLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
-        contrasenaLabel.setBounds(20, 270, 100, 30);
+        contrasenaLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+        contrasenaLabel.setBounds(10, 250, 110, 30);
         getContentPane().add(contrasenaLabel);
 
         textFieldContrasena = new JTextField();
-        textFieldContrasena.setBounds(130, 270, 250, 26);
+        textFieldContrasena.setBounds(130, 250, 290, 26);
         getContentPane().add(textFieldContrasena);
-        textFieldContrasena.setColumns(10);
 
         JButton btnRegistrarse = new JButton("Registrarse");
         btnRegistrarse.setForeground(Color.BLUE);
-        btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 16)); 
-        btnRegistrarse.setBounds(380, 270, 130, 30);
+        btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnRegistrarse.setBounds(370, 300, 150, 30);
         btnRegistrarse.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 String nombre = textFieldNombre.getText();
@@ -113,10 +109,10 @@ public class Ventana2 extends JFrame {
                 String dni = textFieldDni.getText();
                 String contrasena = textFieldContrasena.getText();
                 
-                Usuario usuario = new Usuario (nombre, apellido, email, telefono, dni, contrasena);
+                UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, email, telefono, dni, contrasena);
                 if (serverFacade != null) {
                     try {
-                        serverFacade.registrarse(usuario); 
+                        serverFacade.registrarse(usuario);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -126,8 +122,8 @@ public class Ventana2 extends JFrame {
         getContentPane().add(btnRegistrarse);
 
         JButton btnAtras = new JButton("Atrás");
-        btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16)); 
-        btnAtras.setBounds(270, 270, 100, 30);
+        btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnAtras.setBounds(200, 300, 150, 30);
         btnAtras.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -138,10 +134,11 @@ public class Ventana2 extends JFrame {
     }
 
     public static void main(String[] args) {
+        RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Ventana2 frame = new Ventana2(); 
+                    Ventana2 frame = new Ventana2();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
