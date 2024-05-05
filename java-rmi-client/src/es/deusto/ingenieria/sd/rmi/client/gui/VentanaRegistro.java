@@ -16,7 +16,7 @@ import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
-public class Ventana2 extends JFrame {
+public class VentanaRegistro extends JFrame {
 
     private JTextField textFieldNombre;
     private JTextField textFieldApellido;
@@ -26,11 +26,7 @@ public class Ventana2 extends JFrame {
     private JTextField textFieldContrasena;
     private ServerFacade serverFacade;
 
-    public void setRegistroUsuarioListener(ServerFacade listener) {
-        this.serverFacade = listener;
-    }
-
-    public Ventana2() {
+    public VentanaRegistro() {
         serverFacade = RMIServiceLocator.getInstance().getService();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 550, 400); // Aumento tamaño para mejor distribución
@@ -113,6 +109,19 @@ public class Ventana2 extends JFrame {
                 if (serverFacade != null) {
                     try {
                         serverFacade.registrarse(usuario);
+                        // Abre la ventana de inicio de sesión después de registrarse
+                        EventQueue.invokeLater(new Runnable() {
+                            public void run() {
+                                try {
+                                    VentanaInicio frame = new VentanaInicio();
+                                    frame.setVisible(true);
+                                    // Cierra la ventana actual
+                                    dispose();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -120,17 +129,6 @@ public class Ventana2 extends JFrame {
             }
         });
         getContentPane().add(btnRegistrarse);
-
-        JButton btnAtras = new JButton("Atrás");
-        btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnAtras.setBounds(200, 300, 150, 30);
-        btnAtras.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                dispose();
-            }
-        });
-        getContentPane().add(btnAtras);
     }
 
     public static void main(String[] args) {
@@ -138,7 +136,7 @@ public class Ventana2 extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Ventana2 frame = new Ventana2();
+                    VentanaRegistro frame = new VentanaRegistro();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

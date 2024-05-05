@@ -17,7 +17,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
    
     @Override
     public void registrarse(UsuarioDTO usuarioDTO) {
-        System.out.println("Empezando metodo registrarse de servicio Alojamiento");
+        System.out.println("Empezando metodo registrarse de servicioUsuarioImpl");
         Usuario usuario = Usuario.builder()
         .nombre(usuarioDTO.getNombre())
         .apellido(usuarioDTO.getApellido())
@@ -35,6 +35,23 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
         }
 
     }
+   
+    public boolean iniciarSesion(String usuario, String contrasenya){
+        System.out.println("Empezando metodo inicarSesion de servicioUsuarioImpl");
+        try {
+            boolean usuarioExitoso = usuarioDAO.verificarLogin(usuario, contrasenya);
+            if (usuarioExitoso){
+                return true;
+            }else{
+                return false;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al tratar de verificar el usuario: " + e.getMessage(), e);
+        }
+        
+    }
+
     private void validarUsuario(Usuario usuario){
         if (usuario.getCorreo() == null || usuario.getCorreo().isEmpty()) {
             throw new RuntimeException("El correo no puede estar vacío."); 

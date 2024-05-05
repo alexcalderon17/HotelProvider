@@ -118,7 +118,6 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
         return loginExitoso;
-
     }
 
     public boolean existeCorreo(String correo) {

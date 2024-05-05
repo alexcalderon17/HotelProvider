@@ -40,8 +40,22 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
 
     @Override
     public boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException {
+        System.out.println("metodo iniciar sesion en ServerfacadeImpl"); //sout
+        try {
+           boolean usuarioExitoso =  servicioUsuario.iniciarSesion(usuario, contrasenya);
+           if (usuarioExitoso){
+            return true;
+           }else{
+            return false;
+           }
+            
+        } catch (Exception e) {
+            // Manejar otras excepciones que no sean de tipo RemoteException
+            throw new RemoteException("Error en iniciar sesion: " + e.getMessage(), e);
+        }
 
-        throw new UnsupportedOperationException("Unimplemented method 'iniciarSesion'");
+
+        
     }
 
     @Override

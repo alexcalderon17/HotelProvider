@@ -9,4 +9,5 @@ import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 
 public interface ServicioUsuario {
     void registrarse(UsuarioDTO usuarioDTO);
+    boolean iniciarSesion(String usuario, String contrasenya);
 }
