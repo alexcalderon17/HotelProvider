@@ -9,7 +9,10 @@ import java.awt.event.ActionEvent;
 
 
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.List;
+
+import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
@@ -21,13 +24,20 @@ public class VentanaAlojamientos extends JFrame {
     private JTextField textFieldPrecioMin;
     private JTextField textFieldPrecioMax;
     private JTextPane textPaneInfo;
-    private JList<String> listAlojamientos;
+    private JList<String> alojamientosJList;
     private DefaultListModel<String> listModel;
     private JButton btnAceptar;
     private ServerFacade serverFacade;
+    private  List<AlojamientoAtributes> alojamientos;
 
 
-    public VentanaAlojamientos(List<AlojamientoAtributes> alojamientos) {
+    public VentanaAlojamientos() throws RemoteException {
+        serverFacade = RMIServiceLocator.getInstance().getService();
+
+        alojamientos = serverFacade.obtenerAlojamientos();
+
+        
+
         setTitle("Lista de Apartamentos");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,14 +59,14 @@ public class VentanaAlojamientos extends JFrame {
         for (AlojamientoAtributes alojamiento : alojamientos) {
             listModel.addElement(alojamiento.getNombre());
         }
-        listAlojamientos = new JList<>(listModel);
-        listAlojamientos.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting() && !listAlojamientos.isSelectionEmpty()) {
-                AlojamientoAtributes alojamientoSeleccionado = alojamientos.get(listAlojamientos.getSelectedIndex());
+        alojamientosJList = new JList<>(listModel);
+        alojamientosJList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && !alojamientosJList.isSelectionEmpty()) {
+                AlojamientoAtributes alojamientoSeleccionado = alojamientos.get(alojamientosJList.getSelectedIndex());
                 textPaneInfo.setText("<html><b>Descripción:</b> <br/>" + alojamientoSeleccionado.getDescripcion() + "<br/><br/><b>Dirección:</b> <br/>" + alojamientoSeleccionado.getDireccion() + "</html>");
             }
         });
-        panelAlojamientos.add(new JScrollPane(listAlojamientos), BorderLayout.CENTER);
+        panelAlojamientos.add(new JScrollPane(alojamientosJList), BorderLayout.CENTER);
         mainPanel.add(panelAlojamientos, BorderLayout.CENTER);
 
         // Área de texto con formato HTML para mostrar información
@@ -115,20 +125,17 @@ public class VentanaAlojamientos extends JFrame {
         textFieldPrecioMax = new JTextField();
         panel.add(lblPrecioMax);
         panel.add(textFieldPrecioMax);
+    
     }
+    
+    
+    
 
-    public static void main(String[] args) {
-        if (args.length != 3) {
-            System.out.println("uso: java [policy] [codebase] cliente.Cliente [host] [port] [server]");
-            System.exit(0);
-        }
+    /*public static void main(String[] args) {
+        RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
 
+        
         try {
-            Registry registry = LocateRegistry.getRegistry((Integer.valueOf(args[1])));
-            String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
-            ServerFacade stubServer = (ServerFacade) registry.lookup(name);
-            List<AlojamientoAtributes> alojamientos = stubServer.obtenerAlojamientos();
-
             SwingUtilities.invokeLater(() -> {
                 VentanaAlojamientos ventana = new VentanaAlojamientos(alojamientos);
                 ventana.setVisible(true);
@@ -137,5 +144,19 @@ public class VentanaAlojamientos extends JFrame {
             System.err.println("- Exception running the client: " + e.getMessage());
             e.printStackTrace();
         }
+    }*/
+
+    public static void main(String[] args) {
+        RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    VentanaAlojamientos frame = new VentanaAlojamientos();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

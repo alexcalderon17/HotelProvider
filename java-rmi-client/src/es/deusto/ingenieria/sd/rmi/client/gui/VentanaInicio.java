@@ -69,7 +69,7 @@ public class VentanaInicio extends JFrame {
                         if (loginExitoso) {
                             JOptionPane.showMessageDialog(VentanaInicio.this, "¡Login Exitoso!", "Exito", JOptionPane.INFORMATION_MESSAGE);
                             List<AlojamientoAtributes> alojamientos = serverFacade.obtenerAlojamientos();
-                            VentanaAlojamientos va = new VentanaAlojamientos(alojamientos);
+                            VentanaAlojamientos va = new VentanaAlojamientos();
                             va.setVisible(true);
                             VentanaInicio.this.setVisible(false);
                             VentanaInicio.this.dispose();
