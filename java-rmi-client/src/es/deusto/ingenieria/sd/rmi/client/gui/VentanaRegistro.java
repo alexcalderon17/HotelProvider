@@ -1,18 +1,23 @@
 package es.deusto.ingenieria.sd.rmi.client.gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-
+import javax.swing.JTextField;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.DocumentFilter.FilterBypass;
+import javax.swing.text.PlainDocument;
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
@@ -75,6 +80,7 @@ public class VentanaRegistro extends JFrame {
         textFieldTelefono = new JTextField();
         textFieldTelefono.setBounds(120, 170, 300, 26);
         getContentPane().add(textFieldTelefono);
+        configurarFiltroTelefono();
 
         JLabel dniLabel = new JLabel("DNI:");
         dniLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -105,28 +111,32 @@ public class VentanaRegistro extends JFrame {
                 String email = textFieldEmail.getText();
                 String telefono = textFieldTelefono.getText();
                 String dni = textFieldDni.getText();
-                String contrasena = textFieldContrasena.getText();
+                String contrasena = new String(textFieldContrasena.getPassword());
                 
-                UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, email, telefono, dni, contrasena);
-                if (serverFacade != null) {
-                    try {
-                        serverFacade.registrarse(usuario);
-                        // Abre la ventana de inicio de sesión después de registrarse
-                        EventQueue.invokeLater(new Runnable() {
-                            public void run() {
-                                try {
-                                    VentanaInicio frame = new VentanaInicio();
-                                    frame.setVisible(true);
-                                    // Cierra la ventana actual
-                                    dispose();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                if (validarDNI(dni)) {
+                    UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, email, telefono, dni, contrasena);
+                    if (serverFacade != null) {
+                        try {
+                            serverFacade.registrarse(usuario);
+                            // Abre la ventana de inicio de sesión después de registrarse
+                            EventQueue.invokeLater(new Runnable() {
+                                public void run() {
+                                    try {
+                                        VentanaInicio frame = new VentanaInicio();
+                                        frame.setVisible(true);
+                                        // Cierra la ventana actual
+                                        dispose();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        });
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
+                            });
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
                     }
+                } else {
+                    mostrarMensajeError("El campo DNI debe tener 9 caracteres.");
                 }
             }
         });
@@ -154,6 +164,38 @@ public class VentanaRegistro extends JFrame {
             }
         });
         getContentPane().add(btnAtras);
+    }
+
+    private void configurarFiltroTelefono() {
+        ((PlainDocument) textFieldTelefono.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int extra, String string, AttributeSet attr)
+                    throws BadLocationException {
+                if (string.matches("[0-9]*")) {
+                    super.insertString(fb, extra, string, attr);
+                } else {
+                    mostrarMensajeError("El campo teléfono solo puede incluir números.");
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int extra, int longitud, String text, AttributeSet attrs)
+                    throws BadLocationException {
+                if (text.matches("[0-9]*")) {
+                    super.replace(fb, extra, longitud, text, attrs);
+                } else {
+                    mostrarMensajeError("El campo teléfono solo puede incluir números.");
+                }
+            }
+        });
+    }
+
+    private boolean validarDNI(String dni) {
+        return dni.length() == 9;
+    }
+
+    private void mostrarMensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public static void main(String[] args) {
