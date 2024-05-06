@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
+
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
@@ -23,7 +25,7 @@ public class VentanaRegistro extends JFrame {
     private JTextField textFieldEmail;
     private JTextField textFieldTelefono;
     private JTextField textFieldDni;
-    private JTextField textFieldContrasena;
+    private JPasswordField textFieldContrasena;
     private ServerFacade serverFacade;
 
     public VentanaRegistro() {
@@ -88,7 +90,7 @@ public class VentanaRegistro extends JFrame {
         contrasenaLabel.setBounds(10, 250, 110, 30);
         getContentPane().add(contrasenaLabel);
 
-        textFieldContrasena = new JTextField();
+        textFieldContrasena = new JPasswordField();
         textFieldContrasena.setBounds(130, 250, 290, 26);
         getContentPane().add(textFieldContrasena);
 
@@ -129,6 +131,29 @@ public class VentanaRegistro extends JFrame {
             }
         });
         getContentPane().add(btnRegistrarse);
+
+        JButton btnAtras = new JButton("Atrás");
+        btnAtras.setForeground(Color.RED);
+        btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnAtras.setBounds(10, 300, 100, 30);
+        btnAtras.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                // Abre la ventana de inicio después de presionar el botón "Atrás"
+                EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            VentanaInicio frame = new VentanaInicio();
+                            frame.setVisible(true);
+                            // Cierra la ventana actual
+                            dispose();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+        getContentPane().add(btnAtras);
     }
 
     public static void main(String[] args) {
