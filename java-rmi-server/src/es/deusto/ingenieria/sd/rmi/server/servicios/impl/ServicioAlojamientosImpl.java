@@ -12,6 +12,8 @@ import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiResponse;
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
+
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
@@ -33,10 +35,43 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
     }
 
     @Override
-    public List<HabitacionDTO> obtenerHabitaciones() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerHabitaciones'");
+    public List<HabitacionAtributes> obtenerHabitaciones() {
+        System.out.println("Obteniendo todas las habitaciones disponibles");
+    
+        List<HabitacionAtributes> habitaciones = new ArrayList<>();
+    
+        try {
+            // Construir la solicitud HTTP para obtener todas las habitaciones disponibles
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(HOTEL_PROVIDER_HABITACIONES_URL)) // Reemplaza TODAS_LAS_HABITACIONES_URL con la URL adecuada para obtener todas las habitaciones disponibles
+                    .header("Authorization", "Bearer " + HOTEL_PROVIDER_API_TOKEN)
+                    .build();
+    
+            // Enviar la solicitud HTTP
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    
+            // Comprobar el código de estado de la respuesta
+            if (response.statusCode() == 200) {
+                // Leer y mapear el cuerpo de la respuesta a un objeto ApiResponse<HabitacionAtributes>
+                ApiResponse<HabitacionAtributes> habitacionApiResponse = objectMapper.readValue(response.body(),
+                        objectMapper.getTypeFactory().constructParametricType(ApiResponse.class, HabitacionAtributes.class));
+    
+                // Iterar sobre los datos de habitaciones en la respuesta y agregarlos a la lista de habitaciones
+                for (ApiData<HabitacionAtributes> apiData : habitacionApiResponse.getData()) {
+                    habitaciones.add(apiData.getAttributes());
+                }
+            } else {
+                // Manejar el caso en que la respuesta no sea exitosa
+                System.out.println("Error al obtener las habitaciones. Código de estado: " + response.statusCode());
+            }
+        } catch (IOException | URISyntaxException | InterruptedException e) {
+            // Manejar cualquier excepción que pueda ocurrir durante la ejecución del método
+            e.printStackTrace();
+        }
+    
+        return habitaciones;
     }
+    
 
     @Override
     public List<AlojamientoAtributes> obtenerAlojamientos() {

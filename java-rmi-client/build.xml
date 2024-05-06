@@ -5,7 +5,7 @@
     <property name="build.dir" location="bin"/>
     <property name="dist.dir" location="dist"/>
     <property name="lib.dir" location="lib"/>
-    <property name="server.port" value="2001"/> 
+    <property name="server.port" value="2002"/> 
     <property name="server.IP" value="127.0.0.1"/> 
     <property name="server.Name" value="BackendServer"/>
     <property name="policy.file" location="security/java.policy"/>    

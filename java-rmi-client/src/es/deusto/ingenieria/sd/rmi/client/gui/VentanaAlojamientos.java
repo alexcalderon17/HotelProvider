@@ -2,10 +2,16 @@ package es.deusto.ingenieria.sd.rmi.client.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
 import java.rmi.registry.Registry;
 import java.util.List;
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class VentanaAlojamientos extends JFrame {
@@ -17,6 +23,9 @@ public class VentanaAlojamientos extends JFrame {
     private JTextPane textPaneInfo;
     private JList<String> listAlojamientos;
     private DefaultListModel<String> listModel;
+    private JButton btnAceptar;
+    private ServerFacade serverFacade;
+
 
     public VentanaAlojamientos(List<AlojamientoAtributes> alojamientos) {
         setTitle("Lista de Apartamentos");
@@ -34,7 +43,7 @@ public class VentanaAlojamientos extends JFrame {
 
         // Lista de alojamientos
         JPanel panelAlojamientos = new JPanel(new BorderLayout());
-        panelAlojamientos.setBorder(BorderFactory.createEmptyBorder(110, 40, 110, 40));
+        panelAlojamientos.setBorder(BorderFactory.createEmptyBorder(50, 40, 150, 40));
 
         listModel = new DefaultListModel<>();
         for (AlojamientoAtributes alojamiento : alojamientos) {
@@ -55,6 +64,27 @@ public class VentanaAlojamientos extends JFrame {
         textPaneInfo.setContentType("text/html");
         textPaneInfo.setEditable(false);
         mainPanel.add(new JScrollPane(textPaneInfo), BorderLayout.SOUTH);
+
+        // Botón Aceptar
+        btnAceptar = new JButton("Aceptar");
+        mainPanel.add(btnAceptar, BorderLayout.EAST);
+        btnAceptar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (serverFacade != null) {
+                    try {
+                        List<HabitacionAtributes> habitaciones = serverFacade.obtenerHabitaciones();
+                        VentanaHabitaciones va = new VentanaHabitaciones(habitaciones);
+                        va.setVisible(true);
+                        VentanaAlojamientos.this.setVisible(false);
+                        VentanaAlojamientos.this.dispose();
+                        
+                    } catch (RemoteException ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(VentanaAlojamientos.this, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
     }
 
     private void configuraPanelFiltros(JPanel panel) {
