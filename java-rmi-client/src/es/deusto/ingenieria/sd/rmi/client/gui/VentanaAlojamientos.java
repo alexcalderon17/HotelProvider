@@ -2,11 +2,9 @@ package es.deusto.ingenieria.sd.rmi.client.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
-
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
@@ -16,7 +14,7 @@ public class VentanaAlojamientos extends JFrame {
     private JComboBox<Integer> comboBoxNumViajeros;
     private JTextField textFieldPrecioMin;
     private JTextField textFieldPrecioMax;
-    private JTextArea textAreaInfo;
+    private JTextPane textPaneInfo;
     private JList<String> listAlojamientos;
     private DefaultListModel<String> listModel;
 
@@ -34,44 +32,29 @@ public class VentanaAlojamientos extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout());
         getContentPane().add(mainPanel, BorderLayout.CENTER);
 
-        // Botones a la izquierda para la descripción y dirección
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        JButton btnDescripcion = new JButton("Descripción");
-        JButton btnDireccion = new JButton("Dirección");
-        leftPanel.add(btnDescripcion);
-        leftPanel.add(btnDireccion);
-        mainPanel.add(leftPanel, BorderLayout.WEST);
-
-        // Panel de alojamientos con lista
+        // Lista de alojamientos
         JPanel panelAlojamientos = new JPanel(new BorderLayout());
-        panelAlojamientos.setBorder(BorderFactory.createEmptyBorder(110, 40, 110, 40)); // Espacio alrededor del panel
+        panelAlojamientos.setBorder(BorderFactory.createEmptyBorder(110, 40, 110, 40));
 
         listModel = new DefaultListModel<>();
         for (AlojamientoAtributes alojamiento : alojamientos) {
-            listModel.addElement(alojamiento.getNombre()); // Solo nombre
+            listModel.addElement(alojamiento.getNombre());
         }
         listAlojamientos = new JList<>(listModel);
+        listAlojamientos.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && !listAlojamientos.isSelectionEmpty()) {
+                AlojamientoAtributes alojamientoSeleccionado = alojamientos.get(listAlojamientos.getSelectedIndex());
+                textPaneInfo.setText("<html><b>Descripción:</b> <br/>" + alojamientoSeleccionado.getDescripcion() + "<br/><br/><b>Dirección:</b> <br/>" + alojamientoSeleccionado.getDireccion() + "</html>");
+            }
+        });
         panelAlojamientos.add(new JScrollPane(listAlojamientos), BorderLayout.CENTER);
-
         mainPanel.add(panelAlojamientos, BorderLayout.CENTER);
 
-        // Area de texto para mostrar información
-        textAreaInfo = new JTextArea();
-        textAreaInfo.setEditable(false);
-        mainPanel.add(textAreaInfo, BorderLayout.SOUTH);
-
-        // Acción de los botones
-        btnDescripcion.addActionListener(e -> {
-            if (!listAlojamientos.isSelectionEmpty()) {
-                textAreaInfo.setText(alojamientos.get(listAlojamientos.getSelectedIndex()).getDescripcion());
-            }
-        });
-        btnDireccion.addActionListener(e -> {
-            if (!listAlojamientos.isSelectionEmpty()) {
-                textAreaInfo.setText(alojamientos.get(listAlojamientos.getSelectedIndex()).getDireccion());
-            }
-        });
+        // Área de texto con formato HTML para mostrar información
+        textPaneInfo = new JTextPane();
+        textPaneInfo.setContentType("text/html");
+        textPaneInfo.setEditable(false);
+        mainPanel.add(new JScrollPane(textPaneInfo), BorderLayout.SOUTH);
     }
 
     private void configuraPanelFiltros(JPanel panel) {

@@ -122,6 +122,7 @@ public class VentanaRegistro extends JFrame {
                             EventQueue.invokeLater(new Runnable() {
                                 public void run() {
                                     try {
+                                        JOptionPane.showMessageDialog(VentanaRegistro.this, "¡Registro Exitoso!", "Exito", JOptionPane.INFORMATION_MESSAGE);
                                         VentanaInicio frame = new VentanaInicio();
                                         frame.setVisible(true);
                                         // Cierra la ventana actual
