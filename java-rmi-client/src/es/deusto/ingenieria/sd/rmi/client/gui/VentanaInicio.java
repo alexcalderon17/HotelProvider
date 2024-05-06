@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.util.List; // Importa la interfaz List
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes; // Importa la clase AlojamientoAtributes
 
 public class VentanaInicio extends JFrame {
 
@@ -25,7 +27,7 @@ public class VentanaInicio extends JFrame {
     public VentanaInicio() {
         serverFacade = RMIServiceLocator.getInstance().getService();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300); // Ajuste de dimensiones
+        setBounds(100, 100, 450, 300); 
         getContentPane().setLayout(null);
         getContentPane().setBackground(Color.WHITE);
 
@@ -66,6 +68,11 @@ public class VentanaInicio extends JFrame {
                         boolean loginExitoso = serverFacade.iniciarSesion(email, contrasena);
                         if (loginExitoso) {
                             JOptionPane.showMessageDialog(VentanaInicio.this, "¡Login Exitoso!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                            List<AlojamientoAtributes> alojamientos = serverFacade.obtenerAlojamientos();
+                            VentanaAlojamientos va = new VentanaAlojamientos(alojamientos);
+                            va.setVisible(true);
+                            VentanaInicio.this.setVisible(false);
+                            VentanaInicio.this.dispose();
                         } else {
                             JOptionPane.showMessageDialog(VentanaInicio.this, "Correo electrónico o contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
                         }

@@ -13,10 +13,10 @@ import es.deusto.ingenieria.sd.rmi.server.InvalidUser;
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
-public class Ventana4 extends JFrame {
+public class VentanaAlojamientos extends JFrame {
     private JTable tablaApartamentos;
 
-    public Ventana4(List<AlojamientoAtributes> alojamientos) {
+    public VentanaAlojamientos(List<AlojamientoAtributes> alojamientos) {
         setTitle("Lista de Apartamentos");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,7 +58,7 @@ public class Ventana4 extends JFrame {
             List<AlojamientoAtributes> alojamientos = stubServer.obtenerAlojamientos();
             
             SwingUtilities.invokeLater(() -> {
-                Ventana4 ventana = new Ventana4(alojamientos);
+                VentanaAlojamientos ventana = new VentanaAlojamientos(alojamientos);
                 ventana.setVisible(true);
             });
         } catch (Exception e) {
