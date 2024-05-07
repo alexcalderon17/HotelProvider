@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.sd.rmi.server.dto;
 
 import lombok.*;
+
 import java.util.Date;
 import javax.jdo.annotations.PersistenceCapable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

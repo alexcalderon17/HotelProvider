@@ -1,7 +1,13 @@
 package es.deusto.ingenieria.sd.rmi.comun.dto;
 
+import lombok.*;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+@ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HabitacionAtributes implements Serializable {
     private String nombre;
     private String descripcion;

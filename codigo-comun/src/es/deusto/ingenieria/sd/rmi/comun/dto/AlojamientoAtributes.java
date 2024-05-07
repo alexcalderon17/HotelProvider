@@ -15,6 +15,7 @@ public class AlojamientoAtributes  implements Serializable{
     private String nombre;
     private String descripcion;
     private String direccion;
+
     
     public AlojamientoAtributes() {
     }
