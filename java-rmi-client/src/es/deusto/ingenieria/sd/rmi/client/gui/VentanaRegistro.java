@@ -114,27 +114,32 @@ public class VentanaRegistro extends JFrame {
                 String contrasena = new String(textFieldContrasena.getPassword());
                 
                 if (validarDNI(dni)) {
-                    UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, email, telefono, dni, contrasena);
-                    if (serverFacade != null) {
-                        try {
-                            serverFacade.registrarse(usuario);
-                            // Abre la ventana de inicio de sesión después de registrarse
-                            EventQueue.invokeLater(new Runnable() {
-                                public void run() {
-                                    try {
-                                        JOptionPane.showMessageDialog(VentanaRegistro.this, "¡Registro Exitoso!", "Exito", JOptionPane.INFORMATION_MESSAGE);
-                                        VentanaInicio frame = new VentanaInicio();
-                                        frame.setVisible(true);
-                                        // Cierra la ventana actual
-                                        dispose();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                    String errorContrasena = validarContrasena(contrasena);
+                    if (errorContrasena == null) {
+                        UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, email, telefono, dni, contrasena);
+                        if (serverFacade != null) {
+                            try {
+                                serverFacade.registrarse(usuario);
+                                // Abre la ventana de inicio de sesión después de registrarse
+                                EventQueue.invokeLater(new Runnable() {
+                                    public void run() {
+                                        try {
+                                            JOptionPane.showMessageDialog(VentanaRegistro.this, "¡Registro Exitoso!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                                            VentanaInicio frame = new VentanaInicio();
+                                            frame.setVisible(true);
+                                            // Cierra la ventana actual
+                                            dispose();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                }
-                            });
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
+                                });
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
                         }
+                    } else {
+                        mostrarMensajeError(errorContrasena);
                     }
                 } else {
                     mostrarMensajeError("El campo DNI debe tener 9 caracteres.");
@@ -193,6 +198,31 @@ public class VentanaRegistro extends JFrame {
 
     private boolean validarDNI(String dni) {
         return dni.length() == 9;
+    }
+
+    private String validarContrasena(String contrasena) {
+        // Verifica la longitud de la contraseña
+        if (contrasena.length() != 8) {
+            return "La contraseña debe tener exactamente 8 caracteres.";
+        }
+
+        // Verifica la presencia de al menos una letra mayúscula
+        if (!contrasena.matches(".*[A-Z].*")) {
+            return "La contraseña debe contener al menos una letra mayúscula.";
+        }
+
+        // Verifica la presencia de al menos una letra minúscula
+        if (!contrasena.matches(".*[a-z].*")) {
+            return "La contraseña debe contener al menos una letra minúscula.";
+        }
+
+        // Verifica la presencia de al menos un número
+        if (!contrasena.matches(".*\\d.*")) {
+            return "La contraseña debe contener al menos un número.";
+        }
+
+        // Si la contraseña cumple con todas las condiciones, devuelve null (sin mensaje de error)
+        return null;
     }
 
     private void mostrarMensajeError(String mensaje) {
