@@ -1,10 +1,12 @@
 package es.deusto.ingenieria.sd.rmi.server.dao;
 
-import es.deusto.ingenieria.sd.rmi.server.dto.ReservaDTO;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
+
+import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
+
 import javax.jdo.Query;
 import java.util.List;
 import java.util.Date;
@@ -14,16 +16,19 @@ public class ReservaDAO {
     PersistenceManagerFactory persistentManagerFactory = JDOHelper
             .getPersistenceManagerFactory("datanucleus.properties");
 
-    public void insertarReserva(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
+    public void insertarReserva(int reservaId, String cliente, String alojamiento, String habitacion, Date fechaInicio, Date fechaFin) {
         PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            ReservaDTO reserva = new ReservaDTO(); 
+            ReservaDTO reserva = new ReservaDTO();
+            reserva.setReservaID(reservaId);
+            reserva.setCliente(cliente);
             reserva.setAlojamiento(alojamiento);
+            reserva.setHabitacion(habitacion);
             reserva.setFechaInicio(fechaInicio);
             reserva.setFechaFin(fechaFin);
-            reserva.setEstaCancelada(false); 
+             
 
             pm.makePersistent(reserva);
             System.out.println("+ Inserted reserva into db: " + reserva.getReservaID());
@@ -52,7 +57,6 @@ public class ReservaDAO {
                 reserva.setAlojamiento(alojamiento);
                 reserva.setFechaInicio(fechaInicio);
                 reserva.setFechaFin(fechaFin);
-                reserva.setEstaCancelada(estaCancelada);
                 pm.makePersistent(reserva);
             }
             tx.commit();
