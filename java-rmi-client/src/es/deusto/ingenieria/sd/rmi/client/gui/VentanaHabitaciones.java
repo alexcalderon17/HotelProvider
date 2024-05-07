@@ -2,6 +2,8 @@ package es.deusto.ingenieria.sd.rmi.client.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -30,7 +32,27 @@ public class VentanaHabitaciones extends JFrame {
         // Añadir la tabla a un JScrollPane para permitir desplazamiento vertical
         JScrollPane scrollPane = new JScrollPane(tableHabitaciones);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
+        
+        // Añadir botón Atrás
+        JButton btnAtras = new JButton("Atrás");
+        btnAtras.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Cierra la ventana actual
+                EventQueue.invokeLater(() -> {
+                    try {
+                        VentanaAlojamientos ventanaAlojamientos = new VentanaAlojamientos();
+                        ventanaAlojamientos.setVisible(true);
+                    } catch (RemoteException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+            }
+        });
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelInferior.add(btnAtras);
+        getContentPane().add(panelInferior, BorderLayout.SOUTH);
     }
+    
 
     private void fillTable(List<HabitacionAtributes> habitaciones) {
         for (HabitacionAtributes habitacion : habitaciones) {
