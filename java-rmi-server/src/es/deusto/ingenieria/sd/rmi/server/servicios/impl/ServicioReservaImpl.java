@@ -23,9 +23,9 @@ import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
 public class ServicioReservaImpl implements ServicioReserva {
 
     @Override
-    public ReservaDTO crearReserva(int reservaID, String cliente, String alojamiento,String habitacion,  Date fechaInicio, Date fechaFin) {
+    public ReservaDTO crearReserva(String cliente, String alojamiento,String habitacion,  Date fechaInicio, Date fechaFin) {
         // Crear un nuevo objeto Reserva con los datos proporcionados
-        return new ReservaDTO(reservaID, cliente, alojamiento, habitacion, fechaInicio, fechaFin);
+        return new ReservaDTO(cliente, alojamiento, habitacion, fechaInicio, fechaFin);
     }
 
     /*@Override

@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 
 public class ReservaDTO implements Serializable {
-    private int reservaID;
+    
     private String cliente; // la idea es que sea el nombre del usuario que esta logeado en ese momento
     private String alojamiento;// la idea es que sea el nombre del alojamiento
     private String habitacion;// la idea es que sea el nombre del habitacion

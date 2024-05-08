@@ -11,6 +11,8 @@ import java.rmi.registry.Registry;
 import java.util.Date;
 import java.util.List;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
+
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class VentanaHabitaciones extends JFrame {

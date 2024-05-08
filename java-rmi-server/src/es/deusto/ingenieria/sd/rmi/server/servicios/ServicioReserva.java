@@ -8,7 +8,7 @@ import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 
 public interface ServicioReserva {
-    public ReservaDTO crearReserva(int reservaID, String cliente, String alojamiento, String habitacion,  Date fechaInicio, Date fechaFin);
+    public ReservaDTO crearReserva(String cliente, String alojamiento, String habitacion,  Date fechaInicio, Date fechaFin);
 
     //public void cancelarReserva(ReservaDTO ReservaID);
 

@@ -16,13 +16,13 @@ public class ReservaDAO {
     PersistenceManagerFactory persistentManagerFactory = JDOHelper
             .getPersistenceManagerFactory("datanucleus.properties");
 
-    public void insertarReserva(int reservaId, String cliente, String alojamiento, String habitacion, Date fechaInicio, Date fechaFin) {
+    public void insertarReserva(String cliente, String alojamiento, String habitacion, Date fechaInicio, Date fechaFin) {
         PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
             ReservaDTO reserva = new ReservaDTO();
-            reserva.setReservaID(reservaId);
+            
             reserva.setCliente(cliente);
             reserva.setAlojamiento(alojamiento);
             reserva.setHabitacion(habitacion);
@@ -31,7 +31,7 @@ public class ReservaDAO {
              
 
             pm.makePersistent(reserva);
-            System.out.println("+ Inserted reserva into db: " + reserva.getReservaID());
+            System.out.println("+ Inserted reserva into db: " + reserva.getHabitacion());
             tx.commit();
         } catch (Exception e) {
             System.err.println("DBException: " + e.getMessage());
@@ -45,7 +45,7 @@ public class ReservaDAO {
 
    
 
-    public void actualizarReserva(String reservaID, String alojamiento, Date fechaInicio, Date fechaFin,
+    /*public void actualizarReserva(String alojamiento, Date fechaInicio, Date fechaFin,
             boolean estaCancelada) {
         PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -68,9 +68,9 @@ public class ReservaDAO {
             }
             pm.close();
         }
-    }
+    }*/
 
-    public void borrarReserva(String reservaID) {
+    /*public void borrarReserva(String reservaID) {
         PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try {
@@ -88,6 +88,6 @@ public class ReservaDAO {
             }
             pm.close();
         }
-    }
+    }*/
 
 }
