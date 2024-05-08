@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Date;
 import java.util.List;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
@@ -85,10 +86,13 @@ public class VentanaHabitaciones extends JFrame {
         btnReservar = new JButton("Reservar");
         btnReservar.setEnabled(false); // Botón desactivado inicialmente
 
+        // Se añaden las etiquetas de aforo y descripción
         detailsPanel.add(new JLabel("Aforo:"));
         detailsPanel.add(lblAforo);
         detailsPanel.add(new JLabel("Descripción:"));
         detailsPanel.add(lblDescripcion);
+
+        // Las demás componentes permanecen igual
         detailsPanel.add(new JLabel("Fecha inicio (dd/mm/aaaa):"));
         detailsPanel.add(txtFechaInicio);
         detailsPanel.add(new JLabel("Fecha fin (dd/mm/aaaa):"));
@@ -128,17 +132,31 @@ public class VentanaHabitaciones extends JFrame {
     }
 
     private void updateReserveButton() {
-        if (listHabitaciones.getSelectedIndex() != -1 && !txtFechaInicio.getText().trim().isEmpty() && !txtFechaFin.getText().trim().isEmpty()) {
+        String fechaInicio = txtFechaInicio.getText().trim();
+        String fechaFin = txtFechaFin.getText().trim();
+
+        boolean validDates = isValidDate(fechaInicio) && isValidDate(fechaFin);
+        if (validDates) {
             try {
-                new SimpleDateFormat("dd/MM/yyyy").parse(txtFechaInicio.getText());
-                new SimpleDateFormat("dd/MM/yyyy").parse(txtFechaFin.getText());
-                btnReservar.setEnabled(true);
+                Date fechaInicioDate = new SimpleDateFormat("dd/MM/yyyy").parse(fechaInicio);
+                Date fechaFinDate = new SimpleDateFormat("dd/MM/yyyy").parse(fechaFin);
+
+                if (fechaFinDate.after(fechaInicioDate)) {
+                    btnReservar.setEnabled(true);
+                } else {
+                    btnReservar.setEnabled(false);
+                    JOptionPane.showMessageDialog(this, "La fecha de fin debe ser posterior a la fecha de inicio.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (ParseException e) {
                 btnReservar.setEnabled(false);
             }
         } else {
             btnReservar.setEnabled(false);
         }
+    }
+
+    private boolean isValidDate(String date) {
+        return date.matches("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$");
     }
 
     @FunctionalInterface
