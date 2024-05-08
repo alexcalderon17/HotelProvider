@@ -4,7 +4,7 @@
     <property name="bin.dir" location="bin"/>
 	<property name="lib.dir" location="lib"/>
 	<property name="resources.dir" location="resources"/>
-	<property name="server.port" value="2002"/> 
+	<property name="server.port" value="2003"/> 
 	<property name="server.IP" value="127.0.0.1"/>
 	<property name="server.Name" value="BackendServer"/>
     <property name="codigo-comun.jar" value="../codigo-comun/dist/codigo-comun.jar"/>
