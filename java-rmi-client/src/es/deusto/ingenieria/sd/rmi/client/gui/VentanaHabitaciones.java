@@ -10,9 +10,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Date;
 import java.util.List;
-import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
-import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 
+import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
+import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class VentanaHabitaciones extends JFrame {
@@ -25,9 +27,15 @@ public class VentanaHabitaciones extends JFrame {
     private JButton btnReservar;
     private JButton btnAtras;
     private List<HabitacionAtributes> habitaciones; // Store the list of habitaciones
+    private ServerFacade serverFacade;
+    private AlojamientoAtributes alojamientoSeleccionado;
+    private String cliente;
 
-    public VentanaHabitaciones(List<HabitacionAtributes> habitaciones) {
-        this.habitaciones = habitaciones; // Initialize with the passed list
+    public VentanaHabitaciones(AlojamientoAtributes alojamientoSeleccionado) throws RemoteException {
+        this.alojamientoSeleccionado = alojamientoSeleccionado;
+        serverFacade = RMIServiceLocator.getInstance().getService();
+        habitaciones = serverFacade.obtenerHabitaciones();
+        cliente = "Pepito";
 
         setTitle("Lista de Habitaciones");
         setSize(800, 600);
@@ -73,7 +81,6 @@ public class VentanaHabitaciones extends JFrame {
             HabitacionAtributes seleccionada = habitaciones.get(index);
             lblAforo.setText("Aforo: " + seleccionada.getAforo());
             lblDescripcion.setText("Descripción: " + seleccionada.getDescripcion());
-            updateReserveButton();
         }
     }
 
@@ -86,22 +93,39 @@ public class VentanaHabitaciones extends JFrame {
         txtFechaInicio = createFormattedTextField();
         txtFechaFin = createFormattedTextField();
         btnReservar = new JButton("Reservar");
-        btnReservar.setEnabled(false); // Botón desactivado inicialmente
+        btnReservar.setEnabled(true); // Botón activado siempre
 
-        // Se añaden las etiquetas de aforo y descripción
+        btnReservar.addActionListener(e -> {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date fechaInicio = sdf.parse(txtFechaInicio.getText());
+                Date fechaFin = sdf.parse(txtFechaFin.getText());
+                if (!fechaInicio.after(fechaFin)) {
+                    int selectedIndex = listHabitaciones.getSelectedIndex();
+                    if (selectedIndex != -1) {
+                        HabitacionAtributes habitacionSeleccionada = habitaciones.get(selectedIndex);
+                        ReservaDTO reserva = new ReservaDTO(cliente, alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
+                        // Opcional: Guardar la reserva mediante la llamada a un método del servidor
+                        JOptionPane.showMessageDialog(this, "Reserva realizada correctamente.", "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser posterior a la fecha de fin.", "Error de fechas", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese las fechas en el formato correcto (dd/mm/aaaa).", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         detailsPanel.add(new JLabel("Aforo:"));
         detailsPanel.add(lblAforo);
         detailsPanel.add(new JLabel("Descripción:"));
         detailsPanel.add(lblDescripcion);
 
-        // Las demás componentes permanecen igual
         detailsPanel.add(new JLabel("Fecha inicio (dd/mm/aaaa):"));
         detailsPanel.add(txtFechaInicio);
         detailsPanel.add(new JLabel("Fecha fin (dd/mm/aaaa):"));
         detailsPanel.add(txtFechaFin);
         detailsPanel.add(btnReservar);
-
-        btnReservar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Reserva realizada correctamente!"));
 
         getContentPane().add(detailsPanel, BorderLayout.CENTER);
     }
@@ -129,77 +153,28 @@ public class VentanaHabitaciones extends JFrame {
         JFormattedTextField formattedTextField = new JFormattedTextField(new DateFormatter(new SimpleDateFormat("dd/MM/yyyy")));
         formattedTextField.setColumns(10);
         formattedTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
-        formattedTextField.getDocument().addDocumentListener((SimpleDocumentListener) this::updateReserveButton);
         return formattedTextField;
     }
 
-    private void updateReserveButton() {
-        String fechaInicio = txtFechaInicio.getText().trim();
-        String fechaFin = txtFechaFin.getText().trim();
-
-        boolean validDates = isValidDate(fechaInicio) && isValidDate(fechaFin);
-        if (validDates) {
-            try {
-                Date fechaInicioDate = new SimpleDateFormat("dd/MM/yyyy").parse(fechaInicio);
-                Date fechaFinDate = new SimpleDateFormat("dd/MM/yyyy").parse(fechaFin);
-
-                if (fechaFinDate.after(fechaInicioDate)) {
-                    btnReservar.setEnabled(true);
-                } else {
-                    btnReservar.setEnabled(false);
-                    JOptionPane.showMessageDialog(this, "La fecha de fin debe ser posterior a la fecha de inicio.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (ParseException e) {
-                btnReservar.setEnabled(false);
-            }
-        } else {
-            btnReservar.setEnabled(false);
-        }
-    }
-
-    private boolean isValidDate(String date) {
-        return date.matches("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\\d{4})$");
-    }
-
-    @FunctionalInterface
-    interface SimpleDocumentListener extends javax.swing.event.DocumentListener {
-        void onChange();
-
-        @Override
-        default void insertUpdate(javax.swing.event.DocumentEvent e) {
-            onChange();
-        }
-
-        @Override
-        default void removeUpdate(javax.swing.event.DocumentEvent e) {
-            onChange();
-        }
-
-        @Override
-        default void changedUpdate(javax.swing.event.DocumentEvent e) {
-            onChange();
-        }
-    }
-
     public static void main(String[] args) {
-        if (args.length != 3) {
-            System.out.println("Uso: java [policy] [codebase] cliente.Cliente [host] [port] [server]");
-            System.exit(0);
-        }
+        RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
+        EventQueue.invokeLater(() -> {
+            try {
+                AlojamientoAtributes testAlojamiento = createTestAlojamiento();
+                VentanaHabitaciones frame = new VentanaHabitaciones(testAlojamiento);
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
-        try {
-            Registry registry = LocateRegistry.getRegistry(Integer.parseInt(args[1]));
-            String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
-            ServerFacade stubServer = (ServerFacade) registry.lookup(name);
-            List<HabitacionAtributes> habitaciones = stubServer.obtenerHabitaciones();
-
-            SwingUtilities.invokeLater(() -> {
-                VentanaHabitaciones ventana = new VentanaHabitaciones(habitaciones);
-                ventana.setVisible(true);
-            });
-        } catch (Exception e) {
-            System.err.println("Exception running the client: " + e.getMessage());
-            e.printStackTrace();
-        }
+    private static AlojamientoAtributes createTestAlojamiento() {
+        // Create a test AlojamientoAtributes object for demonstration purposes
+        AlojamientoAtributes testAlojamiento = new AlojamientoAtributes();
+        testAlojamiento.setNombre("Test Hotel");
+        testAlojamiento.setDescripcion("Un hotel de prueba para demostración.");
+        testAlojamiento.setDireccion("123 Demo Street, Demo City");
+        return testAlojamiento;
     }
 }

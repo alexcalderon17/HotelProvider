@@ -4,17 +4,20 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Date;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
-
+import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
+import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
+
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioAlojamientosImpl;
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioUsuarioImpl;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
@@ -23,6 +26,7 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
 
     private ServicioAlojamientos servicioAlojamientos;
     private ServicioUsuario servicioUsuario;
+    private ServicioReserva servicioReserva;
 
     protected ServerFacadeImpl() throws RemoteException {
         super();
@@ -51,14 +55,11 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
            }else{
             return false;
            }
-            
         } catch (Exception e) {
             // Manejar otras excepciones que no sean de tipo RemoteException
             throw new RemoteException("Error en iniciar sesion: " + e.getMessage(), e);
         }
 
-
-        
     }
 
     @Override
@@ -74,6 +75,21 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
             throw new RemoteException("Error en registrarse: " + e.getMessage(), e);
         }
     }
+    @Override
+    public void guardarReserva (ReservaDTO reservaDTO) throws RemoteException{
+        System.out.println("metodo guardarReserva en ServerfacadeImpl"); //sout
+        try {
+            servicioReserva.guardarReserva(reservaDTO);
+            // Asume que 'servicioHotelProvider.registrarse()' también ha sido actualizado
+            // para lanzar RemoteException
+        } catch (Exception e) {
+            // Manejar otras excepciones que no sean de tipo RemoteException
+            throw new RemoteException("Error en registrarse: " + e.getMessage(), e);
+        }
+
+
+    }
+
 
     public static void main(String[] args) {
         if (args.length != 3) {

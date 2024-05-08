@@ -9,8 +9,13 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
+import es.deusto.ingenieria.sd.rmi.server.dao.ReservaDAO;
+import es.deusto.ingenieria.sd.rmi.server.dao.UsuarioDAO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
+import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
+
 
 import java.util.Date;
 import java.util.HashMap;
@@ -21,11 +26,30 @@ import java.util.List;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
 
 public class ServicioReservaImpl implements ServicioReserva {
+    private ReservaDAO reservaDAO;
+
+    public ServicioReservaImpl(){
+        this.reservaDAO = new ReservaDAO();
+        
+    }
 
     @Override
-    public ReservaDTO crearReserva(String cliente, String alojamiento,String habitacion,  Date fechaInicio, Date fechaFin) {
+    public void guardarReserva (ReservaDTO reservaDTO) {
         // Crear un nuevo objeto Reserva con los datos proporcionados
-        return new ReservaDTO(cliente, alojamiento, habitacion, fechaInicio, fechaFin);
+        Reserva reserva = Reserva.builder()
+        .cliente(reservaDTO.getCliente())
+        .alojamiento(reservaDTO.getAlojamiento())
+        .habitacion(reservaDTO.getAlojamiento())
+        .fechaInicio(reservaDTO.getFechaInicio())
+        .fechaFin(reservaDTO.getFechaFin())
+        .build();
+
+        try {
+            reservaDAO.insertarReserva(reserva);
+            System.out.println("Reserva gaurdada exitosamente.");
+        } catch (Exception e) {
+            throw new RuntimeException("Error al guardar la reserva: " + e.getMessage(), e);
+        }
     }
 
     /*@Override

@@ -15,9 +15,5 @@ public class UsuarioDTO implements Serializable{
     private String telefono;
     private String password;
     //private int codPostal;
-    
-
-
-    
 
 }

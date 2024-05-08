@@ -6,9 +6,11 @@ import java.util.Date;
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
+
 
 public interface ServicioReserva {
-    public ReservaDTO crearReserva(String cliente, String alojamiento, String habitacion,  Date fechaInicio, Date fechaFin);
+    public void guardarReserva(ReservaDTO reservaDTO);
 
     //public void cancelarReserva(ReservaDTO ReservaID);
 

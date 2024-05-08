@@ -5,7 +5,10 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
+import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
+
 
 import javax.jdo.Query;
 import java.util.List;
@@ -16,18 +19,12 @@ public class ReservaDAO {
     PersistenceManagerFactory persistentManagerFactory = JDOHelper
             .getPersistenceManagerFactory("datanucleus.properties");
 
-    public void insertarReserva(String cliente, String alojamiento, String habitacion, Date fechaInicio, Date fechaFin) {
+    public void insertarReserva(Reserva reserva) {
         PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            ReservaDTO reserva = new ReservaDTO();
             
-            reserva.setCliente(cliente);
-            reserva.setAlojamiento(alojamiento);
-            reserva.setHabitacion(habitacion);
-            reserva.setFechaInicio(fechaInicio);
-            reserva.setFechaFin(fechaFin);
              
 
             pm.makePersistent(reserva);

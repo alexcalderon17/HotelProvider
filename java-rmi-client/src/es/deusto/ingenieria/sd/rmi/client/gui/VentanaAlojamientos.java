@@ -24,6 +24,7 @@ public class VentanaAlojamientos extends JFrame {
     private JButton btnAceptar;
     private ServerFacade serverFacade;
     private List<AlojamientoAtributes> alojamientos;
+    private AlojamientoAtributes alojamientoSeleccionado;
 
     public VentanaAlojamientos() throws RemoteException {
         serverFacade = RMIServiceLocator.getInstance().getService();
@@ -48,7 +49,7 @@ public class VentanaAlojamientos extends JFrame {
         alojamientosJList = new JList<>(listModel);
         alojamientosJList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && !alojamientosJList.isSelectionEmpty()) {
-                AlojamientoAtributes alojamientoSeleccionado = alojamientos.get(alojamientosJList.getSelectedIndex());
+                alojamientoSeleccionado = alojamientos.get(alojamientosJList.getSelectedIndex());
                 textPaneInfo.setText("<html><b>Descripción:</b> <br/>" + alojamientoSeleccionado.getDescripcion() + "<br/><br/><b>Dirección:</b> <br/>" + alojamientoSeleccionado.getDireccion() + "</html>");
             }
         });
@@ -72,10 +73,9 @@ public class VentanaAlojamientos extends JFrame {
 
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (serverFacade != null) {
+                if (serverFacade != null && alojamientoSeleccionado != null) {
                     try {
-                        List<HabitacionAtributes> habitaciones = serverFacade.obtenerHabitaciones();
-                        VentanaHabitaciones va = new VentanaHabitaciones(habitaciones);
+                        VentanaHabitaciones va = new VentanaHabitaciones(alojamientoSeleccionado);
                         va.setVisible(true);
                         dispose();
                     } catch (RemoteException ex) {
@@ -116,7 +116,7 @@ public class VentanaAlojamientos extends JFrame {
         panel.add(lblPrecioMin);
         panel.add(textFieldPrecioMin);
 
-        JLabel lblPrecioMax = new JLabel("Precio Máximo:");
+        JLabel lblPrecioMax = new JLabel ("Precio Máximo:");
         textFieldPrecioMax = new JTextField();
         panel.add(lblPrecioMax);
         panel.add(textFieldPrecioMax);
