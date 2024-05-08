@@ -7,9 +7,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+
+import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
-import es.deusto.ingenieria.sd.rmi.server.dto.ReservaDTO;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -21,12 +23,12 @@ import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
 public class ServicioReservaImpl implements ServicioReserva {
 
     @Override
-    public ReservaDTO crearReserva(String clienteID, String alojamiento, Date fechaInicio, Date fechaFin) {
+    public ReservaDTO crearReserva(int reservaID, String cliente, String alojamiento,String habitacion,  Date fechaInicio, Date fechaFin) {
         // Crear un nuevo objeto Reserva con los datos proporcionados
-        return new ReservaDTO(clienteID, alojamiento, fechaInicio, fechaFin);
+        return new ReservaDTO(reservaID, cliente, alojamiento, habitacion, fechaInicio, fechaFin);
     }
 
-    @Override
+    /*@Override
     public void cancelarReserva(ReservaDTO reserva) {
         if (!reserva.isEstaCancelada()) {
             reserva.setEstaCancelada(true);
@@ -34,9 +36,9 @@ public class ServicioReservaImpl implements ServicioReserva {
         } else {
             System.out.println("Esta reserva ya estaba cancelada.");
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean modificarReserva(String reservaID, Date nuevaFechaInicio, Date nuevaFechaFin) {
         HashMap<String, ReservaDTO> reservas = new HashMap<>();
 
@@ -53,7 +55,7 @@ public class ServicioReservaImpl implements ServicioReserva {
             System.out.println("No se puede modificar una reserva cancelada.");
             return false;
         }
-    }
+    }*/
 
     // @Override
     // public List<Reserva> obtenerReservasUsuario (String usuarioID){

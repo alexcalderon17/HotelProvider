@@ -1,10 +1,10 @@
 package es.deusto.ingenieria.sd.rmi.client.gui;
 
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -13,65 +13,157 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class VentanaHabitaciones extends JFrame {
-    private JTable tableHabitaciones;
-    private DefaultTableModel tableModel;
-    private ServerFacade serverFacade;
+    private JList<String> listHabitaciones;
+    private DefaultListModel<String> listModel;
+    private JLabel lblAforo;
+    private JLabel lblDescripcion;
+    private JFormattedTextField txtFechaInicio;
+    private JFormattedTextField txtFechaFin;
+    private JButton btnReservar;
+    private JButton btnAtras;
+    private List<HabitacionAtributes> habitaciones; // Store the list of habitaciones
 
     public VentanaHabitaciones(List<HabitacionAtributes> habitaciones) {
+        this.habitaciones = habitaciones; // Initialize with the passed list
+
         setTitle("Lista de Habitaciones");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
-        // Configuración de la tabla
-        tableHabitaciones = new JTable();
-        tableModel = new DefaultTableModel();
-        tableModel.setColumnIdentifiers(new String[] {"ID", "Tipo", "Precio", "Capacidad"});
-        tableHabitaciones.setModel(tableModel);
-        fillTable(habitaciones);
+        setLayout(new BorderLayout());
+        setBackground(new Color(255, 255, 255));
 
-        // Añadir la tabla a un JScrollPane para permitir desplazamiento vertical
-        JScrollPane scrollPane = new JScrollPane(tableHabitaciones);
-        getContentPane().add(scrollPane, BorderLayout.CENTER);
-        
-        // Añadir botón Atrás
-        JButton btnAtras = new JButton("Atrás");
-        btnAtras.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // Cierra la ventana actual
-                EventQueue.invokeLater(() -> {
-                    try {
-                        VentanaAlojamientos ventanaAlojamientos = new VentanaAlojamientos();
-                        ventanaAlojamientos.setVisible(true);
-                    } catch (RemoteException ex) {
-                        ex.printStackTrace();
-                    }
-                });
+        initListPanel();
+        initDetailsPanel();
+        initBottomPanel();
+    }
+
+    private void initListPanel() {
+        listModel = new DefaultListModel<>();
+        habitaciones.forEach(habitacion -> listModel.addElement(habitacion.getNombre()));
+        listHabitaciones = new JList<>(listModel);
+        listHabitaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listHabitaciones.setFont(new Font("Arial", Font.BOLD, 14));
+        listHabitaciones.setBackground(new Color(242, 242, 242));
+        listHabitaciones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JScrollPane scrollPane = new JScrollPane(listHabitaciones);
+        scrollPane.setPreferredSize(new Dimension(200, 0));
+
+        JPanel listPanel = new JPanel(new BorderLayout());
+        listPanel.add(scrollPane, BorderLayout.CENTER);
+        listPanel.setBorder(BorderFactory.createTitledBorder("Habitaciones Disponibles"));
+
+        getContentPane().add(listPanel, BorderLayout.WEST);
+
+        listHabitaciones.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                showRoomDetails();
             }
         });
+    }
+
+    private void showRoomDetails() {
+        int index = listHabitaciones.getSelectedIndex();
+        if (index != -1) {
+            HabitacionAtributes seleccionada = habitaciones.get(index);
+            lblAforo.setText("Aforo: " + seleccionada.getAforo());
+            lblDescripcion.setText("Descripción: " + seleccionada.getDescripcion());
+            updateReserveButton();
+        }
+    }
+
+    private void initDetailsPanel() {
+        JPanel detailsPanel = new JPanel(new GridLayout(6, 1, 10, 10));
+        detailsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        lblAforo = new JLabel();
+        lblDescripcion = new JLabel();
+        txtFechaInicio = createFormattedTextField();
+        txtFechaFin = createFormattedTextField();
+        btnReservar = new JButton("Reservar");
+        btnReservar.setEnabled(false); // Botón desactivado inicialmente
+
+        detailsPanel.add(new JLabel("Aforo:"));
+        detailsPanel.add(lblAforo);
+        detailsPanel.add(new JLabel("Descripción:"));
+        detailsPanel.add(lblDescripcion);
+        detailsPanel.add(new JLabel("Fecha inicio (dd/mm/aaaa):"));
+        detailsPanel.add(txtFechaInicio);
+        detailsPanel.add(new JLabel("Fecha fin (dd/mm/aaaa):"));
+        detailsPanel.add(txtFechaFin);
+        detailsPanel.add(btnReservar);
+
+        btnReservar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Reserva realizada correctamente!"));
+
+        getContentPane().add(detailsPanel, BorderLayout.CENTER);
+    }
+
+    private void initBottomPanel() {
+        btnAtras = new JButton("Atrás");
+        btnAtras.addActionListener(e -> {
+            dispose();
+            EventQueue.invokeLater(() -> {
+                try {
+                    VentanaAlojamientos ventanaAlojamientos = new VentanaAlojamientos();
+                    ventanaAlojamientos.setVisible(true);
+                } catch (RemoteException ex) {
+                    ex.printStackTrace();
+                }
+            });
+        });
+
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelInferior.add(btnAtras);
         getContentPane().add(panelInferior, BorderLayout.SOUTH);
     }
-    
 
-    private void fillTable(List<HabitacionAtributes> habitaciones) {
-        for (HabitacionAtributes habitacion : habitaciones) {
-            tableModel.addRow(new Object[]{
-                habitacion.getNombre(),
-                habitacion.getAforo(),
-                habitacion.getDescripcion(),
+    private JFormattedTextField createFormattedTextField() {
+        JFormattedTextField formattedTextField = new JFormattedTextField(new DateFormatter(new SimpleDateFormat("dd/MM/yyyy")));
+        formattedTextField.setColumns(10);
+        formattedTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
+        formattedTextField.getDocument().addDocumentListener((SimpleDocumentListener) this::updateReserveButton);
+        return formattedTextField;
+    }
 
+    private void updateReserveButton() {
+        if (listHabitaciones.getSelectedIndex() != -1 && !txtFechaInicio.getText().trim().isEmpty() && !txtFechaFin.getText().trim().isEmpty()) {
+            try {
+                new SimpleDateFormat("dd/MM/yyyy").parse(txtFechaInicio.getText());
+                new SimpleDateFormat("dd/MM/yyyy").parse(txtFechaFin.getText());
+                btnReservar.setEnabled(true);
+            } catch (ParseException e) {
+                btnReservar.setEnabled(false);
+            }
+        } else {
+            btnReservar.setEnabled(false);
+        }
+    }
 
+    @FunctionalInterface
+    interface SimpleDocumentListener extends javax.swing.event.DocumentListener {
+        void onChange();
 
+        @Override
+        default void insertUpdate(javax.swing.event.DocumentEvent e) {
+            onChange();
+        }
 
-                
-            });
+        @Override
+        default void removeUpdate(javax.swing.event.DocumentEvent e) {
+            onChange();
+        }
+
+        @Override
+        default void changedUpdate(javax.swing.event.DocumentEvent e) {
+            onChange();
         }
     }
 
     public static void main(String[] args) {
         if (args.length != 3) {
-            System.out.println("uso: java [policy] [codebase] cliente.Cliente [host] [port] [server]");
+            System.out.println("Uso: java [policy] [codebase] cliente.Cliente [host] [port] [server]");
             System.exit(0);
         }
 
