@@ -18,8 +18,6 @@ public class ReservaDTO implements Serializable {
     private Date fechaInicio;
     private Date fechaFin;
     //private boolean estaCancelada;
-
-   
     }
 
     

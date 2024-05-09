@@ -39,7 +39,7 @@ public class ServicioReservaImpl implements ServicioReserva {
         Reserva reserva = Reserva.builder()
         .cliente(reservaDTO.getCliente())
         .alojamiento(reservaDTO.getAlojamiento())
-        .habitacion(reservaDTO.getAlojamiento())
+        .habitacion(reservaDTO.getHabitacion())
         .fechaInicio(reservaDTO.getFechaInicio())
         .fechaFin(reservaDTO.getFechaFin())
         .build();

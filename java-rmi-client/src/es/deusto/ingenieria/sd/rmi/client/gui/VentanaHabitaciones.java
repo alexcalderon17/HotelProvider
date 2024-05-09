@@ -31,8 +31,8 @@ public class VentanaHabitaciones extends JFrame {
     private AlojamientoAtributes alojamientoSeleccionado;
     private String cliente;
 
-    public VentanaHabitaciones(AlojamientoAtributes alojamientoSeleccionado) throws RemoteException {
-        this.alojamientoSeleccionado = alojamientoSeleccionado;
+    public VentanaHabitaciones(AlojamientoAtributes AlojamientoSeleccionado) throws RemoteException {
+        this.alojamientoSeleccionado = AlojamientoSeleccionado;
         serverFacade = RMIServiceLocator.getInstance().getService();
         habitaciones = serverFacade.obtenerHabitaciones();
         cliente = "Pepito";
