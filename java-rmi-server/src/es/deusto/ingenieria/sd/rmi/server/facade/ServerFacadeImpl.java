@@ -7,8 +7,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 import java.util.List;
 
-import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
-import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
+import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
@@ -38,13 +38,13 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     }
 
     @Override
-    public List<HabitacionAtributes> obtenerHabitaciones() throws RemoteException {
+    public List<HabitacionDTO> obtenerHabitaciones() throws RemoteException {
 
         return servicioAlojamientos.obtenerHabitaciones();
     }
 
     @Override
-    public List<AlojamientoAtributes> obtenerAlojamientos() throws RemoteException {
+    public List<AlojamientoDTO> obtenerAlojamientos() throws RemoteException {
         return servicioAlojamientos.obtenerAlojamientos();
     }
 

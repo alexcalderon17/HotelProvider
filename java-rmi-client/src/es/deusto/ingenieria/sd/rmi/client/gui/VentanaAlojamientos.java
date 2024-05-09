@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
-import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
-import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
+import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
@@ -24,8 +24,8 @@ public class VentanaAlojamientos extends JFrame {
     private DefaultListModel<String> listModel;
     private JButton btnAceptar;
     private ServerFacade serverFacade;
-    private List<AlojamientoAtributes> alojamientos;
-    private AlojamientoAtributes alojamientoSeleccionado;
+    private List<AlojamientoDTO> alojamientos;
+    private AlojamientoDTO alojamientoSeleccionado;
     private UsuarioDTO estaLogeado;
 
     public VentanaAlojamientos(UsuarioDTO estaLogeado) throws RemoteException {
@@ -46,7 +46,7 @@ public class VentanaAlojamientos extends JFrame {
         panelAlojamientos.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
 
         listModel = new DefaultListModel<>();
-        for (AlojamientoAtributes alojamiento : alojamientos) {
+        for (AlojamientoDTO alojamiento : alojamientos) {
             listModel.addElement(alojamiento.getNombre());
         }
         alojamientosJList = new JList<>(listModel);

@@ -6,7 +6,7 @@ import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.server.IServer;
 import es.deusto.ingenieria.sd.rmi.server.InvalidUser;
-import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class Client {
@@ -44,7 +44,7 @@ public class Client {
 		}
 	
 		try{
-			List<AlojamientoAtributes> alojamientos = stubServer.obtenerAlojamientos();
+			List<AlojamientoDTO> alojamientos = stubServer.obtenerAlojamientos();
 			System.out.println(alojamientos);
 		}catch(Exception e){
 			System.out.println("No se han podido imprimir los apartamentos.");

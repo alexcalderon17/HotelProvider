@@ -5,8 +5,8 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
 
-import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
-import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
+import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 
@@ -17,8 +17,8 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 public interface ServerFacade extends Remote {
 
     // List<HabitacionDTO> obtenerHabitaciones() throws RemoteException;
-    List<AlojamientoAtributes>  obtenerAlojamientos() throws RemoteException;
-    List<HabitacionAtributes>  obtenerHabitaciones() throws RemoteException;
+    List<AlojamientoDTO>  obtenerAlojamientos() throws RemoteException;
+    List<HabitacionDTO>  obtenerHabitaciones() throws RemoteException;
 
 
     boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException;

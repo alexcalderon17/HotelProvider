@@ -10,11 +10,12 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.deusto.ingenieria.sd.rmi.server.dto.ApiResponse;
-import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
-import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiResponseList;
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
+import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,16 +35,25 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
         super();
     }
 
+    /*private HabitacionDTO convertirApiHabitacionDtoAHabitacionDto(ApiHabitacionDTO apiHabitacionDTO) {
+        HabitacionDTO habitacionDTO = new HabitacionDTO();
+        habitacionDTO.setNombre(apiHabitacionDTO.getNombre());
+        habitacionDTO.setDescripcion(apiHabitacionDTO.getDescripcion());
+        habitacionDTO.setAforo(apiHabitacionDTO.getAforo());
+        // Añadir otros campos si son necesarios
+        return habitacionDTO;
+    }*/
     @Override
-    public List<HabitacionAtributes> obtenerHabitaciones() {
+    public List<HabitacionDTO> obtenerHabitaciones() {
         System.out.println("Obteniendo todas las habitaciones disponibles");
     
-        List<HabitacionAtributes> habitaciones = new ArrayList<>();
+        List<HabitacionDTO> habitaciones = new ArrayList<>();
     
         try {
             // Construir la solicitud HTTP para obtener todas las habitaciones disponibles
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(HOTEL_PROVIDER_HABITACIONES_URL)) // Reemplaza TODAS_LAS_HABITACIONES_URL con la URL adecuada para obtener todas las habitaciones disponibles
+                    .uri(new URI(HOTEL_PROVIDER_HABITACIONES_URL + "?populate=*" )) // Reemplaza TODAS_LAS_HABITACIONES_URL con la URL adecuada para obtener todas las habitaciones disponibles
+                    //añadir el populate * a la llamada HTTP
                     .header("Authorization", "Bearer " + HOTEL_PROVIDER_API_TOKEN)
                     .build();
     
@@ -53,11 +63,14 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
             // Comprobar el código de estado de la respuesta
             if (response.statusCode() == 200) {
                 // Leer y mapear el cuerpo de la respuesta a un objeto ApiResponse<HabitacionAtributes>
-                ApiResponse<HabitacionAtributes> habitacionApiResponse = objectMapper.readValue(response.body(),
-                        objectMapper.getTypeFactory().constructParametricType(ApiResponse.class, HabitacionAtributes.class));
+                ApiResponseList<ApiHabitacionDTO> habitacionApiResponse  = objectMapper.readValue(response.body(),
+                        objectMapper.getTypeFactory().constructParametricType(ApiResponseList.class, ApiHabitacionDTO.class));
     
                 // Iterar sobre los datos de habitaciones en la respuesta y agregarlos a la lista de habitaciones
-                for (ApiData<HabitacionAtributes> apiData : habitacionApiResponse.getData()) {
+                for (ApiData<ApiHabitacionDTO> apiData : habitacionApiResponse.getData()) {
+                    //añadir un if para ver si la habitacion esta relacionada al alojamiento seleccionado
+                    apiData.getAttributes().getAlojamiento().getData().getId();
+                    //convertir apihabitaciondto a un objeto de habitaciondto y añadirlo a la lista
                     habitaciones.add(apiData.getAttributes());
                 }
             } else {
@@ -74,9 +87,9 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
     
 
     @Override
-    public List<AlojamientoAtributes> obtenerAlojamientos() {
+    public List<AlojamientoDTO> obtenerAlojamientos() {
         System.out.println("obteniendo apartamentos");
-        List<AlojamientoAtributes> respuesta = new ArrayList<>();
+        List<AlojamientoDTO> respuesta = new ArrayList<>();
 
         HttpRequest request;
         try {
@@ -88,12 +101,12 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
 
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) { 
-                ApiResponse<AlojamientoAtributes> alojamientoApiRespuesta = objectMapper.readValue(response.body(),
-                        objectMapper.getTypeFactory().constructParametricType(ApiResponse.class,
-                                AlojamientoAtributes.class));
+                ApiResponseList<AlojamientoDTO> alojamientoApiRespuesta = objectMapper.readValue(response.body(),
+                        objectMapper.getTypeFactory().constructParametricType(ApiResponseList.class,
+                                AlojamientoDTO.class));
                 System.out.println("El primer alojamiento se llama: "
                         + alojamientoApiRespuesta.getData().getFirst().getAttributes().getNombre());
-                for (ApiData<AlojamientoAtributes> apiData : alojamientoApiRespuesta.getData()) {
+                for (ApiData<AlojamientoDTO> apiData : alojamientoApiRespuesta.getData()) {
                     respuesta.add(apiData.getAttributes());
                 }
                 return respuesta;

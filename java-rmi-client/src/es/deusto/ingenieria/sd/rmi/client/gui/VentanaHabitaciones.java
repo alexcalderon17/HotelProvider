@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
-import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
-import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
@@ -27,13 +27,13 @@ public class VentanaHabitaciones extends JFrame {
     private JFormattedTextField txtFechaFin;
     private JButton btnReservar;
     private JButton btnAtras;
-    private List<HabitacionAtributes> habitaciones; // Store the list of habitaciones
+    private List<HabitacionDTO> habitaciones; // Store the list of habitaciones
     private ServerFacade serverFacade;
-    private AlojamientoAtributes alojamientoSeleccionado;
+    private AlojamientoDTO alojamientoSeleccionado;
     private String cliente;
     private UsuarioDTO estaLogeado;
 
-    public VentanaHabitaciones(AlojamientoAtributes AlojamientoSeleccionado, UsuarioDTO estaLogeado) throws RemoteException {
+    public VentanaHabitaciones(AlojamientoDTO AlojamientoSeleccionado, UsuarioDTO estaLogeado) throws RemoteException {
         this.alojamientoSeleccionado = AlojamientoSeleccionado;
         this.estaLogeado = estaLogeado;
         serverFacade = RMIServiceLocator.getInstance().getService();
@@ -81,7 +81,7 @@ public class VentanaHabitaciones extends JFrame {
     private void showRoomDetails() {
         int index = listHabitaciones.getSelectedIndex();
         if (index != -1) {
-            HabitacionAtributes seleccionada = habitaciones.get(index);
+            HabitacionDTO seleccionada = habitaciones.get(index);
             lblAforo.setText("Aforo: " + seleccionada.getAforo());
             lblDescripcion.setText("Descripción: " + seleccionada.getDescripcion());
         }
@@ -106,7 +106,7 @@ public class VentanaHabitaciones extends JFrame {
                 if (!fechaInicio.after(fechaFin)) {
                     int selectedIndex = listHabitaciones.getSelectedIndex();
                     if (selectedIndex != -1) {
-                        HabitacionAtributes habitacionSeleccionada = habitaciones.get(selectedIndex);
+                        HabitacionDTO habitacionSeleccionada = habitaciones.get(selectedIndex);
                         ReservaDTO reserva = new ReservaDTO(estaLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
                         if (serverFacade!= null){
                             try {
@@ -181,7 +181,7 @@ public class VentanaHabitaciones extends JFrame {
         EventQueue.invokeLater(() -> {
             try {
                 UsuarioDTO tesUsuarioDTO = createTestUsuarioDTO();
-                AlojamientoAtributes testAlojamiento = createTestAlojamiento();
+                AlojamientoDTO testAlojamiento = createTestAlojamiento();
                 VentanaHabitaciones frame = new VentanaHabitaciones(testAlojamiento, tesUsuarioDTO);
                 frame.setVisible(true);
             } catch (Exception e) {
@@ -190,9 +190,9 @@ public class VentanaHabitaciones extends JFrame {
         });
     }
 
-    private static AlojamientoAtributes createTestAlojamiento() {
+    private static AlojamientoDTO createTestAlojamiento() {
         // Create a test AlojamientoAtributes object for demonstration purposes
-        AlojamientoAtributes testAlojamiento = new AlojamientoAtributes();
+        AlojamientoDTO testAlojamiento = new AlojamientoDTO();
         testAlojamiento.setNombre("Test Hotel");
         testAlojamiento.setDescripcion("Un hotel de prueba para demostración.");
         testAlojamiento.setDireccion("123 Demo Street, Demo City");

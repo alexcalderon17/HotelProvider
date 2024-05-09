@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
-import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;// Importa la clase AlojamientoAtributes
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;// Importa la clase AlojamientoAtributes
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 
 
@@ -73,7 +73,7 @@ public class VentanaInicio extends JFrame {
                             //para saber quien esta logeado
                             UsuarioDTO estaLogeado = new UsuarioDTO(email);
                             JOptionPane.showMessageDialog(VentanaInicio.this, "¡Login Exitoso!", "Exito", JOptionPane.INFORMATION_MESSAGE);
-                            List<AlojamientoAtributes> alojamientos = serverFacade.obtenerAlojamientos();
+                            List<AlojamientoDTO> alojamientos = serverFacade.obtenerAlojamientos();
                             VentanaAlojamientos va = new VentanaAlojamientos(estaLogeado);
                             va.setVisible(true);
                             VentanaInicio.this.setVisible(false);
