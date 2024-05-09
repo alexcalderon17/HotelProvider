@@ -15,6 +15,7 @@ import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class VentanaHabitaciones extends JFrame {
@@ -30,9 +31,11 @@ public class VentanaHabitaciones extends JFrame {
     private ServerFacade serverFacade;
     private AlojamientoAtributes alojamientoSeleccionado;
     private String cliente;
+    private UsuarioDTO estaLogeado;
 
-    public VentanaHabitaciones(AlojamientoAtributes AlojamientoSeleccionado) throws RemoteException {
+    public VentanaHabitaciones(AlojamientoAtributes AlojamientoSeleccionado, UsuarioDTO estaLogeado) throws RemoteException {
         this.alojamientoSeleccionado = AlojamientoSeleccionado;
+        this.estaLogeado = estaLogeado;
         serverFacade = RMIServiceLocator.getInstance().getService();
         habitaciones = serverFacade.obtenerHabitaciones();
         cliente = "Pepito";
@@ -104,7 +107,7 @@ public class VentanaHabitaciones extends JFrame {
                     int selectedIndex = listHabitaciones.getSelectedIndex();
                     if (selectedIndex != -1) {
                         HabitacionAtributes habitacionSeleccionada = habitaciones.get(selectedIndex);
-                        ReservaDTO reserva = new ReservaDTO(cliente, alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
+                        ReservaDTO reserva = new ReservaDTO(estaLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
                         if (serverFacade!= null){
                             try {
                                 serverFacade.guardarReserva(reserva);
@@ -153,7 +156,7 @@ public class VentanaHabitaciones extends JFrame {
             dispose();
             EventQueue.invokeLater(() -> {
                 try {
-                    VentanaAlojamientos ventanaAlojamientos = new VentanaAlojamientos();
+                    VentanaAlojamientos ventanaAlojamientos = new VentanaAlojamientos(estaLogeado);
                     ventanaAlojamientos.setVisible(true);
                 } catch (RemoteException ex) {
                     ex.printStackTrace();
@@ -177,8 +180,9 @@ public class VentanaHabitaciones extends JFrame {
         RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
         EventQueue.invokeLater(() -> {
             try {
+                UsuarioDTO tesUsuarioDTO = createTestUsuarioDTO();
                 AlojamientoAtributes testAlojamiento = createTestAlojamiento();
-                VentanaHabitaciones frame = new VentanaHabitaciones(testAlojamiento);
+                VentanaHabitaciones frame = new VentanaHabitaciones(testAlojamiento, tesUsuarioDTO);
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -193,5 +197,13 @@ public class VentanaHabitaciones extends JFrame {
         testAlojamiento.setDescripcion("Un hotel de prueba para demostración.");
         testAlojamiento.setDireccion("123 Demo Street, Demo City");
         return testAlojamiento;
+    }
+
+    private static UsuarioDTO createTestUsuarioDTO() {
+        // Create a test AlojamientoAtributes object for demonstration purposes
+        UsuarioDTO testUsuarioDTO = new UsuarioDTO();
+        testUsuarioDTO.setCorreo("Test Correo");
+       
+        return testUsuarioDTO;
     }
 }

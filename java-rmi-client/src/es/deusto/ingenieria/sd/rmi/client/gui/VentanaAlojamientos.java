@@ -10,6 +10,7 @@ import java.util.List;
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoAtributes;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionAtributes;
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class VentanaAlojamientos extends JFrame {
@@ -25,8 +26,10 @@ public class VentanaAlojamientos extends JFrame {
     private ServerFacade serverFacade;
     private List<AlojamientoAtributes> alojamientos;
     private AlojamientoAtributes alojamientoSeleccionado;
+    private UsuarioDTO estaLogeado;
 
-    public VentanaAlojamientos() throws RemoteException {
+    public VentanaAlojamientos(UsuarioDTO estaLogeado) throws RemoteException {
+        this.estaLogeado = estaLogeado;
         serverFacade = RMIServiceLocator.getInstance().getService();
         alojamientos = serverFacade.obtenerAlojamientos();
 
@@ -75,7 +78,7 @@ public class VentanaAlojamientos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (serverFacade != null && alojamientoSeleccionado != null) {
                     try {
-                        VentanaHabitaciones va = new VentanaHabitaciones(alojamientoSeleccionado);
+                        VentanaHabitaciones va = new VentanaHabitaciones(alojamientoSeleccionado, estaLogeado);
                         va.setVisible(true);
                         dispose();
                     } catch (RemoteException ex) {
@@ -126,11 +129,20 @@ public class VentanaAlojamientos extends JFrame {
         RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
         EventQueue.invokeLater(() -> {
             try {
-                VentanaAlojamientos frame = new VentanaAlojamientos();
+                UsuarioDTO tesUsuarioDTO = createTestUsuarioDTO();
+                VentanaAlojamientos frame = new VentanaAlojamientos(tesUsuarioDTO);
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    private static UsuarioDTO createTestUsuarioDTO() {
+        // Create a test AlojamientoAtributes object for demonstration purposes
+        UsuarioDTO testUsuarioDTO = new UsuarioDTO();
+        testUsuarioDTO.setCorreo("Test Correo");
+       
+        return testUsuarioDTO;
     }
 }

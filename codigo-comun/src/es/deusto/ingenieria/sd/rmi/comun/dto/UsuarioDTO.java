@@ -8,6 +8,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UsuarioDTO implements Serializable{
 
+   
     private String nombre;
     private String apellido;
     private String DNI;
@@ -15,5 +16,9 @@ public class UsuarioDTO implements Serializable{
     private String telefono;
     private String password;
     //private int codPostal;
+
+    public UsuarioDTO (String correo){
+        this.correo = correo;
+    }
 
 }
