@@ -105,8 +105,25 @@ public class VentanaHabitaciones extends JFrame {
                     if (selectedIndex != -1) {
                         HabitacionAtributes habitacionSeleccionada = habitaciones.get(selectedIndex);
                         ReservaDTO reserva = new ReservaDTO(cliente, alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
-                        // Opcional: Guardar la reserva mediante la llamada a un método del servidor
-                        JOptionPane.showMessageDialog(this, "Reserva realizada correctamente.", "Reserva exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        if (serverFacade!= null){
+                            try {
+                                serverFacade.guardarReserva(reserva);
+                                EventQueue.invokeLater(new Runnable(){
+                                    public void run(){
+                                        try {
+                                            JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            } catch (RemoteException e2) {
+                                e2.printStackTrace();
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar la reserva", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
+
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser posterior a la fecha de fin.", "Error de fechas", JOptionPane.ERROR_MESSAGE);

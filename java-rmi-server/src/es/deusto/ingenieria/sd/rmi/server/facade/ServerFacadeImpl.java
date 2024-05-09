@@ -20,6 +20,8 @@ import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
 
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioAlojamientosImpl;
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioUsuarioImpl;
+import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioReservaImpl;
+
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacade {
@@ -32,6 +34,7 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
         super();
         this.servicioAlojamientos = new ServicioAlojamientosImpl();
         this.servicioUsuario = new ServicioUsuarioImpl();
+        this.servicioReserva = new ServicioReservaImpl();
     }
 
     @Override
