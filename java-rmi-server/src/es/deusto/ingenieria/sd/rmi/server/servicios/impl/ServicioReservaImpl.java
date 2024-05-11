@@ -12,7 +12,7 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.server.dao.ReservaDAO;
 import es.deusto.ingenieria.sd.rmi.server.dao.UsuarioDAO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
-import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
 

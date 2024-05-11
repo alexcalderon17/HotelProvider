@@ -37,7 +37,7 @@ public class VentanaHabitaciones extends JFrame {
         this.alojamientoSeleccionado = AlojamientoSeleccionado;
         this.estaLogeado = estaLogeado;
         serverFacade = RMIServiceLocator.getInstance().getService();
-        habitaciones = serverFacade.obtenerHabitaciones();
+        habitaciones = serverFacade.obtenerHabitaciones(AlojamientoSeleccionado.getId());
         cliente = "Pepito";
 
         setTitle("Lista de Habitaciones");

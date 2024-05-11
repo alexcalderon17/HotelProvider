@@ -16,7 +16,7 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
-import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.deusto.ingenieria.sd.rmi.server.manager.ClienteManager;
@@ -35,55 +35,48 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
         super();
     }
 
-    /*private HabitacionDTO convertirApiHabitacionDtoAHabitacionDto(ApiHabitacionDTO apiHabitacionDTO) {
+    private HabitacionDTO convertirApiHabitacionDtoAHabitacionDto(ApiHabitacionDTO apiHabitacionDTO) {
         HabitacionDTO habitacionDTO = new HabitacionDTO();
         habitacionDTO.setNombre(apiHabitacionDTO.getNombre());
         habitacionDTO.setDescripcion(apiHabitacionDTO.getDescripcion());
         habitacionDTO.setAforo(apiHabitacionDTO.getAforo());
-        // Añadir otros campos si son necesarios
+        
         return habitacionDTO;
-    }*/
+    }
     @Override
-    public List<HabitacionDTO> obtenerHabitaciones() {
+    public List<HabitacionDTO> obtenerHabitaciones(int IdAlojamientoSeleccionado)  {
         System.out.println("Obteniendo todas las habitaciones disponibles");
-    
         List<HabitacionDTO> habitaciones = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();  // Asegúrate de que ObjectMapper está instanciado
     
         try {
-            // Construir la solicitud HTTP para obtener todas las habitaciones disponibles
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(HOTEL_PROVIDER_HABITACIONES_URL + "?populate=*" )) // Reemplaza TODAS_LAS_HABITACIONES_URL con la URL adecuada para obtener todas las habitaciones disponibles
-                    //añadir el populate * a la llamada HTTP
+                    .uri(new URI(HOTEL_PROVIDER_HABITACIONES_URL + "?populate=*")) // Asegúrate de que la URL es correcta
                     .header("Authorization", "Bearer " + HOTEL_PROVIDER_API_TOKEN)
                     .build();
     
-            // Enviar la solicitud HTTP
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
     
-            // Comprobar el código de estado de la respuesta
             if (response.statusCode() == 200) {
-                // Leer y mapear el cuerpo de la respuesta a un objeto ApiResponse<HabitacionAtributes>
-                ApiResponseList<ApiHabitacionDTO> habitacionApiResponse  = objectMapper.readValue(response.body(),
-                        objectMapper.getTypeFactory().constructParametricType(ApiResponseList.class, ApiHabitacionDTO.class));
+                ApiResponseList<ApiHabitacionDTO> habitacionApiResponse = objectMapper.readValue(response.body(),
+                    objectMapper.getTypeFactory().constructParametricType(ApiResponseList.class, ApiHabitacionDTO.class));
     
-                // Iterar sobre los datos de habitaciones en la respuesta y agregarlos a la lista de habitaciones
                 for (ApiData<ApiHabitacionDTO> apiData : habitacionApiResponse.getData()) {
-                    //añadir un if para ver si la habitacion esta relacionada al alojamiento seleccionado
-                    apiData.getAttributes().getAlojamiento().getData().getId();
-                    //convertir apihabitaciondto a un objeto de habitaciondto y añadirlo a la lista
-                    habitaciones.add(apiData.getAttributes());
+                    if (apiData.getAttributes().getAlojamiento().getData().getId() == IdAlojamientoSeleccionado) {
+                        HabitacionDTO habitacionDTO = convertirApiHabitacionDtoAHabitacionDto(apiData.getAttributes());
+                        habitaciones.add(habitacionDTO);
+                    }
                 }
             } else {
-                // Manejar el caso en que la respuesta no sea exitosa
                 System.out.println("Error al obtener las habitaciones. Código de estado: " + response.statusCode());
             }
         } catch (IOException | URISyntaxException | InterruptedException e) {
-            // Manejar cualquier excepción que pueda ocurrir durante la ejecución del método
             e.printStackTrace();
         }
     
         return habitaciones;
     }
+    
     
 
     @Override

@@ -18,7 +18,7 @@ public interface ServerFacade extends Remote {
 
     // List<HabitacionDTO> obtenerHabitaciones() throws RemoteException;
     List<AlojamientoDTO>  obtenerAlojamientos() throws RemoteException;
-    List<HabitacionDTO>  obtenerHabitaciones() throws RemoteException;
+    List<HabitacionDTO>  obtenerHabitaciones(int IdAlojamientoSeleccionado) throws RemoteException;
 
 
     boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException;

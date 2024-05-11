@@ -11,9 +11,9 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
-import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 
-import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
@@ -38,9 +38,9 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     }
 
     @Override
-    public List<HabitacionDTO> obtenerHabitaciones() throws RemoteException {
+    public List<HabitacionDTO> obtenerHabitaciones(int IdAlojamientoSeleccionado) throws RemoteException {
 
-        return servicioAlojamientos.obtenerHabitaciones();
+        return servicioAlojamientos.obtenerHabitaciones(IdAlojamientoSeleccionado);
     }
 
     @Override

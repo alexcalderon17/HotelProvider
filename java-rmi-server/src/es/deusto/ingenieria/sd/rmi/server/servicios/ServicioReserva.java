@@ -5,7 +5,7 @@ import java.util.Date;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
-import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
 
 
