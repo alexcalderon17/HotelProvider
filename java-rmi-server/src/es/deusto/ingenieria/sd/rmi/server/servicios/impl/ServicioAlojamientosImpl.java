@@ -82,12 +82,12 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
     @Override
     public List<AlojamientoDTO> obtenerAlojamientos() {
         System.out.println("obteniendo apartamentos");
-        List<AlojamientoDTO> respuesta = new ArrayList<>();
+        List<AlojamientoDTO> alojamientos = new ArrayList<>();
 
         HttpRequest request;
         try {
             request = HttpRequest.newBuilder()
-                    .uri(new URI(HOTEL_PROVIDER_ALOJAMIENTOS_URL))
+                    .uri(new URI(HOTEL_PROVIDER_ALOJAMIENTOS_URL + "?populate=*"))
                     .header("Authorization", "Bearer " + HOTEL_PROVIDER_API_TOKEN)
                     .build();
             HttpResponse<String> response;
@@ -97,19 +97,22 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
                 ApiResponseList<AlojamientoDTO> alojamientoApiRespuesta = objectMapper.readValue(response.body(),
                         objectMapper.getTypeFactory().constructParametricType(ApiResponseList.class,
                                 AlojamientoDTO.class));
+
+                for(ApiData<AlojamientoDTO> apiData: alojamientoApiRespuesta.getData()){
+                    AlojamientoDTO alojamientoDTO = apiData.getAttributes();
+                    alojamientoDTO.setId(apiData.getId());
+                    System.out.println(apiData.getId());
+                    alojamientos.add(alojamientoDTO);
+                }
                 System.out.println("El primer alojamiento se llama: "
                         + alojamientoApiRespuesta.getData().getFirst().getAttributes().getNombre());
-                for (ApiData<AlojamientoDTO> apiData : alojamientoApiRespuesta.getData()) {
-                    respuesta.add(apiData.getAttributes());
-                }
-                return respuesta;
             } else {
-                System.out.println("error codigo:" + response.statusCode());
+                System.out.println("error al obetener los alojamientos. Codigo:" + response.statusCode());
             }
         } catch (IOException | URISyntaxException | InterruptedException e) {
             
             e.printStackTrace();
         }
-        return respuesta;
+        return alojamientos;
     }
 }
