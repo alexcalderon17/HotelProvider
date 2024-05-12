@@ -23,6 +23,7 @@ public class VentanaAlojamientos extends JFrame {
     private JList<String> alojamientosJList;
     private DefaultListModel<String> listModel;
     private JButton btnAceptar;
+    private JButton btnPerfil;
     private ServerFacade serverFacade;
     private List<AlojamientoDTO> alojamientos;
     private AlojamientoDTO alojamientoSeleccionado;
@@ -53,7 +54,8 @@ public class VentanaAlojamientos extends JFrame {
         alojamientosJList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && !alojamientosJList.isSelectionEmpty()) {
                 alojamientoSeleccionado = alojamientos.get(alojamientosJList.getSelectedIndex());
-                textPaneInfo.setText("<html><b>Descripción:</b> <br/>" + alojamientoSeleccionado.getDescripcion() + "<br/><br/><b>Dirección:</b> <br/>" + alojamientoSeleccionado.getDireccion() + "</html>");
+                textPaneInfo.setText("<html><b>Descripción:</b> <br/>" + alojamientoSeleccionado.getDescripcion()
+                        + "<br/><br/><b>Dirección:</b> <br/>" + alojamientoSeleccionado.getDireccion() + "</html>");
             }
         });
 
@@ -70,9 +72,19 @@ public class VentanaAlojamientos extends JFrame {
 
         // Botón Aceptar
         btnAceptar = new JButton("Aceptar");
+        btnPerfil = new JButton("Perfil");
         JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelBoton.add(btnAceptar);
+        panelBoton.add(btnPerfil);
         mainPanel.add(panelBoton, BorderLayout.SOUTH);
+
+        btnPerfil.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                VentanaPerfil vp = new VentanaPerfil(estaLogeado);
+                vp.setVisible(true);
+                dispose();
+            }
+        });
 
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -83,7 +95,8 @@ public class VentanaAlojamientos extends JFrame {
                         dispose();
                     } catch (RemoteException ex) {
                         ex.printStackTrace();
-                        JOptionPane.showMessageDialog(VentanaAlojamientos.this, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(VentanaAlojamientos.this, "Error de conexión", "Error",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -119,7 +132,7 @@ public class VentanaAlojamientos extends JFrame {
         panel.add(lblPrecioMin);
         panel.add(textFieldPrecioMin);
 
-        JLabel lblPrecioMax = new JLabel ("Precio Máximo:");
+        JLabel lblPrecioMax = new JLabel("Precio Máximo:");
         textFieldPrecioMax = new JTextField();
         panel.add(lblPrecioMax);
         panel.add(textFieldPrecioMax);
@@ -142,7 +155,7 @@ public class VentanaAlojamientos extends JFrame {
         // Create a test AlojamientoAtributes object for demonstration purposes
         UsuarioDTO testUsuarioDTO = new UsuarioDTO();
         testUsuarioDTO.setCorreo("Test Correo");
-       
+
         return testUsuarioDTO;
     }
 }
