@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +39,9 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     }
 
     @Override
-    public List<HabitacionDTO> obtenerHabitaciones(int IdAlojamientoSeleccionado) throws RemoteException {
+    public List<HabitacionDTO> obtenerHabitaciones(int IdAlojamientoSeleccionado, LocalDate fechaIni, LocalDate fechaFin) throws RemoteException {
 
-        return servicioAlojamientos.obtenerHabitaciones(IdAlojamientoSeleccionado);
+        return servicioAlojamientos.obtenerHabitaciones(IdAlojamientoSeleccionado, fechaIni, fechaFin);
     }
 
     @Override

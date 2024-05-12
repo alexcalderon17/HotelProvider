@@ -2,6 +2,7 @@ package es.deusto.ingenieria.sd.rmi.comun.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ServerFacade extends Remote {
 
     // List<HabitacionDTO> obtenerHabitaciones() throws RemoteException;
     List<AlojamientoDTO>  obtenerAlojamientos() throws RemoteException;
-    List<HabitacionDTO>  obtenerHabitaciones(int IdAlojamientoSeleccionado) throws RemoteException;
+    List<HabitacionDTO>  obtenerHabitaciones(int IdAlojamientoSeleccionado, LocalDate fechaini, LocalDate fechafin) throws RemoteException;
 
 
     boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException;

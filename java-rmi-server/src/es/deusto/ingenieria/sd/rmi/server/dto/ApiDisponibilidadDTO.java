@@ -1,7 +1,7 @@
 package es.deusto.ingenieria.sd.rmi.server.dto;
-import lombok.*;
 
-import javax.jdo.annotations.PersistenceCapable;
+import java.time.LocalDate;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -9,11 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ApiData<T> {
-
-    private int id;
-    private T attributes;
-   
-}
-
+public class ApiDisponibilidadDTO {
+    private LocalDate fecha_ini; 
+    private LocalDate fecha_fin; 
+    private float precio_base; 
     
+}

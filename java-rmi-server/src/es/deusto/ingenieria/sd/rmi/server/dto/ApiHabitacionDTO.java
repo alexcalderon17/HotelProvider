@@ -4,6 +4,7 @@ import lombok.*;
 import javax.jdo.annotations.PersistenceCapable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @Data //poniendo esto, 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,6 +13,8 @@ public class ApiHabitacionDTO {
     private String nombre;
     private String descripcion;
     private int aforo;
-    private ApiResponseDTO<ApiData<ApiAlojamientoDTO>> alojamiento;
+    private ApiResponseDTO<ApiAlojamientoDTO> alojamiento;
+    private ApiResponseList<ApiDisponibilidadDTO> disponibilidades;
+
 
 }

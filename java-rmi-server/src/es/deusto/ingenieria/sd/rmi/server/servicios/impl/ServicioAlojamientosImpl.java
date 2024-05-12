@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,12 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiDisponibilidadDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.dto.ApiDisponibilidadDTO;
+
+
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.deusto.ingenieria.sd.rmi.server.manager.ClienteManager;
@@ -35,20 +40,12 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
         super();
     }
 
-    private HabitacionDTO convertirApiHabitacionDtoAHabitacionDto(ApiHabitacionDTO apiHabitacionDTO) {
-        HabitacionDTO habitacionDTO = new HabitacionDTO();
-        habitacionDTO.setNombre(apiHabitacionDTO.getNombre());
-        habitacionDTO.setDescripcion(apiHabitacionDTO.getDescripcion());
-        habitacionDTO.setAforo(apiHabitacionDTO.getAforo());
-        
-        return habitacionDTO;
-    }
+   
     @Override
-    public List<HabitacionDTO> obtenerHabitaciones(int IdAlojamientoSeleccionado)  {
+    public List<HabitacionDTO> obtenerHabitaciones(int IdAlojamientoSeleccionado, LocalDate fechaIni, LocalDate fechaFin)  {
         System.out.println("Obteniendo todas las habitaciones disponibles");
         List<HabitacionDTO> habitaciones = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();  // Asegúrate de que ObjectMapper está instanciado
-    
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(HOTEL_PROVIDER_HABITACIONES_URL + "?populate=*")) // Asegúrate de que la URL es correcta
@@ -63,8 +60,11 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
     
                 for (ApiData<ApiHabitacionDTO> apiData : habitacionApiResponse.getData()) {
                     if (apiData.getAttributes().getAlojamiento().getData().getId() == IdAlojamientoSeleccionado) {
-                        HabitacionDTO habitacionDTO = convertirApiHabitacionDtoAHabitacionDto(apiData.getAttributes());
-                        habitaciones.add(habitacionDTO);
+
+                        if (isHabitacionDisponible(apiData.getAttributes().getDisponibilidades(), fechaIni, fechaFin)){
+                            HabitacionDTO habitacionDTO = convertirApiHabitacionDtoAHabitacionDto(apiData.getAttributes(), apiData.getId());
+                            habitaciones.add(habitacionDTO);
+                        }
                     }
                 }
             } else {
@@ -115,4 +115,28 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
         }
         return alojamientos;
     }
+
+    private HabitacionDTO convertirApiHabitacionDtoAHabitacionDto(ApiHabitacionDTO apiHabitacionDTO, int id) {
+        HabitacionDTO habitacionDTO = new HabitacionDTO();
+        habitacionDTO.setNombre(apiHabitacionDTO.getNombre());
+        habitacionDTO.setDescripcion(apiHabitacionDTO.getDescripcion());
+        habitacionDTO.setAforo(apiHabitacionDTO.getAforo());
+        habitacionDTO.setId(id);
+        return habitacionDTO;
+    }
+
+    private boolean isHabitacionDisponible(ApiResponseList<ApiDisponibilidadDTO> disponibilidades, LocalDate fechaInicio, LocalDate fechaFin) {
+        for (ApiData<ApiDisponibilidadDTO> disponibilidad : disponibilidades.getData()) {
+            
+            if (!(fechaFin.isBefore(disponibilidad.getAttributes().getFecha_ini()) || fechaInicio.isAfter(disponibilidad.getAttributes().getFecha_fin()))) {
+                
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    
+    
 }

@@ -5,6 +5,7 @@ import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,16 +27,17 @@ public class VentanaHabitaciones extends JFrame {
     private JFormattedTextField txtFechaFin;
     private JButton btnReservar;
     private JButton btnAtras;
-    private List<HabitacionDTO> habitaciones; // Store the list of habitaciones
+    private List<HabitacionDTO> habitaciones; 
     private ServerFacade serverFacade;
     private AlojamientoDTO alojamientoSeleccionado;
-    private UsuarioDTO estaLogeado;
+    private UsuarioDTO usuarioLogeado;
 
-    public VentanaHabitaciones(AlojamientoDTO AlojamientoSeleccionado, UsuarioDTO estaLogeado) throws RemoteException {
-        this.alojamientoSeleccionado = AlojamientoSeleccionado;
-        this.estaLogeado = estaLogeado;
+    public VentanaHabitaciones(AlojamientoDTO alojamientoSeleccionado, UsuarioDTO usuarioLogeado) throws RemoteException {
+        this.alojamientoSeleccionado = alojamientoSeleccionado;
+        this.usuarioLogeado = usuarioLogeado;
+        System.out.println("Id AlojamientoSeleccionado: " + alojamientoSeleccionado.getId());
         serverFacade = RMIServiceLocator.getInstance().getService();
-        habitaciones = serverFacade.obtenerHabitaciones(AlojamientoSeleccionado.getId());
+        habitaciones = serverFacade.obtenerHabitaciones(alojamientoSeleccionado.getId(),);
 
         setTitle("Lista de Habitaciones");
         setSize(800, 600);
@@ -120,7 +122,7 @@ public class VentanaHabitaciones extends JFrame {
                         int selectedIndex = listHabitaciones.getSelectedIndex();
                         if (selectedIndex != -1) {
                             HabitacionDTO habitacionSeleccionada = habitaciones.get(selectedIndex);
-                            ReservaDTO reserva = new ReservaDTO(estaLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
+                            ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
                             if (serverFacade != null) {
                                 try {
                                     serverFacade.guardarReserva(reserva);
@@ -169,7 +171,7 @@ public class VentanaHabitaciones extends JFrame {
             dispose();
             EventQueue.invokeLater(() -> {
                 try {
-                    VentanaAlojamientos ventanaAlojamientos = new VentanaAlojamientos(estaLogeado);
+                    VentanaAlojamientos ventanaAlojamientos = new VentanaAlojamientos(usuarioLogeado);
                     ventanaAlojamientos.setVisible(true);
                 } catch (RemoteException ex) {
                     ex.printStackTrace();
