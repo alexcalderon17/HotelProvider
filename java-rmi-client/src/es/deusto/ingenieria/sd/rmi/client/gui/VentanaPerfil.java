@@ -8,15 +8,17 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class VentanaPerfil extends JFrame {
-    private JTextField nombre;
-    private JTextField apellido;
-    private JTextField DNI;
-    private JTextField correo;
-    private JTextField telefono;
+    private JTextField campoNombre;
+    private JTextField campoApellido;
+    private JTextField campoDNI;
+    private JTextField campoCorreo;
+    private JTextField campoTelefono;
     private JButton botonGuardar;
-    private UsuarioDTO estaLogeado;
+    private UsuarioDTO usuario;
 
-    public VentanaPerfil(UsuarioDTO estaLogeado) {
+    public VentanaPerfil(UsuarioDTO usuario) {
+        this.usuario = usuario;
+
         // Configurar la ventana
         setTitle("Perfil de Usuario");
         setSize(300, 200);
@@ -25,57 +27,49 @@ public class VentanaPerfil extends JFrame {
 
         // Crear panel principal
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1));
+        panel.setLayout(new GridLayout(6, 2));
 
         // Campo de texto para el nombre
-        JLabel labelNombre = new JLabel();
         JLabel etiquetaNombre = new JLabel("Nombre:");
-        nombre = new JTextField(15);
-        labelNombre.add(etiquetaNombre);
-        labelNombre.add(nombre);
-        panel.add(labelNombre);
+        campoNombre = new JTextField(usuario.getNombre());
+        campoNombre.setEditable(false);
+        panel.add(etiquetaNombre);
+        panel.add(campoNombre);
 
-        // Campo de texto para la edad
-        JPanel panelEdad = new JPanel();
-        JLabel etiquetaEdad = new JLabel("Edad:");
-        apellido = new JTextField(15);
-        panelEdad.add(etiquetaEdad);
-        panelEdad.add(apellido);
-        panel.add(panelEdad);
+        // Campo de texto para el apellido
+        JLabel etiquetaApellido = new JLabel("Apellido:");
+        campoApellido = new JTextField(usuario.getApellido());
+        campoApellido.setEditable(false);
+        panel.add(etiquetaApellido);
+        panel.add(campoApellido);
 
-        // Botón guardar
-        JPanel panelBoton = new JPanel();
+        // Campo de texto para el DNI
+        JLabel etiquetaDNI = new JLabel("DNI:");
+        campoDNI = new JTextField(usuario.getDNI());
+        campoDNI.setEditable(false);
+        panel.add(etiquetaDNI);
+        panel.add(campoDNI);
+
+        // Campo de texto para el correo
+        JLabel etiquetaCorreo = new JLabel("Correo:");
+        campoCorreo = new JTextField(usuario.getCorreo());
+        campoCorreo.setEditable(false);
+        panel.add(etiquetaCorreo);
+        panel.add(campoCorreo);
+
+        // Campo de texto para el teléfono
+        JLabel etiquetaTelefono = new JLabel("Teléfono:");
+        campoTelefono = new JTextField(usuario.getTelefono());
+        campoTelefono.setEditable(false);
+        panel.add(etiquetaTelefono);
+        panel.add(campoTelefono);
+
+        // Botón guardar (no necesario para mostrar datos del usuario)
         botonGuardar = new JButton("Guardar");
-        botonGuardar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                guardarPerfil();
-            }
-        });
-        panelBoton.add(botonGuardar);
-        panel.add(panelBoton);
+        botonGuardar.setVisible(false); // Ocultar el botón
+        panel.add(botonGuardar);
 
         // Agregar panel a la ventana
         add(panel);
     }
-
-    private void guardarPerfil() {
-        // String nombre = nombre.getText();
-        String edad = apellido.getText();
-
-        // Aquí podrías guardar el perfil en alguna estructura de datos o en una base de
-        // datos
-        // Por simplicidad, solo imprimiremos el perfil
-        // System.out.println("Nombre: " + nombre);
-        System.out.println("Edad: " + edad);
-    }
-
-    /*
-     * public static void main(String[] args) {
-     * SwingUtilities.invokeLater(new Runnable() {
-     * public void run() {
-     * new VentanaPerfil(estaLogeado).setVisible(true);
-     * }
-     * });
-     * }
-     */
 }
