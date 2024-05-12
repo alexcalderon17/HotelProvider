@@ -3,6 +3,8 @@ package es.deusto.ingenieria.sd.rmi.server.jdo;
 
 import lombok.*;
 import javax.jdo.annotations.PersistenceCapable;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -18,8 +20,8 @@ public class Reserva {
     private String cliente;
     private String alojamiento;
     private String habitacion;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
     //private int codPostal;
 
 }

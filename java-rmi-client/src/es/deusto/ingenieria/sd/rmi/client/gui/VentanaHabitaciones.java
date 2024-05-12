@@ -6,6 +6,8 @@ import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,7 +39,7 @@ public class VentanaHabitaciones extends JFrame {
         this.usuarioLogeado = usuarioLogeado;
         System.out.println("Id AlojamientoSeleccionado: " + alojamientoSeleccionado.getId());
         serverFacade = RMIServiceLocator.getInstance().getService();
-        habitaciones = serverFacade.obtenerHabitaciones(alojamientoSeleccionado.getId(),);
+        //habitaciones = serverFacade.obtenerHabitaciones(alojamientoSeleccionado.getId(),);
 
         setTitle("Lista de Habitaciones");
         setSize(800, 600);
@@ -53,6 +55,7 @@ public class VentanaHabitaciones extends JFrame {
     }
 
     private void initListPanel() {
+        System.out.println("Entra en initListPanel");
         listModel = new DefaultListModel<>();
         habitaciones.forEach(habitacion -> listModel.addElement(habitacion.getNombre()));
         listHabitaciones = new JList<>(listModel);
@@ -97,57 +100,41 @@ public class VentanaHabitaciones extends JFrame {
         btnReservar = new JButton("Reservar");
         btnReservar.setEnabled(true); // Botón activado siempre
 
-        btnReservar.addActionListener(e -> {
+        btnReservar.addActionListener(e -> {  
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                sdf.setLenient(false); // Esto hace que SimpleDateFormat sea más estricto con las fechas
-                Date fechaInicio = sdf.parse(txtFechaInicio.getText());
-                Date fechaFin = sdf.parse(txtFechaFin.getText());
+                LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText(), formatter);
+                LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText(), formatter);
+                System.out.println("La fecha incio es " + fechaInicio);
 
-                // Validar si las fechas ingresadas son válidas
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(fechaInicio);
-                int diaInicio = calendar.get(Calendar.DAY_OF_MONTH);
-                int mesInicio = calendar.get(Calendar.MONTH) + 1; // Los meses se indexan desde 0
-                int añoInicio = calendar.get(Calendar.YEAR);
+                if (fechaInicio.isBefore(fechaFin)) {
+                    int selectedIndex = listHabitaciones.getSelectedIndex();
+                    if (selectedIndex != -1) {
+                        HabitacionDTO habitacionSeleccionada = habitaciones.get(selectedIndex);
+                        ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
+                        if (serverFacade != null) {
+                            try {
+                                serverFacade.guardarReserva(reserva);    
+                                JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Exito", JOptionPane.INFORMATION_MESSAGE);  
+                            } catch (RemoteException e2) {
+                                e2.printStackTrace();
+                                JOptionPane.showMessageDialog(this, "Ha ocurrido un error", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
 
-                calendar.setTime(fechaFin);
-                int diaFin = calendar.get(Calendar.DAY_OF_MONTH);
-                int mesFin = calendar.get(Calendar.MONTH) + 1;
-                int añoFin = calendar.get(Calendar.YEAR);
-
-                // Verificar si los días, meses y años son válidos
-                if (isValidDate(diaInicio, mesInicio, añoInicio) && isValidDate(diaFin, mesFin, añoFin)) {
-                    if (!fechaInicio.after(fechaFin)) {
-                        int selectedIndex = listHabitaciones.getSelectedIndex();
-                        if (selectedIndex != -1) {
-                            HabitacionDTO habitacionSeleccionada = habitaciones.get(selectedIndex);
-                            ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
-                            if (serverFacade != null) {
-                                try {
-                                    serverFacade.guardarReserva(reserva);
-                                    EventQueue.invokeLater(() -> {
-                                        try {
-                                            JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Exito", JOptionPane.INFORMATION_MESSAGE);
-                                        } catch (Exception ex) {
-                                            ex.printStackTrace();
-                                        }
-                                    });
-                                } catch (RemoteException e2) {
-                                    e2.printStackTrace();
-                                }
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Ha ocurrido un error al guardar la reserva", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
+                        }else{
+                            throw new RuntimeException("El ServerFacade es null");
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser posterior a la fecha de fin.", "Error de fechas", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Debe seleccionar una habitacion", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Por favor, ingrese fechas válidas.", "Error de fechas", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser posterior a la fecha de fin.", "Error de fechas", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (ParseException ex) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese las fechas en el formato correcto (dd/mm/aaaa).", "Error de formato", JOptionPane.ERROR_MESSAGE);
+                
+            } catch (DateTimeParseException e1) {
+                System.out.println("Error parseando las fechas. Error: "+ e1.getMessage());
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese fechas válidas.", "Error de fechas", JOptionPane.ERROR_MESSAGE);
             }
         });
 
