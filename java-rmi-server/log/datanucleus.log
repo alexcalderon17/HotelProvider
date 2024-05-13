@@ -5312,3 +5312,4 @@ Caused by: java.io.EOFException: Can not read response from server. Expected to 
 	at com.mysql.cj.protocol.a.SimplePacketReader.readHeader(SimplePacketReader.java:45)
 	at com.mysql.cj.protocol.a.NativeProtocol.readMessage(NativeProtocol.java:513)
 	... 30 more
+00:35:17,583 (RMI TCP Connection(3)-192.168.5.179) ERROR [DataNucleus.Datastore.Persist] - Persistencia del objeto "es.deusto.ingenieria.sd.rmi.server.jdo.Usuario@bc47795" con SQL "INSERT INTO `USUARIO` (`APELLIDO`,`CORREO`,`NOMBRE`,`PASSWORD`,`TELEFONO`,`DNI`) VALUES (?,?,?,?,?,?)" ha tirado un error : Column 'DNI' cannot be null

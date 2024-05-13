@@ -10,8 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiDisponibilidadDTO {
-    private LocalDate fecha_ini; 
-    private LocalDate fecha_fin; 
+    private String fecha_ini; 
+    private String fecha_fin; 
     private float precio_base; 
     
 }

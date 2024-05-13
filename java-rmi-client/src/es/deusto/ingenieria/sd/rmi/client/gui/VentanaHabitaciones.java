@@ -33,14 +33,19 @@ public class VentanaHabitaciones extends JFrame {
     private ServerFacade serverFacade;
     private AlojamientoDTO alojamientoSeleccionado;
     private UsuarioDTO usuarioLogeado;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
 
-    public VentanaHabitaciones(AlojamientoDTO alojamientoSeleccionado, UsuarioDTO usuarioLogeado) throws RemoteException {
+    public VentanaHabitaciones(AlojamientoDTO alojamientoSeleccionado, UsuarioDTO usuarioLogeado, LocalDate fechaInicio, LocalDate fechaFin) throws RemoteException {
+        System.out.println("epi");
         this.alojamientoSeleccionado = alojamientoSeleccionado;
         this.usuarioLogeado = usuarioLogeado;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
         System.out.println("Id AlojamientoSeleccionado: " + alojamientoSeleccionado.getId());
         serverFacade = RMIServiceLocator.getInstance().getService();
-        //habitaciones = serverFacade.obtenerHabitaciones(alojamientoSeleccionado.getId(),);
-
+        habitaciones = serverFacade.obtenerHabitaciones(alojamientoSeleccionado.getId(), fechaInicio, fechaFin);
+        System.out.println("Las habitaciones libres son  estas: " + habitaciones);
         setTitle("Lista de Habitaciones");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,41 +105,25 @@ public class VentanaHabitaciones extends JFrame {
         btnReservar = new JButton("Reservar");
         btnReservar.setEnabled(true); // Botón activado siempre
 
-        btnReservar.addActionListener(e -> {  
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            
-            try {
-                LocalDate fechaInicio = LocalDate.parse(txtFechaInicio.getText(), formatter);
-                LocalDate fechaFin = LocalDate.parse(txtFechaFin.getText(), formatter);
-                System.out.println("La fecha incio es " + fechaInicio);
+        btnReservar.addActionListener(e -> { 
+            int selectedIndex = listHabitaciones.getSelectedIndex();
+            if (selectedIndex != -1) {
+                HabitacionDTO habitacionSeleccionada = habitaciones.get(selectedIndex);
+                ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
+                if (serverFacade != null) {
+                    try {
+                        serverFacade.guardarReserva(reserva);    
+                        JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Exito", JOptionPane.INFORMATION_MESSAGE);  
+                    } catch (RemoteException e2) {
+                        e2.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "Ha ocurrido un error", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
 
-                if (fechaInicio.isBefore(fechaFin)) {
-                    int selectedIndex = listHabitaciones.getSelectedIndex();
-                    if (selectedIndex != -1) {
-                        HabitacionDTO habitacionSeleccionada = habitaciones.get(selectedIndex);
-                        ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
-                        if (serverFacade != null) {
-                            try {
-                                serverFacade.guardarReserva(reserva);    
-                                JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Exito", JOptionPane.INFORMATION_MESSAGE);  
-                            } catch (RemoteException e2) {
-                                e2.printStackTrace();
-                                JOptionPane.showMessageDialog(this, "Ha ocurrido un error", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
-
-                            }
-                        }else{
-                            throw new RuntimeException("El ServerFacade es null");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Debe seleccionar una habitacion", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser posterior a la fecha de fin.", "Error de fechas", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    throw new RuntimeException("El ServerFacade es null");
                 }
-                
-            } catch (DateTimeParseException e1) {
-                System.out.println("Error parseando las fechas. Error: "+ e1.getMessage());
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese fechas válidas.", "Error de fechas", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una habitacion", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -179,19 +168,6 @@ public class VentanaHabitaciones extends JFrame {
     }
 
     
-    public static void main(String[] args) {
-        RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
-        EventQueue.invokeLater(() -> {
-            try {
-                UsuarioDTO tesUsuarioDTO = createTestUsuarioDTO();
-                AlojamientoDTO testAlojamiento = createTestAlojamiento();
-                VentanaHabitaciones frame = new VentanaHabitaciones(testAlojamiento, tesUsuarioDTO);
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
     private static AlojamientoDTO createTestAlojamiento() {
         // Create a test AlojamientoAtributes object for demonstration purposes
         AlojamientoDTO testAlojamiento = new AlojamientoDTO();

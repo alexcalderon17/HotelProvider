@@ -37,7 +37,8 @@ public class ServicioReservaImpl implements ServicioReserva {
     public void guardarReserva (ReservaDTO reservaDTO) {
         // Crear un nuevo objeto Reserva con los datos proporcionados
         Reserva reserva = Reserva.builder()
-        .cliente(reservaDTO.getCliente())
+        //PARA UNIR LA RESERVA AL CLIENTE, TENEMOS QUE RECIBIR EL DNI DESDE LA GUI Y LEER UN OBJETO USUARIO DE LA BD Y ASIGNARSELO AL CAMPO CLIENTE DE LA RESERVA
+        //.cliente(reservaDTO.getCliente())
         .alojamiento(reservaDTO.getAlojamiento())
         .habitacion(reservaDTO.getHabitacion())
         .fechaInicio(reservaDTO.getFechaInicio())

@@ -8,7 +8,7 @@ public class ClienteManager {
     UsuarioDAO usuarioDAO;
 
     public void registrarse(String nombre, String apellido, String DNI, String correo, String telefono, String password) {
-        Usuario usuario = new Usuario(nombre, apellido, DNI, correo, telefono, password);
+        Usuario usuario = new Usuario(nombre, apellido, DNI, correo, telefono, password, null);
         usuarioDAO.insertarUsuarioDTODB(usuario);
     }
 

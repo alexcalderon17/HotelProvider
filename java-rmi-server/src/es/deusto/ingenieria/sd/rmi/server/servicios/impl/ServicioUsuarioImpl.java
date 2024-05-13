@@ -19,12 +19,13 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     public void registrarse(UsuarioDTO usuarioDTO) {
         System.out.println("Empezando metodo registrarse de servicioUsuarioImpl");
         Usuario usuario = Usuario.builder()
-        .nombre(usuarioDTO.getNombre())
-        .apellido(usuarioDTO.getApellido())
-        .correo(usuarioDTO.getCorreo())
-        .telefono(usuarioDTO.getTelefono())
-        .password(usuarioDTO.getPassword())
-        .build();
+            .dni(usuarioDTO.getDNI())
+            .nombre(usuarioDTO.getNombre())
+            .apellido(usuarioDTO.getApellido())
+            .correo(usuarioDTO.getCorreo())
+            .telefono(usuarioDTO.getTelefono())
+            .password(usuarioDTO.getPassword())
+            .build();
         validarUsuario(usuario);
 
         try {

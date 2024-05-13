@@ -14,7 +14,7 @@ import java.util.List;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiResponseList;
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
-
+import es.deusto.ingenieria.sd.rmi.comun.utils.DateUtils;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiDisponibilidadDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
@@ -127,14 +127,15 @@ public class ServicioAlojamientosImpl implements ServicioAlojamientos {
 
     private boolean isHabitacionDisponible(ApiResponseList<ApiDisponibilidadDTO> disponibilidades, LocalDate fechaInicio, LocalDate fechaFin) {
         for (ApiData<ApiDisponibilidadDTO> disponibilidad : disponibilidades.getData()) {
-            
-            if (!(fechaFin.isBefore(disponibilidad.getAttributes().getFecha_ini()) || fechaInicio.isAfter(disponibilidad.getAttributes().getFecha_fin()))) {
-                
-                return false;
+            LocalDate inicioDisponibilidad = DateUtils.parsDateConGuiones(disponibilidad.getAttributes().getFecha_ini());
+            LocalDate finDisponibilidad = DateUtils.parsDateConGuiones(disponibilidad.getAttributes().getFecha_fin());
+            if(inicioDisponibilidad == null || finDisponibilidad == null){
+                System.out.println("Error en el parseo de fechas de disponibilidad.  " + fechaInicio + " y " + fechaFin);
+            } else if (fechaInicio.isAfter(inicioDisponibilidad) || fechaFin.isBefore(finDisponibilidad)){
+                return true;
             }
         }
-        
-        return true;
+        return false;
     }
 
     

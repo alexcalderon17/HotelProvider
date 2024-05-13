@@ -63,7 +63,7 @@ public class UsuarioDAO {
                
                 usuario.setNombre(nombre);
                 usuario.setApellido(apellido);
-                usuario.setDNI(DNI);
+                usuario.setDni(DNI);
                 usuario.setCorreo(correo);
                 //usuario.setCodPostal(codPostal);
                 usuario.setTelefono(telefono);

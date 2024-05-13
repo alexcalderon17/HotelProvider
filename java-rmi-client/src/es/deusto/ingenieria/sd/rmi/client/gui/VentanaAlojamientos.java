@@ -3,6 +3,7 @@ package es.deusto.ingenieria.sd.rmi.client.gui;
 import javax.swing.*;
 import java.awt.*;
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -12,6 +13,7 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
+import es.deusto.ingenieria.sd.rmi.comun.utils.DateUtils;
 
 public class VentanaAlojamientos extends JFrame {
     private JTextField textFieldFechaInicio;
@@ -88,9 +90,13 @@ public class VentanaAlojamientos extends JFrame {
 
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (serverFacade != null && alojamientoSeleccionado != null) {
+                LocalDate fechaInicio = DateUtils.parseDate(textFieldFechaInicio.getText());
+                LocalDate fechaFin = DateUtils.parseDate(textFieldFechaFin.getText());
+                if (alojamientoSeleccionado != null && DateUtils.sonFechasValidas(fechaFin, fechaFin)) {
+                    System.out.println("epi1");
                     try {
-                        VentanaHabitaciones va = new VentanaHabitaciones(alojamientoSeleccionado, estaLogeado);
+                        VentanaHabitaciones va = new VentanaHabitaciones(alojamientoSeleccionado, estaLogeado, fechaInicio, fechaFin);
+                        System.out.println("epi2");
                         va.setVisible(true);
                         dispose();
                     } catch (RemoteException ex) {
