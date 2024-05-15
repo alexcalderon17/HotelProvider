@@ -29,10 +29,10 @@ public class VentanaAlojamientos extends JFrame {
     private ServerFacade serverFacade;
     private List<AlojamientoDTO> alojamientos;
     private AlojamientoDTO alojamientoSeleccionado;
-    private UsuarioDTO estaLogeado;
+    private UsuarioDTO usuarioLogeado;
 
-    public VentanaAlojamientos(UsuarioDTO estaLogeado) throws RemoteException {
-        this.estaLogeado = estaLogeado;
+    public VentanaAlojamientos(UsuarioDTO usuarioLogeado) throws RemoteException {
+        this.usuarioLogeado = usuarioLogeado;
         serverFacade = RMIServiceLocator.getInstance().getService();
         alojamientos = serverFacade.obtenerAlojamientos();
 
@@ -82,7 +82,7 @@ public class VentanaAlojamientos extends JFrame {
 
         btnPerfil.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                VentanaPerfil vp = new VentanaPerfil(estaLogeado);
+                VentanaPerfil vp = new VentanaPerfil(usuarioLogeado);
                 vp.setVisible(true);
                 dispose();
             }
@@ -95,7 +95,7 @@ public class VentanaAlojamientos extends JFrame {
                 if (alojamientoSeleccionado != null && DateUtils.sonFechasValidas(fechaFin, fechaFin)) {
                     System.out.println("epi1");
                     try {
-                        VentanaHabitaciones va = new VentanaHabitaciones(alojamientoSeleccionado, estaLogeado, fechaInicio, fechaFin);
+                        VentanaHabitaciones va = new VentanaHabitaciones(alojamientoSeleccionado, usuarioLogeado, fechaInicio, fechaFin);
                         System.out.println("epi2");
                         va.setVisible(true);
                         dispose();
@@ -116,12 +116,12 @@ public class VentanaAlojamientos extends JFrame {
 
     private void configuraPanelFiltros(JPanel panel) {
         JLabel lblFechaInicio = new JLabel("Fecha Inicio:");
-        textFieldFechaInicio = new JTextField();
+        textFieldFechaInicio = new JTextField("05/07/2024");
         panel.add(lblFechaInicio);
         panel.add(textFieldFechaInicio);
 
         JLabel lblFechaFin = new JLabel("Fecha Fin:");
-        textFieldFechaFin = new JTextField();
+        textFieldFechaFin = new JTextField("05/07/2024");
         panel.add(lblFechaFin);
         panel.add(textFieldFechaFin);
 

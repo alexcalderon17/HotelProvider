@@ -103,7 +103,7 @@ public class VentanaHabitaciones extends JFrame {
         txtFechaInicio = createFormattedTextField();
         txtFechaFin = createFormattedTextField();
         btnReservar = new JButton("Reservar");
-        btnReservar.setEnabled(true); // Botón activado siempre
+        btnReservar.setEnabled(true); 
 
         btnReservar.addActionListener(e -> { 
             int selectedIndex = listHabitaciones.getSelectedIndex();
@@ -112,6 +112,7 @@ public class VentanaHabitaciones extends JFrame {
                 ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
                 if (serverFacade != null) {
                     try {
+                        System.out.println(usuarioLogeado);
                         serverFacade.guardarReserva(reserva, usuarioLogeado);    
                         JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Exito", JOptionPane.INFORMATION_MESSAGE);  
                     } catch (RemoteException e2) {

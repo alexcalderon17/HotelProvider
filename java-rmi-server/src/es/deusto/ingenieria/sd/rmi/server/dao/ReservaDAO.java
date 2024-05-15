@@ -8,7 +8,7 @@ import javax.jdo.Transaction;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
-
+import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 
 import javax.jdo.Query;
 import java.util.List;
@@ -19,14 +19,13 @@ public class ReservaDAO {
     PersistenceManagerFactory persistentManagerFactory = JDOHelper
             .getPersistenceManagerFactory("datanucleus.properties");
 
-    public void insertarReserva(Reserva reserva) {
+    public void insertarReserva(Reserva reserva, String correo) {
         PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try {
             tx.begin();
-            
-             
-
+            Usuario usuario = pm.getObjectById(Usuario.class, correo);
+            reserva.setCliente(usuario);
             pm.makePersistent(reserva);
             System.out.println("+ Inserted reserva into db: " + reserva.getHabitacion());
             tx.commit();

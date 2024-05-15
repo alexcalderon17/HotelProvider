@@ -116,7 +116,7 @@ public class VentanaRegistro extends JFrame {
                 if (validarDNI(dni)) {
                     String errorContrasena = validarContrasena(contrasena);
                     if (errorContrasena == null) {
-                        UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, email, telefono, dni, contrasena);
+                        UsuarioDTO usuario = new UsuarioDTO(nombre, apellido,dni, email, telefono,contrasena);
                         if (serverFacade != null) {
                             try {
                                 serverFacade.registrarse(usuario);

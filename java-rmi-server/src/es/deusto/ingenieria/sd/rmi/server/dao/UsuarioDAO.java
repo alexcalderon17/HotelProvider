@@ -12,9 +12,12 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+import javax.jdo.JDOObjectNotFoundException;
 
 
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
+import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorLecturaBaseDatos;
+import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorLogin;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 
 
@@ -102,22 +105,20 @@ public class UsuarioDAO {
         }
     }
 
-    public boolean verificarLogin(String correo, String password) {
-        boolean loginExitoso = false;
-        String sql = "SELECT * FROM USUARIO WHERE correo = ? AND password = ?";
-        try (Connection conn = DriverManager.getConnection(URL, MyUserBD, MyPassBD);
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, correo);
-            stmt.setString(2, password);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) { 
-                    loginExitoso = true;
-                }
+    public Usuario verificarLogin(String correo, String password) {
+        System.out.println("El correo es: " + correo);
+        System.out.println("la contrasenya es: " + password);
+
+        try{
+            Usuario usuario = leerUsuario(correo);
+            System.out.println("El usuario es: " + usuario);
+            if (usuario != null && password.equals(usuario.getPassword()) ){
+                return usuario;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ErrorLogin( "Correo o Contrasenya no valida");
+        }catch(ErrorLecturaBaseDatos e){
+            throw new ErrorLogin( "Error al buscar el usuario", e);
         }
-        return loginExitoso;
     }
 
     public boolean existeCorreo(String correo) {
@@ -134,6 +135,28 @@ public class UsuarioDAO {
             System.err.println("Error al verificar el correo: " + e.getMessage());
         }
         return false;
+    }
+
+    public Usuario leerUsuario(String correo) {
+        if(correo == null || correo.isBlank()){
+            throw new ErrorLecturaBaseDatos("Error al leer usuario. DNI no puede ser null ni vacio");
+        }
+        PersistenceManager persistentManager = persistentManagerFactory.getPersistenceManager();
+        Transaction transaction = persistentManager.currentTransaction();
+
+        try{
+            transaction.begin();
+            //dni --> primary key
+            Usuario usuario = persistentManager.getObjectById(Usuario.class, correo);
+            usuario = persistentManager.detachCopy(usuario);
+            transaction.commit();
+            return usuario;
+        } catch(JDOObjectNotFoundException e){
+            return null;
+        }
+        catch(Exception e){
+            throw new ErrorLecturaBaseDatos("Error al leer usuario de la base de datos", e);
+        }
     }
 
 

@@ -22,7 +22,7 @@ public interface ServerFacade extends Remote {
     List<HabitacionDTO>  obtenerHabitaciones(int IdAlojamientoSeleccionado, LocalDate fechaini, LocalDate fechafin) throws RemoteException;
 
 
-    boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException;
+    UsuarioDTO iniciarSesion(String usuario, String contrasenya) throws RemoteException;
     void registrarse(UsuarioDTO usuarioDTO) throws RemoteException;
     void guardarReserva (ReservaDTO reservaDTO, UsuarioDTO usuarioDTO) throws RemoteException;
 

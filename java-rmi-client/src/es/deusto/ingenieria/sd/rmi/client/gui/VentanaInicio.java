@@ -68,13 +68,12 @@ public class VentanaInicio extends JFrame {
                 
                 if (serverFacade != null) {
                     try {
-                        boolean loginExitoso = serverFacade.iniciarSesion(email, contrasena);
-                        if (loginExitoso) {
+                        UsuarioDTO usuarioLogeado = serverFacade.iniciarSesion(email, contrasena);
+                        if (usuarioLogeado != null) {
                             //para saber quien esta logeado
-                            UsuarioDTO estaLogeado = new UsuarioDTO(email);
                             JOptionPane.showMessageDialog(VentanaInicio.this, "¡Login Exitoso!", "Exito", JOptionPane.INFORMATION_MESSAGE);
                             List<AlojamientoDTO> alojamientos = serverFacade.obtenerAlojamientos();
-                            VentanaAlojamientos va = new VentanaAlojamientos(estaLogeado);
+                            VentanaAlojamientos va = new VentanaAlojamientos(usuarioLogeado);
                             va.setVisible(true);
                             VentanaInicio.this.setVisible(false);
                             VentanaInicio.this.dispose();

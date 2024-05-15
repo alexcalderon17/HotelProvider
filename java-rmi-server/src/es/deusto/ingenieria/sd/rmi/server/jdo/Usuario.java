@@ -17,12 +17,12 @@ import javax.jdo.annotations.Persistent;
 public class Usuario {
 
     @PrimaryKey
-    private String dni;
+    private String correo;
+    private String password;
     private String nombre;
     private String apellido;
-    private String correo;
     private String telefono;
-    private String password;
+    private String dni;
     @Persistent(mappedBy = "cliente")
     private List<Reserva> reservas;
 

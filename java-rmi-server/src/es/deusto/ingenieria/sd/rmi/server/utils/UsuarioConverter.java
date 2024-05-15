@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.utils;
+package es.deusto.ingenieria.sd.rmi.server.utils;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
@@ -17,6 +17,7 @@ public class UsuarioConverter {
         
         // Crear un Usuario usando el builder
         Usuario usuario = Usuario.builder()
+                
                 .dni(usuarioDTO.getDNI())
                 .nombre(usuarioDTO.getNombre())
                 .apellido(usuarioDTO.getApellido())
@@ -26,5 +27,22 @@ public class UsuarioConverter {
                 .build();
         
         return usuario;
+    }
+
+    public static UsuarioDTO convertirUsuarioaDTO(Usuario usuario) {
+        if (usuario == null) {
+            return null;
+        }
+        // Crear un Usuario usando el builder
+        UsuarioDTO usuarioDTO = UsuarioDTO.builder()
+                .DNI(usuario.getDni())
+                .nombre(usuario.getNombre())
+                .apellido(usuario.getApellido())
+                .correo(usuario.getCorreo())
+                .telefono(usuario.getTelefono())
+                .password(usuario.getPassword())
+                .build();
+        
+        return usuarioDTO;
     }
 }

@@ -15,6 +15,7 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorCreacionReserva;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
@@ -50,20 +51,14 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     }
 
     @Override
-    public boolean iniciarSesion(String usuario, String contrasenya) throws RemoteException {
+    public UsuarioDTO iniciarSesion(String usuario, String contrasenya) throws RemoteException {
         System.out.println("metodo iniciar sesion en ServerfacadeImpl"); //sout
         try {
-           boolean usuarioExitoso =  servicioUsuario.iniciarSesion(usuario, contrasenya);
-           if (usuarioExitoso){
-            return true;
-           }else{
-            return false;
-           }
+           return servicioUsuario.iniciarSesion(usuario, contrasenya);
         } catch (Exception e) {
-            // Manejar otras excepciones que no sean de tipo RemoteException
-            throw new RemoteException("Error en iniciar sesion: " + e.getMessage(), e);
+            e.printStackTrace();
+            return null;
         }
-
     }
 
     @Override
@@ -84,14 +79,10 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
         System.out.println("metodo guardarReserva en ServerfacadeImpl"); //sout
         try {
             servicioReserva.guardarReserva(reservaDTO, usuarioDTO);
-            // Asume que 'servicioHotelProvider.registrarse()' también ha sido actualizado
-            // para lanzar RemoteException
-        } catch (Exception e) {
-            // Manejar otras excepciones que no sean de tipo RemoteException
-            throw new RemoteException("Error en registrarse: " + e.getMessage(), e);
-        }
-
-
+        } catch(Exception e){
+            e.printStackTrace();
+            throw new RemoteException("Error al crear la reserva");
+        } 
     }
 
 

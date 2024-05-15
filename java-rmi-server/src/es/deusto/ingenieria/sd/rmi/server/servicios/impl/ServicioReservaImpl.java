@@ -15,6 +15,8 @@ import es.deusto.ingenieria.sd.rmi.server.dao.ReservaDAO;
 import es.deusto.ingenieria.sd.rmi.server.dao.UsuarioDAO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
+import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorCreacionReserva;
+import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorLecturaBaseDatos;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
 
@@ -26,35 +28,42 @@ import java.util.HashMap;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
-import es.deusto.ingenieria.utils.UsuarioConverter;
+import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
+import es.deusto.ingenieria.sd.rmi.server.utils.UsuarioConverter;
 
 public class ServicioReservaImpl implements ServicioReserva {
     private ReservaDAO reservaDAO;
+    private ServicioUsuario servicioUsuario;
+
 
     public ServicioReservaImpl(){
         this.reservaDAO = new ReservaDAO();
-        
+        this.servicioUsuario = new ServicioUsuarioImpl();
     }
-
-
-
 
     @Override
     public void guardarReserva (ReservaDTO reservaDTO, UsuarioDTO usuarioDTO) {
         // Crear un nuevo objeto Reserva con los datos proporcionados
-        Usuario usuario = UsuarioConverter.convertirDTOaUsuario(usuarioDTO);
+        /*Usuario usuario;
+        try{
+            usuario = servicioUsuario.leerUsuario(usuarioDTO.getCorreo());
+        } catch(ErrorLecturaBaseDatos e){
+            throw new ErrorCreacionReserva("Error al crear reserva por usuario no encontrado", e);
+        }*/
+        
         Reserva reserva = Reserva.builder()
-        //PARA UNIR LA RESERVA AL CLIENTE, TENEMOS QUE RECIBIR EL DNI DESDE LA GUI Y LEER UN OBJETO USUARIO DE LA BD Y ASIGNARSELO AL CAMPO CLIENTE DE LA RESERVA
+        //PARA UNIR LA RESERVA AL CLIENTE, TENEMOS QUE RECIBIR EL DNI DESDE LA GUI
+        // Y LEER UN OBJETO USUARIO DE LA BD Y ASIGNARSELO AL CAMPO CLIENTE DE LA RESERVA
         //.cliente(reservaDTO.getCliente())
-        .cliente(usuario)
-        .alojamiento(reservaDTO.getAlojamiento())
-        .habitacion(reservaDTO.getHabitacion())
-        .fechaInicio(reservaDTO.getFechaInicio())
-        .fechaFin(reservaDTO.getFechaFin())
-        .build();
+            //.cliente(usuario)
+            .alojamiento(reservaDTO.getAlojamiento())
+            .habitacion(reservaDTO.getHabitacion())
+            .fechaInicio(reservaDTO.getFechaInicio())
+            .fechaFin(reservaDTO.getFechaFin())
+            .build();
 
         try {
-            reservaDAO.insertarReserva(reserva);
+            reservaDAO.insertarReserva(reserva, usuarioDTO.getCorreo());
             System.out.println("Reserva gaurdada exitosamente.");
         } catch (Exception e) {
             throw new RuntimeException("Error al guardar la reserva: " + e.getMessage(), e);

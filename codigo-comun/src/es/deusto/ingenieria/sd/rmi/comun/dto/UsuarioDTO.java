@@ -3,6 +3,7 @@ package es.deusto.ingenieria.sd.rmi.comun.dto;
 import lombok.*;
 import java.io.Serializable;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

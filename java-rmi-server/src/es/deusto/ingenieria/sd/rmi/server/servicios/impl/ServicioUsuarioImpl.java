@@ -4,8 +4,10 @@ import java.rmi.RemoteException;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.server.dao.UsuarioDAO;
+import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorLogin;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
+import es.deusto.ingenieria.sd.rmi.server.utils.UsuarioConverter;
 
 public class ServicioUsuarioImpl implements ServicioUsuario{
     private UsuarioDAO usuarioDAO;
@@ -37,20 +39,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
     }
    
-    public boolean iniciarSesion(String usuario, String contrasenya){
+    @Override
+    public UsuarioDTO iniciarSesion(String correo, String contrasenya){
         System.out.println("Empezando metodo inicarSesion de servicioUsuarioImpl");
-        try {
-            boolean usuarioExitoso = usuarioDAO.verificarLogin(usuario, contrasenya);
-            if (usuarioExitoso){
-                return true;
-            }else{
-                return false;
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error al tratar de verificar el usuario: " + e.getMessage(), e);
-        }
-        
+        Usuario usuario = usuarioDAO.verificarLogin(correo, contrasenya);
+        return UsuarioConverter.convertirUsuarioaDTO(usuario);
     }
 
     private void validarUsuario(Usuario usuario){
@@ -62,5 +55,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
           //  throw new RemoteException("El correo ya está en uso.");
        // }
 
+    }
+
+    @Override
+    public Usuario leerUsuario(String correo) {
+        return usuarioDAO.leerUsuario(correo); 
     }
 }
