@@ -112,7 +112,7 @@ public class VentanaHabitaciones extends JFrame {
                 ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
                 if (serverFacade != null) {
                     try {
-                        serverFacade.guardarReserva(reserva);    
+                        serverFacade.guardarReserva(reserva, usuarioLogeado);    
                         JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Exito", JOptionPane.INFORMATION_MESSAGE);  
                     } catch (RemoteException e2) {
                         e2.printStackTrace();

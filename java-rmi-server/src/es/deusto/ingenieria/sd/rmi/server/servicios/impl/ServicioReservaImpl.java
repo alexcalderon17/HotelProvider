@@ -9,6 +9,8 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
+
 import es.deusto.ingenieria.sd.rmi.server.dao.ReservaDAO;
 import es.deusto.ingenieria.sd.rmi.server.dao.UsuarioDAO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
+import es.deusto.ingenieria.utils.UsuarioConverter;
 
 public class ServicioReservaImpl implements ServicioReserva {
     private ReservaDAO reservaDAO;
@@ -33,12 +36,17 @@ public class ServicioReservaImpl implements ServicioReserva {
         
     }
 
+
+
+
     @Override
-    public void guardarReserva (ReservaDTO reservaDTO) {
+    public void guardarReserva (ReservaDTO reservaDTO, UsuarioDTO usuarioDTO) {
         // Crear un nuevo objeto Reserva con los datos proporcionados
+        Usuario usuario = UsuarioConverter.convertirDTOaUsuario(usuarioDTO);
         Reserva reserva = Reserva.builder()
         //PARA UNIR LA RESERVA AL CLIENTE, TENEMOS QUE RECIBIR EL DNI DESDE LA GUI Y LEER UN OBJETO USUARIO DE LA BD Y ASIGNARSELO AL CAMPO CLIENTE DE LA RESERVA
         //.cliente(reservaDTO.getCliente())
+        .cliente(usuario)
         .alojamiento(reservaDTO.getAlojamiento())
         .habitacion(reservaDTO.getHabitacion())
         .fechaInicio(reservaDTO.getFechaInicio())

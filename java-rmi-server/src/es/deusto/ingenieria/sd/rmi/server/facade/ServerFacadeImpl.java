@@ -80,10 +80,10 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
         }
     }
     @Override
-    public void guardarReserva (ReservaDTO reservaDTO) throws RemoteException{
+    public void guardarReserva (ReservaDTO reservaDTO, UsuarioDTO usuarioDTO) throws RemoteException{
         System.out.println("metodo guardarReserva en ServerfacadeImpl"); //sout
         try {
-            servicioReserva.guardarReserva(reservaDTO);
+            servicioReserva.guardarReserva(reservaDTO, usuarioDTO);
             // Asume que 'servicioHotelProvider.registrarse()' también ha sido actualizado
             // para lanzar RemoteException
         } catch (Exception e) {
