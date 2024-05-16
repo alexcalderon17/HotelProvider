@@ -10,7 +10,7 @@ import java.awt.event.*;
 public class VentanaPerfil extends JFrame {
     private JTextField campoNombre;
     private JTextField campoApellido;
-    private JTextField campoDNI;
+    private JLabel campoDNI;
     private JTextField campoCorreo;
     private JTextField campoTelefono;
     private JButton botonGuardar;
@@ -45,8 +45,7 @@ public class VentanaPerfil extends JFrame {
 
         // Campo de texto para el DNI
         JLabel etiquetaDNI = new JLabel("DNI:");
-        campoDNI = new JTextField(usuario.getDNI());
-        campoDNI.setEditable(false);
+        campoDNI = new JLabel(usuario.getDNI());
         panel.add(etiquetaDNI);
         panel.add(campoDNI);
 
