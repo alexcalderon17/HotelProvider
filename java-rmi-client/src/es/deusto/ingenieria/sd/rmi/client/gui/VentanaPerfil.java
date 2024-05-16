@@ -6,6 +6,7 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.rmi.RemoteException;
 
 public class VentanaPerfil extends JFrame {
     private JLabel campoNombre;
@@ -61,7 +62,20 @@ public class VentanaPerfil extends JFrame {
 
         // Botón guardar (no necesario para mostrar datos del usuario)
         botonGuardar = new JButton("Atras");
-        botonGuardar.setVisible(false); // Ocultar el botón
+        botonGuardar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    VentanaAlojamientos va = new VentanaAlojamientos(usuario);
+                    va.setVisible(true);
+                    dispose();
+                } catch (RemoteException ex) {
+                    // Manejar la excepción aquí
+                    ex.printStackTrace(); // o cualquier otra acción que desees
+                }
+            }
+        });
+
+        // Ocultar el botón
         panel.add(botonGuardar);
 
         // Agregar panel a la ventana
