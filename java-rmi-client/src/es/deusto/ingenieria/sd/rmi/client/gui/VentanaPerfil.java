@@ -8,11 +8,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class VentanaPerfil extends JFrame {
-    private JTextField campoNombre;
-    private JTextField campoApellido;
+    private JLabel campoNombre;
+    private JLabel campoApellido;
     private JLabel campoDNI;
-    private JTextField campoCorreo;
-    private JTextField campoTelefono;
+    private JLabel campoCorreo;
+    private JLabel campoTelefono;
     private JButton botonGuardar;
     private UsuarioDTO usuario;
 
@@ -31,15 +31,13 @@ public class VentanaPerfil extends JFrame {
 
         // Campo de texto para el nombre
         JLabel etiquetaNombre = new JLabel("Nombre:");
-        campoNombre = new JTextField(usuario.getNombre());
-        campoNombre.setEditable(false);
+        campoNombre = new JLabel(usuario.getNombre());
         panel.add(etiquetaNombre);
         panel.add(campoNombre);
 
         // Campo de texto para el apellido
         JLabel etiquetaApellido = new JLabel("Apellido:");
-        campoApellido = new JTextField(usuario.getApellido());
-        campoApellido.setEditable(false);
+        campoApellido = new JLabel(usuario.getApellido());
         panel.add(etiquetaApellido);
         panel.add(campoApellido);
 
@@ -51,20 +49,18 @@ public class VentanaPerfil extends JFrame {
 
         // Campo de texto para el correo
         JLabel etiquetaCorreo = new JLabel("Correo:");
-        campoCorreo = new JTextField(usuario.getCorreo());
-        campoCorreo.setEditable(false);
+        campoCorreo = new JLabel(usuario.getCorreo());
         panel.add(etiquetaCorreo);
         panel.add(campoCorreo);
 
         // Campo de texto para el teléfono
         JLabel etiquetaTelefono = new JLabel("Teléfono:");
-        campoTelefono = new JTextField(usuario.getTelefono());
-        campoTelefono.setEditable(false);
+        campoTelefono = new JLabel(usuario.getTelefono());
         panel.add(etiquetaTelefono);
         panel.add(campoTelefono);
 
         // Botón guardar (no necesario para mostrar datos del usuario)
-        botonGuardar = new JButton("Guardar");
+        botonGuardar = new JButton("Atras");
         botonGuardar.setVisible(false); // Ocultar el botón
         panel.add(botonGuardar);
 
