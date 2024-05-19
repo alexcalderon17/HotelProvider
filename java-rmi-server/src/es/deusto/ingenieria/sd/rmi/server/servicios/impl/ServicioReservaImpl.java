@@ -16,7 +16,7 @@ import es.deusto.ingenieria.sd.rmi.server.dao.ReservaDAO;
 import es.deusto.ingenieria.sd.rmi.server.dao.UsuarioDAO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
-import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorCreacionReserva;
+import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorCreacionQr;
 import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorLecturaBaseDatos;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
@@ -61,6 +61,11 @@ public class ServicioReservaImpl implements ServicioReserva {
         } catch (Exception e) {
             throw new RuntimeException("Error al guardar la reserva: " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public Reserva leerReserva(String codigoReserva){
+        return reservaDAO.leerReserva(codigoReserva);
     }
 
     private String crearCodigoReserva() {

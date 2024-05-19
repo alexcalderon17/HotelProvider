@@ -1,11 +1,19 @@
-package es.deusto.ingenieria.sd.rmi.puertas.facade.gui;
+package es.deusto.ingenieria.sd.rmi.puertas.gui;
 import javax.swing.*;
+
+import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
+import es.deusto.ingenieria.sd.rmi.puertas.remote.ServiceLocator;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 public class VentanaPrincipal extends JFrame {
+    private ServerFacade serverFacade;
+
     public VentanaPrincipal() {
+        this.serverFacade = ServiceLocator.getInstance().getService();
         // Configuración de la ventana principal
         setTitle("Introduzca su Código de Reserva");
         setSize(400, 200);
@@ -51,7 +59,21 @@ public class VentanaPrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String codigoReserva = textField.getText();
-                JOptionPane.showMessageDialog(panel, "Código de reserva introducido: " + codigoReserva);
+                try{
+                    byte[] codigoQr = serverFacade.abrirPuerta(codigoReserva);
+                    if (codigoQr!= null){
+                        VentanaQR ventanaQR = new VentanaQR(codigoQr);
+                        ventanaQR.setVisible(true);
+                        VentanaPrincipal.this.setVisible(false);
+                        VentanaPrincipal.this.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(VentanaPrincipal.this, "Codigo de reserva incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                }catch(RemoteException e2){
+                    e2.printStackTrace();
+
+                }
             }
         });
 
@@ -60,10 +82,13 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public static void main(String[] args) {
+        ServiceLocator serviceLocator = new ServiceLocator(args[0], args[1], args[2]);
+
         // Crear y mostrar la ventana
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+
                 VentanaPrincipal ventana = new VentanaPrincipal();
                 ventana.setVisible(true);
             }

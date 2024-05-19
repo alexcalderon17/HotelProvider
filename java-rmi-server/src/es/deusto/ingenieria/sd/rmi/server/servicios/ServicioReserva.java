@@ -12,9 +12,5 @@ import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
 
 public interface ServicioReserva {
     public void guardarReserva(ReservaDTO reservaDTO, UsuarioDTO usuario);
-
-    //public void cancelarReserva(ReservaDTO ReservaID);
-
-    //public boolean modificarReserva(String reservaID, Date nuevaFechaInicio, Date nuevaFechaFin);
-    // public List<Reserva> obtenerReservasUsuario (String usuarioID);
+    public Reserva leerReserva(String codigo);
 }

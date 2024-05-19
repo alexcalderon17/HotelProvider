@@ -3,5 +3,6 @@ package es.deusto.ingenieria.sd.rmi.server.servicios;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 
 public interface ServicioPuertas {
-    void abrirPuerta(String codigoReserva);
+
+    byte[] abrirPuerta(String codigoReserva);
 } 

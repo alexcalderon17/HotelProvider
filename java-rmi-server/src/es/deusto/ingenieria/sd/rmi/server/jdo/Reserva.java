@@ -25,7 +25,7 @@ public class Reserva {
     private String habitacion;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     private Usuario cliente;
 
 }

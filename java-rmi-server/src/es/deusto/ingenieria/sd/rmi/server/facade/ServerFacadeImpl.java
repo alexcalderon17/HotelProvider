@@ -15,12 +15,14 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
-import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorCreacionReserva;
+import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorCreacionQr;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
+import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioPuertas;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
 
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioAlojamientosImpl;
+import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioPuertasImpl;
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioUsuarioImpl;
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioReservaImpl;
 
@@ -31,13 +33,15 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     private ServicioUsuario servicioUsuario;
     private ServicioReserva servicioReserva;
     private ServicioAlojamientos servicioAlojamientos;
-
-
+    private ServicioPuertas servicioPuertas;
+    
     protected ServerFacadeImpl() throws RemoteException {
         super();
         this.servicioAlojamientos = new ServicioAlojamientosImpl();
         this.servicioUsuario = new ServicioUsuarioImpl();
         this.servicioReserva = new ServicioReservaImpl();
+        this.servicioPuertas = new ServicioPuertasImpl();
+
     }
 
     @Override
@@ -84,6 +88,16 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
             e.printStackTrace();
             throw new RemoteException("Error al crear la reserva");
         } 
+    }
+
+    @Override
+    public byte[] abrirPuerta(String codigoReserva) throws RemoteException {
+        try {
+            return servicioPuertas.abrirPuerta(codigoReserva);
+        } catch (Exception e) {
+            // Manejar otras excepciones que no sean de tipo RemoteException
+            throw new RemoteException("Error al abrir la puertas: " + e.getMessage(), e);
+        }
     }
 
 

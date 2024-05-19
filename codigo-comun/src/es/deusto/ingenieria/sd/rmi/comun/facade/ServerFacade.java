@@ -11,17 +11,14 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 
-
-// import es.deusto.ingenieria.sd.rmi.server.dto.AlojamientoDTO;
-// import es.deusto.ingenieria.sd.rmi.server.dto.HabitacionDTO;
-
 public interface ServerFacade extends Remote {
 
-    // List<HabitacionDTO> obtenerHabitaciones() throws RemoteException;
+    
     List<AlojamientoDTO>  obtenerAlojamientos() throws RemoteException;
     List<HabitacionDTO>  obtenerHabitaciones(int IdAlojamientoSeleccionado, LocalDate fechaini, LocalDate fechafin) throws RemoteException;
     UsuarioDTO iniciarSesion(String usuario, String contrasenya) throws RemoteException;
     void registrarse(UsuarioDTO usuarioDTO) throws RemoteException;
     void guardarReserva (ReservaDTO reservaDTO, UsuarioDTO usuarioDTO) throws RemoteException;
+    byte[] abrirPuerta(String codigoReserva) throws RemoteException;
 
 }
