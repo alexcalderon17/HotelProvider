@@ -5,6 +5,6 @@ import java.rmi.RemoteException;
 
 public interface PuertasFacade extends Remote {
 
-    boolean abrirPuerta(int numeroPuerta) throws RemoteException;
+    void abrirPuerta(String codigoReserva) throws RemoteException;
 
 }

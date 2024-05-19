@@ -39,51 +39,7 @@ public class ReservaDAO {
         }
     }
 
-   
+    public void abrirPuerta(String codigo){
 
-    /*public void actualizarReserva(String alojamiento, Date fechaInicio, Date fechaFin,
-            boolean estaCancelada) {
-        PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        try {
-            tx.begin();
-            ReservaDTO reserva = pm.getObjectById(ReservaDTO.class, reservaID);
-            if (reserva != null) {
-
-                reserva.setAlojamiento(alojamiento);
-                reserva.setFechaInicio(fechaInicio);
-                reserva.setFechaFin(fechaFin);
-                pm.makePersistent(reserva);
-            }
-            tx.commit();
-        } catch (Exception e) {
-            System.err.println("DBException: " + e.getMessage());
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-            pm.close();
-        }
-    }*/
-
-    /*public void borrarReserva(String reservaID) {
-        PersistenceManager pm = persistentManagerFactory.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        try {
-            tx.begin();
-            ReservaDTO reserva = pm.getObjectById(ReservaDTO.class, reservaID);
-            if (reserva != null) {
-                pm.deletePersistent(reserva);
-            }
-            tx.commit();
-        } catch (Exception e) {
-            System.err.println("DBException: " + e.getMessage());
-        } finally {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-            pm.close();
-        }
-    }*/
-
+    }
 }
