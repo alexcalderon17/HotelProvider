@@ -16,8 +16,8 @@ import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiData;
 import es.deusto.ingenieria.sd.rmi.server.dto.ApiHabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorCreacionReserva;
-import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioUsuario;
+import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioAlojamientos;
 import es.deusto.ingenieria.sd.rmi.server.servicios.ServicioReserva;
 
 import es.deusto.ingenieria.sd.rmi.server.servicios.impl.ServicioAlojamientosImpl;
@@ -28,9 +28,10 @@ import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 
 public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacade {
 
-    private ServicioAlojamientos servicioAlojamientos;
     private ServicioUsuario servicioUsuario;
     private ServicioReserva servicioReserva;
+    private ServicioAlojamientos servicioAlojamientos;
+
 
     protected ServerFacadeImpl() throws RemoteException {
         super();
@@ -104,5 +105,7 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
             e.printStackTrace();
         }
     }
+
+   
 
 }

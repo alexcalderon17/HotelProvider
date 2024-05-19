@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Random;
 
 import es.deusto.ingenieria.sd.rmi.comun.dto.ReservaDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
@@ -19,6 +20,8 @@ import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorCreacionReserva;
 import es.deusto.ingenieria.sd.rmi.server.exceptions.ErrorLecturaBaseDatos;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Usuario;
 import es.deusto.ingenieria.sd.rmi.server.jdo.Reserva;
+import java.util.Random;
+
 
 
 import java.util.Date;
@@ -44,18 +47,8 @@ public class ServicioReservaImpl implements ServicioReserva {
     @Override
     public void guardarReserva (ReservaDTO reservaDTO, UsuarioDTO usuarioDTO) {
         // Crear un nuevo objeto Reserva con los datos proporcionados
-        /*Usuario usuario;
-        try{
-            usuario = servicioUsuario.leerUsuario(usuarioDTO.getCorreo());
-        } catch(ErrorLecturaBaseDatos e){
-            throw new ErrorCreacionReserva("Error al crear reserva por usuario no encontrado", e);
-        }*/
-        
         Reserva reserva = Reserva.builder()
-        //PARA UNIR LA RESERVA AL CLIENTE, TENEMOS QUE RECIBIR EL DNI DESDE LA GUI
-        // Y LEER UN OBJETO USUARIO DE LA BD Y ASIGNARSELO AL CAMPO CLIENTE DE LA RESERVA
-        //.cliente(reservaDTO.getCliente())
-            //.cliente(usuario)
+            .codigoReserva(crearCodigoReserva())
             .alojamiento(reservaDTO.getAlojamiento())
             .habitacion(reservaDTO.getHabitacion())
             .fechaInicio(reservaDTO.getFechaInicio())
@@ -70,37 +63,15 @@ public class ServicioReservaImpl implements ServicioReserva {
         }
     }
 
-    /*@Override
-    public void cancelarReserva(ReservaDTO reserva) {
-        if (!reserva.isEstaCancelada()) {
-            reserva.setEstaCancelada(true);
-            System.out.println("La reserva ha sido cancelada exitosamente.");
-        } else {
-            System.out.println("Esta reserva ya estaba cancelada.");
+    private String crearCodigoReserva() {
+        String letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        int longitud = 5;
+        Random random = new Random();
+        StringBuilder codigoReserva = new StringBuilder(longitud);
+        for (int i = 0; i < longitud; i++) {
+            int index = random.nextInt(letras.length());
+            codigoReserva.append(letras.charAt(index));
         }
-    }*/
-
-    /*@Override
-    public boolean modificarReserva(String reservaID, Date nuevaFechaInicio, Date nuevaFechaFin) {
-        HashMap<String, ReservaDTO> reservas = new HashMap<>();
-
-        ReservaDTO reserva = reservas.get(reservaID);
-        if (reserva != null && !reserva.isEstaCancelada()) {
-            reserva.setFechaInicio(nuevaFechaInicio);
-            reserva.setFechaFin(nuevaFechaFin);
-            System.out.println("Reserva modificada exitosamente.");
-            return true;
-        } else if (reserva == null) {
-            System.out.println("No se encontró la reserva con ID: " + reservaID);
-            return false;
-        } else {
-            System.out.println("No se puede modificar una reserva cancelada.");
-            return false;
-        }
-    }*/
-
-    // @Override
-    // public List<Reserva> obtenerReservasUsuario (String usuarioID){
-
-    // }
+        return codigoReserva.toString();
+    }
 }

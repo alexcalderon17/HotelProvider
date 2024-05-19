@@ -11,10 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HabitacionDTO implements Serializable {
-
     private int id;
     private String nombre;
     private String descripcion;
     private int aforo;
-
 }
