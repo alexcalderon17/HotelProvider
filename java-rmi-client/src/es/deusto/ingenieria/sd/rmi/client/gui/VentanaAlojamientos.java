@@ -10,7 +10,6 @@ import java.util.List;
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
-import es.deusto.ingenieria.sd.rmi.comun.dto.HabitacionDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
 import es.deusto.ingenieria.sd.rmi.comun.utils.DateUtils;
@@ -18,9 +17,6 @@ import es.deusto.ingenieria.sd.rmi.comun.utils.DateUtils;
 public class VentanaAlojamientos extends JFrame {
     private JTextField textFieldFechaInicio;
     private JTextField textFieldFechaFin;
-    private JComboBox<Integer> comboBoxNumViajeros;
-    private JTextField textFieldPrecioMin;
-    private JTextField textFieldPrecioMax;
     private JTextPane textPaneInfo;
     private JList<String> alojamientosJList;
     private DefaultListModel<String> listModel;
@@ -92,11 +88,9 @@ public class VentanaAlojamientos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 LocalDate fechaInicio = DateUtils.parseDate(textFieldFechaInicio.getText());
                 LocalDate fechaFin = DateUtils.parseDate(textFieldFechaFin.getText());
-                if (alojamientoSeleccionado != null && DateUtils.sonFechasValidas(fechaFin, fechaFin)) {
-                    System.out.println("epi1");
+                if (alojamientoSeleccionado != null && DateUtils.sonFechasValidas(fechaInicio, fechaFin)) {
                     try {
                         VentanaHabitaciones va = new VentanaHabitaciones(alojamientoSeleccionado, usuarioLogeado, fechaInicio, fechaFin);
-                        System.out.println("epi2");
                         va.setVisible(true);
                         dispose();
                     } catch (RemoteException ex) {
@@ -109,7 +103,7 @@ public class VentanaAlojamientos extends JFrame {
         });
 
         // Configurar panel de filtros
-        JPanel panelFiltros = new JPanel(new GridLayout(2, 6, 5, 5));
+        JPanel panelFiltros = new JPanel(new GridLayout(2, 2, 5, 5));
         configuraPanelFiltros(panelFiltros);
         getContentPane().add(panelFiltros, BorderLayout.NORTH);
     }
@@ -124,24 +118,6 @@ public class VentanaAlojamientos extends JFrame {
         textFieldFechaFin = new JTextField("05/07/2024");
         panel.add(lblFechaFin);
         panel.add(textFieldFechaFin);
-
-        JLabel lblNumViajeros = new JLabel("Nº de Viajeros:");
-        comboBoxNumViajeros = new JComboBox<>();
-        for (int i = 1; i <= 10; i++) {
-            comboBoxNumViajeros.addItem(i);
-        }
-        panel.add(lblNumViajeros);
-        panel.add(comboBoxNumViajeros);
-
-        JLabel lblPrecioMin = new JLabel("Precio Mínimo:");
-        textFieldPrecioMin = new JTextField();
-        panel.add(lblPrecioMin);
-        panel.add(textFieldPrecioMin);
-
-        JLabel lblPrecioMax = new JLabel("Precio Máximo:");
-        textFieldPrecioMax = new JTextField();
-        panel.add(lblPrecioMax);
-        panel.add(textFieldPrecioMax);
     }
 
     public static void main(String[] args) {
