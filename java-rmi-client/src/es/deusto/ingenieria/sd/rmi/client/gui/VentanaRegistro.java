@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import javax.swing.text.DocumentFilter.FilterBypass;
 import javax.swing.text.PlainDocument;
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
@@ -36,74 +35,76 @@ public class VentanaRegistro extends JFrame {
     public VentanaRegistro() {
         serverFacade = RMIServiceLocator.getInstance().getService();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 550, 400); // Aumento tamaño para mejor distribución
-        getContentPane().setLayout(null);
+        setSize(800, 600); // Ajuste del tamaño de la ventana
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+
+        getContentPane().setLayout(null); // Desactiva el layout manager
         getContentPane().setBackground(Color.WHITE);
 
         JLabel lblRegistrate = new JLabel("Regístrate!");
         lblRegistrate.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblRegistrate.setBounds(200, 10, 150, 30);
+        lblRegistrate.setBounds(350, 30, 100, 30);
         getContentPane().add(lblRegistrate);
 
         JLabel nombreLabel = new JLabel("Nombre:");
         nombreLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        nombreLabel.setBounds(10, 50, 80, 30);
+        nombreLabel.setBounds(200, 80, 100, 30);
         getContentPane().add(nombreLabel);
 
-        textFieldNombre = new JTextField();
-        textFieldNombre.setBounds(120, 50, 300, 26);
+        textFieldNombre = new JTextField(20);
+        textFieldNombre.setBounds(350, 80, 250, 30);
         getContentPane().add(textFieldNombre);
 
         JLabel apellidoLabel = new JLabel("Apellidos:");
         apellidoLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        apellidoLabel.setBounds(10, 90, 90, 30);
+        apellidoLabel.setBounds(200, 130, 100, 30);
         getContentPane().add(apellidoLabel);
 
-        textFieldApellido = new JTextField();
-        textFieldApellido.setBounds(120, 90, 300, 26);
+        textFieldApellido = new JTextField(20);
+        textFieldApellido.setBounds(350, 130, 250, 30);
         getContentPane().add(textFieldApellido);
 
         JLabel emailLabel = new JLabel("Email:");
         emailLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        emailLabel.setBounds(10, 130, 80, 30);
+        emailLabel.setBounds(200, 180, 100, 30);
         getContentPane().add(emailLabel);
 
-        textFieldEmail = new JTextField();
-        textFieldEmail.setBounds(120, 130, 300, 26);
+        textFieldEmail = new JTextField(20);
+        textFieldEmail.setBounds(350, 180, 250, 30);
         getContentPane().add(textFieldEmail);
 
         JLabel telefonoLabel = new JLabel("Teléfono:");
         telefonoLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        telefonoLabel.setBounds(10, 170, 90, 30);
+        telefonoLabel.setBounds(200, 230, 100, 30);
         getContentPane().add(telefonoLabel);
 
-        textFieldTelefono = new JTextField();
-        textFieldTelefono.setBounds(120, 170, 300, 26);
+        textFieldTelefono = new JTextField(20);
+        textFieldTelefono.setBounds(350, 230, 250, 30);
         getContentPane().add(textFieldTelefono);
         configurarFiltroTelefono();
 
         JLabel dniLabel = new JLabel("DNI:");
         dniLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        dniLabel.setBounds(10, 210, 80, 30);
+        dniLabel.setBounds(200, 280, 100, 30);
         getContentPane().add(dniLabel);
 
-        textFieldDni = new JTextField();
-        textFieldDni.setBounds(120, 210, 300, 26);
+        textFieldDni = new JTextField(20);
+        textFieldDni.setBounds(350, 280, 250, 30);
         getContentPane().add(textFieldDni);
 
         JLabel contrasenaLabel = new JLabel("Contraseña:");
         contrasenaLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        contrasenaLabel.setBounds(10, 250, 110, 30);
+        contrasenaLabel.setBounds(200, 330, 120, 30);
         getContentPane().add(contrasenaLabel);
 
-        textFieldContrasena = new JPasswordField();
-        textFieldContrasena.setBounds(130, 250, 290, 26);
+        textFieldContrasena = new JPasswordField(20);
+        textFieldContrasena.setBounds(350, 330, 250, 30);
         getContentPane().add(textFieldContrasena);
 
         JButton btnRegistrarse = new JButton("Registrarse");
         btnRegistrarse.setForeground(Color.BLUE);
         btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnRegistrarse.setBounds(370, 300, 150, 30);
+        btnRegistrarse.setBounds(340, 400, 150, 40); // Ajuste de tamaño para que el texto quepa bien
         btnRegistrarse.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 String nombre = textFieldNombre.getText();
@@ -112,11 +113,11 @@ public class VentanaRegistro extends JFrame {
                 String telefono = textFieldTelefono.getText();
                 String dni = textFieldDni.getText();
                 String contrasena = new String(textFieldContrasena.getPassword());
-                
+
                 if (validarDNI(dni)) {
                     String errorContrasena = validarContrasena(contrasena);
                     if (errorContrasena == null) {
-                        UsuarioDTO usuario = new UsuarioDTO(nombre, apellido,dni, email, telefono,contrasena);
+                        UsuarioDTO usuario = new UsuarioDTO(nombre, apellido, dni, email, telefono, contrasena);
                         if (serverFacade != null) {
                             try {
                                 serverFacade.registrarse(usuario);
@@ -149,9 +150,8 @@ public class VentanaRegistro extends JFrame {
         getContentPane().add(btnRegistrarse);
 
         JButton btnAtras = new JButton("Atrás");
-        btnAtras.setForeground(Color.RED);
         btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnAtras.setBounds(10, 300, 100, 30);
+        btnAtras.setBounds(10, 510, 120, 40); // Abajo a la izquierda
         btnAtras.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 // Abre la ventana de inicio después de presionar el botón "Atrás"
@@ -227,19 +227,5 @@ public class VentanaRegistro extends JFrame {
 
     private void mostrarMensajeError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public static void main(String[] args) {
-        RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    VentanaRegistro frame = new VentanaRegistro();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 }

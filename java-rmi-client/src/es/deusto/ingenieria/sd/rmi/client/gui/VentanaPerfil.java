@@ -1,12 +1,12 @@
 package es.deusto.ingenieria.sd.rmi.client.gui;
 
 import javax.swing.*;
-
-import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
-
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+
+import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
 
 public class VentanaPerfil extends JFrame {
     private JLabel campoNombre;
@@ -14,7 +14,7 @@ public class VentanaPerfil extends JFrame {
     private JLabel campoDNI;
     private JLabel campoCorreo;
     private JLabel campoTelefono;
-    private JButton botonGuardar;
+    private JButton botonAtras;
     private UsuarioDTO usuario;
 
     public VentanaPerfil(UsuarioDTO usuario) {
@@ -22,63 +22,93 @@ public class VentanaPerfil extends JFrame {
 
         // Configurar la ventana
         setTitle("Perfil de Usuario");
-        setSize(300, 200);
+        setSize(800, 600); // Ajuste del tamaño de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        getContentPane().setLayout(null); // Desactiva el layout manager
 
-        // Crear panel principal
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6, 2));
+        // Título
+        JLabel lblTitulo = new JLabel("PERFIL USUARIO");
+        lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 32)); // Tamaño de fuente más grande
+        lblTitulo.setBounds(250, 30, 300, 40); // Ajuste de posición y tamaño
+        getContentPane().add(lblTitulo);
 
-        // Campo de texto para el nombre
+        // Panel de información del usuario
+        JPanel panelInfo = new JPanel(null);
+        panelInfo.setBounds(100, 100, 600, 400); // Ajuste del tamaño del panel
+
+        // Configurar el borde con un título más grande
+        TitledBorder border = BorderFactory.createTitledBorder("Información del Usuario");
+        border.setTitleFont(new Font("Tahoma", Font.BOLD, 18)); // Tamaño de fuente más grande para el borde
+        panelInfo.setBorder(border);
+        getContentPane().add(panelInfo);
+
+        // Etiquetas y campos de texto
         JLabel etiquetaNombre = new JLabel("Nombre:");
+        etiquetaNombre.setFont(new Font("Tahoma", Font.BOLD, 16));
+        etiquetaNombre.setBounds(150, 50, 100, 30); // Centrado horizontalmente
+        panelInfo.add(etiquetaNombre);
+
         campoNombre = new JLabel(usuario.getNombre());
-        panel.add(etiquetaNombre);
-        panel.add(campoNombre);
+        campoNombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        campoNombre.setBounds(300, 50, 300, 30); // Ajuste del tamaño del campo
+        panelInfo.add(campoNombre);
 
-        // Campo de texto para el apellido
         JLabel etiquetaApellido = new JLabel("Apellido:");
+        etiquetaApellido.setFont(new Font("Tahoma", Font.BOLD, 16));
+        etiquetaApellido.setBounds(150, 100, 100, 30); // Centrado horizontalmente
+        panelInfo.add(etiquetaApellido);
+
         campoApellido = new JLabel(usuario.getApellido());
-        panel.add(etiquetaApellido);
-        panel.add(campoApellido);
+        campoApellido.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        campoApellido.setBounds(300, 100, 300, 30); // Ajuste del tamaño del campo
+        panelInfo.add(campoApellido);
 
-        // Campo de texto para el DNI
         JLabel etiquetaDNI = new JLabel("DNI:");
+        etiquetaDNI.setFont(new Font("Tahoma", Font.BOLD, 16));
+        etiquetaDNI.setBounds(150, 150, 100, 30); // Centrado horizontalmente
+        panelInfo.add(etiquetaDNI);
+
         campoDNI = new JLabel(usuario.getDNI());
-        panel.add(etiquetaDNI);
-        panel.add(campoDNI);
+        campoDNI.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        campoDNI.setBounds(300, 150, 300, 30); // Ajuste del tamaño del campo
+        panelInfo.add(campoDNI);
 
-        // Campo de texto para el correo
         JLabel etiquetaCorreo = new JLabel("Correo:");
+        etiquetaCorreo.setFont(new Font("Tahoma", Font.BOLD, 16));
+        etiquetaCorreo.setBounds(150, 200, 100, 30); // Centrado horizontalmente
+        panelInfo.add(etiquetaCorreo);
+
         campoCorreo = new JLabel(usuario.getCorreo());
-        panel.add(etiquetaCorreo);
-        panel.add(campoCorreo);
+        campoCorreo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        campoCorreo.setBounds(300, 200, 300, 30); // Ajuste del tamaño del campo
+        panelInfo.add(campoCorreo);
 
-        // Campo de texto para el teléfono
         JLabel etiquetaTelefono = new JLabel("Teléfono:");
-        campoTelefono = new JLabel(usuario.getTelefono());
-        panel.add(etiquetaTelefono);
-        panel.add(campoTelefono);
+        etiquetaTelefono.setFont(new Font("Tahoma", Font.BOLD, 16));
+        etiquetaTelefono.setBounds(150, 250, 100, 30); // Centrado horizontalmente
+        panelInfo.add(etiquetaTelefono);
 
-        // Botón guardar (no necesario para mostrar datos del usuario)
-        botonGuardar = new JButton("Atras");
-        botonGuardar.addActionListener(new ActionListener() {
+        campoTelefono = new JLabel(usuario.getTelefono());
+        campoTelefono.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        campoTelefono.setBounds(300, 250, 300, 30); // Ajuste del tamaño del campo
+        panelInfo.add(campoTelefono);
+
+        // Botón Atrás
+        botonAtras = new JButton("Atrás");
+        botonAtras.setFont(new Font("Tahoma", Font.BOLD, 16));
+        botonAtras.setBounds(350, 520, 100, 40); // Ajuste de posición
+        botonAtras.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     VentanaAlojamientos va = new VentanaAlojamientos(usuario);
                     va.setVisible(true);
                     dispose();
                 } catch (RemoteException ex) {
-                    // Manejar la excepción aquí
-                    ex.printStackTrace(); // o cualquier otra acción que desees
+                    ex.printStackTrace();
                 }
             }
         });
-
-        // Ocultar el botón
-        panel.add(botonGuardar);
-
-        // Agregar panel a la ventana
-        add(panel);
+        getContentPane().add(botonAtras);
     }
 }

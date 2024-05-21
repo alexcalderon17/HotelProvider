@@ -35,20 +35,27 @@ public class VentanaAlojamientos extends JFrame {
         setTitle("Lista de Apartamentos");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        getContentPane().setLayout(null); // Desactiva el layout manager
 
-        // Panel principal
-        JPanel mainPanel = new JPanel(new BorderLayout(5, 5));
-        getContentPane().add(mainPanel, BorderLayout.CENTER);
+        // Título
+        JLabel lblAlojamientos = new JLabel("ALOJAMIENTOS:");
+        lblAlojamientos.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblAlojamientos.setBounds(10, 10, 200, 30);
+        getContentPane().add(lblAlojamientos);
+
+        // Botón Perfil en la parte superior derecha
+        btnPerfil = new JButton("Perfil");
+        btnPerfil.setBounds(700, 10, 80, 30);
+        getContentPane().add(btnPerfil);
 
         // Lista de alojamientos
-        JPanel panelAlojamientos = new JPanel(new BorderLayout());
-        panelAlojamientos.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
-
         listModel = new DefaultListModel<>();
         for (AlojamientoDTO alojamiento : alojamientos) {
             listModel.addElement(alojamiento.getNombre());
         }
         alojamientosJList = new JList<>(listModel);
+        alojamientosJList.setBounds(10, 50, 350, 400);
         alojamientosJList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && !alojamientosJList.isSelectionEmpty()) {
                 alojamientoSeleccionado = alojamientos.get(alojamientosJList.getSelectedIndex());
@@ -57,24 +64,39 @@ public class VentanaAlojamientos extends JFrame {
             }
         });
 
-        JScrollPane listScrollPane = new JScrollPane(alojamientosJList); // Envuelve la lista en JScrollPane
-        panelAlojamientos.add(listScrollPane, BorderLayout.CENTER); // Agrega el JScrollPane al panel
-        mainPanel.add(panelAlojamientos, BorderLayout.NORTH);
+        JScrollPane listScrollPane = new JScrollPane(alojamientosJList);
+        listScrollPane.setBounds(10, 50, 350, 400);
+        getContentPane().add(listScrollPane);
 
         // Área de texto con formato HTML para mostrar información
         textPaneInfo = new JTextPane();
         textPaneInfo.setContentType("text/html");
         textPaneInfo.setEditable(false);
         JScrollPane infoScrollPane = new JScrollPane(textPaneInfo);
-        mainPanel.add(infoScrollPane, BorderLayout.CENTER);
+        infoScrollPane.setBounds(370, 50, 400, 400);
+        getContentPane().add(infoScrollPane);
+
+        // Campos de fecha en una sola fila
+        JLabel lblFechaInicio = new JLabel("Fecha Inicio:");
+        lblFechaInicio.setBounds(150, 470, 100, 30);
+        getContentPane().add(lblFechaInicio);
+
+        textFieldFechaInicio = new JTextField(10);
+        textFieldFechaInicio.setBounds(250, 470, 100, 30);
+        getContentPane().add(textFieldFechaInicio);
+
+        JLabel lblFechaFin = new JLabel("Fecha Fin:");
+        lblFechaFin.setBounds(370, 470, 100, 30);
+        getContentPane().add(lblFechaFin);
+
+        textFieldFechaFin = new JTextField(10);
+        textFieldFechaFin.setBounds(450, 470, 100, 30);
+        getContentPane().add(textFieldFechaFin);
 
         // Botón Aceptar
         btnAceptar = new JButton("Aceptar");
-        btnPerfil = new JButton("Perfil");
-        JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panelBoton.add(btnAceptar);
-        panelBoton.add(btnPerfil);
-        mainPanel.add(panelBoton, BorderLayout.SOUTH);
+        btnAceptar.setBounds(350, 510, 100, 30);
+        getContentPane().add(btnAceptar);
 
         btnPerfil.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -101,31 +123,14 @@ public class VentanaAlojamientos extends JFrame {
                 }
             }
         });
-
-        // Configurar panel de filtros
-        JPanel panelFiltros = new JPanel(new GridLayout(2, 2, 5, 5));
-        configuraPanelFiltros(panelFiltros);
-        getContentPane().add(panelFiltros, BorderLayout.NORTH);
-    }
-
-    private void configuraPanelFiltros(JPanel panel) {
-        JLabel lblFechaInicio = new JLabel("Fecha Inicio:");
-        textFieldFechaInicio = new JTextField("05/07/2024");
-        panel.add(lblFechaInicio);
-        panel.add(textFieldFechaInicio);
-
-        JLabel lblFechaFin = new JLabel("Fecha Fin:");
-        textFieldFechaFin = new JTextField("05/07/2024");
-        panel.add(lblFechaFin);
-        panel.add(textFieldFechaFin);
     }
 
     public static void main(String[] args) {
         RMIServiceLocator rmiServiceLocator = new RMIServiceLocator(args[0], args[1], args[2]);
         EventQueue.invokeLater(() -> {
             try {
-                UsuarioDTO tesUsuarioDTO = createTestUsuarioDTO();
-                VentanaAlojamientos frame = new VentanaAlojamientos(tesUsuarioDTO);
+                UsuarioDTO testUsuarioDTO = createTestUsuarioDTO();
+                VentanaAlojamientos frame = new VentanaAlojamientos(testUsuarioDTO);
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -134,10 +139,9 @@ public class VentanaAlojamientos extends JFrame {
     }
 
     private static UsuarioDTO createTestUsuarioDTO() {
-        // Create a test AlojamientoAtributes object for demonstration purposes
+        // Crear un objeto de prueba UsuarioDTO para fines de demostración
         UsuarioDTO testUsuarioDTO = new UsuarioDTO();
         testUsuarioDTO.setCorreo("Test Correo");
-
         return testUsuarioDTO;
     }
 }

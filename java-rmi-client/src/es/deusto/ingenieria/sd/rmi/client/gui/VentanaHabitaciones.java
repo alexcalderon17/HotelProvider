@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.sd.rmi.client.gui;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -28,7 +29,6 @@ public class VentanaHabitaciones extends JFrame {
     private LocalDate fechaFin;
 
     public VentanaHabitaciones(AlojamientoDTO alojamientoSeleccionado, UsuarioDTO usuarioLogeado, LocalDate fechaInicio, LocalDate fechaFin) throws RemoteException {
-        System.out.println("epi");
         this.alojamientoSeleccionado = alojamientoSeleccionado;
         this.usuarioLogeado = usuarioLogeado;
         this.fechaInicio = fechaInicio;
@@ -41,8 +41,7 @@ public class VentanaHabitaciones extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centra la ventana en la pantalla
-
-        setLayout(new BorderLayout());
+        getContentPane().setLayout(null); // Desactiva el layout manager
         setBackground(new Color(255, 255, 255));
 
         initListPanel();
@@ -61,13 +60,16 @@ public class VentanaHabitaciones extends JFrame {
         listHabitaciones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane scrollPane = new JScrollPane(listHabitaciones);
-        scrollPane.setPreferredSize(new Dimension(200, 0));
+        scrollPane.setBounds(10, 50, 320, 390); // Ajuste del tamaño y la posición del JScrollPane
 
-        JPanel listPanel = new JPanel(new BorderLayout());
-        listPanel.add(scrollPane, BorderLayout.CENTER);
-        listPanel.setBorder(BorderFactory.createTitledBorder("Habitaciones Disponibles"));
+        TitledBorder listPanelBorder = BorderFactory.createTitledBorder("Habitaciones Disponibles");
+        listPanelBorder.setTitleFont(new Font("Tahoma", Font.BOLD, 18));
+        JPanel listPanel = new JPanel(null);
+        listPanel.setBounds(10, 10, 340, 450);
+        listPanel.setBorder(listPanelBorder);
+        listPanel.add(scrollPane);
 
-        getContentPane().add(listPanel, BorderLayout.WEST);
+        getContentPane().add(listPanel);
 
         listHabitaciones.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -80,20 +82,43 @@ public class VentanaHabitaciones extends JFrame {
         int index = listHabitaciones.getSelectedIndex();
         if (index != -1) {
             HabitacionDTO seleccionada = habitaciones.get(index);
-            lblAforo.setText("Aforo: " + seleccionada.getAforo());
-            lblDescripcion.setText("Descripción: " + seleccionada.getDescripcion());
+            lblAforo.setText(seleccionada.getAforo() + " Personas");
+            lblDescripcion.setText("<html><body style='width: 360px;'>" + seleccionada.getDescripcion() + "</body></html>");
         }
     }
 
     private void initDetailsPanel() {
-        JPanel detailsPanel = new JPanel(new GridLayout(4, 1, 10, 10));
-        detailsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel detailsPanel = new JPanel(null);
+        detailsPanel.setBounds(370, 10, 400, 450);
+        
+        TitledBorder detailsBorder = BorderFactory.createTitledBorder("Detalles de la Habitación");
+        detailsBorder.setTitleFont(new Font("Tahoma", Font.BOLD, 18)); // Tamaño de fuente más grande para el borde
+        detailsPanel.setBorder(detailsBorder);
+
+        JLabel lblAforoTitle = new JLabel("Aforo:");
+        lblAforoTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblAforoTitle.setBounds(20, 20, 100, 30);
+        detailsPanel.add(lblAforoTitle);
 
         lblAforo = new JLabel();
-        lblDescripcion = new JLabel();
-        btnReservar = new JButton("Reservar");
-        btnReservar.setEnabled(true);
+        lblAforo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        lblAforo.setBounds(120, 20, 250, 30);
+        detailsPanel.add(lblAforo);
 
+        JLabel lblDescripcionTitle = new JLabel("Descripción:");
+        lblDescripcionTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblDescripcionTitle.setBounds(20, 70, 150, 30);
+        detailsPanel.add(lblDescripcionTitle);
+
+        lblDescripcion = new JLabel();
+        lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        lblDescripcion.setVerticalAlignment(SwingConstants.TOP);
+        lblDescripcion.setBounds(20, 110, 360, 200);
+        detailsPanel.add(lblDescripcion);
+
+        btnReservar = new JButton("Reservar");
+        btnReservar.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnReservar.setBounds(90, 330, 200, 40); // Centrado en la parte inferior
         btnReservar.addActionListener(e -> {
             int selectedIndex = listHabitaciones.getSelectedIndex();
             if (selectedIndex != -1) {
@@ -115,18 +140,15 @@ public class VentanaHabitaciones extends JFrame {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una habitación", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
             }
         });
-
-        detailsPanel.add(new JLabel("Aforo:"));
-        detailsPanel.add(lblAforo);
-        detailsPanel.add(new JLabel("Descripción:"));
-        detailsPanel.add(lblDescripcion);
         detailsPanel.add(btnReservar);
 
-        getContentPane().add(detailsPanel, BorderLayout.CENTER);
+        getContentPane().add(detailsPanel);
     }
 
     private void initBottomPanel() {
         btnAtras = new JButton("Atrás");
+        btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnAtras.setBounds(10, 510, 100, 40); // Posicionado abajo a la izquierda
         btnAtras.addActionListener(e -> {
             dispose();
             EventQueue.invokeLater(() -> {
@@ -139,25 +161,6 @@ public class VentanaHabitaciones extends JFrame {
             });
         });
 
-        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panelInferior.add(btnAtras);
-        getContentPane().add(panelInferior, BorderLayout.SOUTH);
-    }
-
-    private static AlojamientoDTO createTestAlojamiento() {
-        // Create a test AlojamientoAtributes object for demonstration purposes
-        AlojamientoDTO testAlojamiento = new AlojamientoDTO();
-        testAlojamiento.setNombre("Test Hotel");
-        testAlojamiento.setDescripcion("Un hotel de prueba para demostración.");
-        testAlojamiento.setDireccion("123 Demo Street, Demo City");
-        return testAlojamiento;
-    }
-
-    private static UsuarioDTO createTestUsuarioDTO() {
-        // Create a test AlojamientoAtributes object for demonstration purposes
-        UsuarioDTO testUsuarioDTO = new UsuarioDTO();
-        testUsuarioDTO.setCorreo("Test Correo");
-
-        return testUsuarioDTO;
+        getContentPane().add(btnAtras);
     }
 }

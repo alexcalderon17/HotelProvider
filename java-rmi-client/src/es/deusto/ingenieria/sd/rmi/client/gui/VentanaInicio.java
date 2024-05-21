@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
-import java.util.List; // Importa la interfaz List
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,10 +16,8 @@ import javax.swing.JOptionPane;
 
 import es.deusto.ingenieria.sd.rmi.client.remote.RMIServiceLocator;
 import es.deusto.ingenieria.sd.rmi.comun.facade.ServerFacade;
-import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;// Importa la clase AlojamientoAtributes
+import es.deusto.ingenieria.sd.rmi.comun.dto.AlojamientoDTO;
 import es.deusto.ingenieria.sd.rmi.comun.dto.UsuarioDTO;
-
-
 
 public class VentanaInicio extends JFrame {
 
@@ -30,37 +28,37 @@ public class VentanaInicio extends JFrame {
     public VentanaInicio() {
         serverFacade = RMIServiceLocator.getInstance().getService();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300); 
-        getContentPane().setLayout(null);
-        getContentPane().setBackground(Color.WHITE);
+        setSize(800, 600); // Ajuste del tamaño de la ventana
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        getContentPane().setLayout(null); // Desactiva el layout manager
 
-        JLabel lblLogin = new JLabel("Iniciar Sesión");
-        lblLogin.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblLogin.setBounds(150, 20, 150, 30);
+        JLabel lblLogin = new JLabel("INICIAR SESIÓN");
+        lblLogin.setFont(new Font("Tahoma", Font.BOLD, 24));
+        lblLogin.setBounds(325, 80, 250, 40); // Posición y tamaño del label
         getContentPane().add(lblLogin);
 
         JLabel emailLabel = new JLabel("Correo electrónico:");
         emailLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        emailLabel.setBounds(20, 70, 180, 30);
+        emailLabel.setBounds(200, 150, 180, 30); // Posición y tamaño del label
         getContentPane().add(emailLabel);
 
-        textFieldEmail = new JTextField();
-        textFieldEmail.setBounds(200, 70, 220, 26);
+        textFieldEmail = new JTextField(20);
+        textFieldEmail.setBounds(400, 150, 200, 30); // Posición y tamaño del campo de texto
         getContentPane().add(textFieldEmail);
 
         JLabel contrasenaLabel = new JLabel("Contraseña:");
         contrasenaLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        contrasenaLabel.setBounds(20, 120, 110, 30);
+        contrasenaLabel.setBounds(200, 200, 110, 30); // Posición y tamaño del label
         getContentPane().add(contrasenaLabel);
 
-        textFieldContrasena = new JTextField();
-        textFieldContrasena.setBounds(200, 120, 220, 26);
+        textFieldContrasena = new JTextField(20);
+        textFieldContrasena.setBounds(400, 200, 200, 30); // Posición y tamaño del campo de texto
         getContentPane().add(textFieldContrasena);
 
         JButton btnIniciarSesion = new JButton("Iniciar Sesión");
         btnIniciarSesion.setForeground(Color.BLUE);
         btnIniciarSesion.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnIniciarSesion.setBounds(150, 180, 150, 30);
+        btnIniciarSesion.setBounds(325, 280, 150, 40); // Posición y tamaño del botón
         btnIniciarSesion.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String email = textFieldEmail.getText();
@@ -91,7 +89,7 @@ public class VentanaInicio extends JFrame {
 
         JButton btnRegistrarse = new JButton("Registrarse");
         btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnRegistrarse.setBounds(150, 220, 150, 30);
+        btnRegistrarse.setBounds(325, 340, 150, 40); // Posición y tamaño del botón
         btnRegistrarse.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 EventQueue.invokeLater(new Runnable() {
