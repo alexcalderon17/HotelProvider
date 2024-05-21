@@ -28,14 +28,18 @@ public class VentanaHabitaciones extends JFrame {
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
 
-    public VentanaHabitaciones(AlojamientoDTO alojamientoSeleccionado, UsuarioDTO usuarioLogeado, LocalDate fechaInicio, LocalDate fechaFin) throws RemoteException {
+    public VentanaHabitaciones(AlojamientoDTO alojamientoSeleccionado, UsuarioDTO usuarioLogeado, LocalDate fechaInicio,
+            LocalDate fechaFin) throws RemoteException {
         this.alojamientoSeleccionado = alojamientoSeleccionado;
         this.usuarioLogeado = usuarioLogeado;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         System.out.println("Id AlojamientoSeleccionado: " + alojamientoSeleccionado.getId());
+        System.out.println(fechaFin);
+        System.out.println(fechaInicio);
         serverFacade = RMIServiceLocator.getInstance().getService();
-        habitaciones = serverFacade.obtenerHabitaciones(alojamientoSeleccionado.getId(), fechaInicio, fechaFin);
+        habitaciones = serverFacade.obtenerHabitaciones(alojamientoSeleccionado.getId(), fechaInicio.toString(),
+                fechaFin.toString());
         System.out.println("Las habitaciones libres son estas: " + habitaciones);
         setTitle("Lista de Habitaciones");
         setSize(800, 600);
@@ -83,14 +87,15 @@ public class VentanaHabitaciones extends JFrame {
         if (index != -1) {
             HabitacionDTO seleccionada = habitaciones.get(index);
             lblAforo.setText(seleccionada.getAforo() + " Personas");
-            lblDescripcion.setText("<html><body style='width: 360px;'>" + seleccionada.getDescripcion() + "</body></html>");
+            lblDescripcion
+                    .setText("<html><body style='width: 360px;'>" + seleccionada.getDescripcion() + "</body></html>");
         }
     }
 
     private void initDetailsPanel() {
         JPanel detailsPanel = new JPanel(null);
         detailsPanel.setBounds(370, 10, 400, 450);
-        
+
         TitledBorder detailsBorder = BorderFactory.createTitledBorder("Detalles de la Habitación");
         detailsBorder.setTitleFont(new Font("Tahoma", Font.BOLD, 18)); // Tamaño de fuente más grande para el borde
         detailsPanel.setBorder(detailsBorder);
@@ -123,21 +128,25 @@ public class VentanaHabitaciones extends JFrame {
             int selectedIndex = listHabitaciones.getSelectedIndex();
             if (selectedIndex != -1) {
                 HabitacionDTO habitacionSeleccionada = habitaciones.get(selectedIndex);
-                ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(), habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
+                ReservaDTO reserva = new ReservaDTO(usuarioLogeado.getCorreo(), alojamientoSeleccionado.getNombre(),
+                        habitacionSeleccionada.getNombre(), fechaInicio, fechaFin);
                 if (serverFacade != null) {
                     try {
                         System.out.println(usuarioLogeado);
                         serverFacade.guardarReserva(reserva, usuarioLogeado);
-                        JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(VentanaHabitaciones.this, "¡Reserva guardada!", "Éxito",
+                                JOptionPane.INFORMATION_MESSAGE);
                     } catch (RemoteException e2) {
                         e2.printStackTrace();
-                        JOptionPane.showMessageDialog(this, "Ha ocurrido un error", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Ha ocurrido un error", "Error guardarReserva",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     throw new RuntimeException("El ServerFacade es null");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar una habitación", "Error guardarReserva", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una habitación", "Error guardarReserva",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
         detailsPanel.add(btnReservar);

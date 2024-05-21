@@ -34,7 +34,7 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     private ServicioReserva servicioReserva;
     private ServicioAlojamientos servicioAlojamientos;
     private ServicioPuertas servicioPuertas;
-    
+
     protected ServerFacadeImpl() throws RemoteException {
         super();
         this.servicioAlojamientos = new ServicioAlojamientosImpl();
@@ -45,9 +45,12 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
     }
 
     @Override
-    public List<HabitacionDTO> obtenerHabitaciones(int IdAlojamientoSeleccionado, LocalDate fechaIni, LocalDate fechaFin) throws RemoteException {
+    public List<HabitacionDTO> obtenerHabitaciones(int IdAlojamientoSeleccionado, String fechaIni, String fechaFin)
+            throws RemoteException {
+        LocalDate fechaInicio = LocalDate.parse(fechaIni);
+        LocalDate fechaFinal = LocalDate.parse(fechaFin);
 
-        return servicioAlojamientos.obtenerHabitaciones(IdAlojamientoSeleccionado, fechaIni, fechaFin);
+        return servicioAlojamientos.obtenerHabitaciones(IdAlojamientoSeleccionado, fechaInicio, fechaFinal);
     }
 
     @Override
@@ -57,9 +60,9 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
 
     @Override
     public UsuarioDTO iniciarSesion(String usuario, String contrasenya) throws RemoteException {
-        System.out.println("metodo iniciar sesion en ServerfacadeImpl"); //sout
+        System.out.println("metodo iniciar sesion en ServerfacadeImpl"); // sout
         try {
-           return servicioUsuario.iniciarSesion(usuario, contrasenya);
+            return servicioUsuario.iniciarSesion(usuario, contrasenya);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -68,8 +71,8 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
 
     @Override
     public void registrarse(UsuarioDTO usuarioDTO) throws RemoteException {
-        System.out.println("metodo registrarse en ServerfacadeImpl"); //sout
-        
+        System.out.println("metodo registrarse en ServerfacadeImpl"); // sout
+
         try {
             servicioUsuario.registrarse(usuarioDTO);
             // Asume que 'servicioHotelProvider.registrarse()' también ha sido actualizado
@@ -79,15 +82,16 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
             throw new RemoteException("Error en registrarse: " + e.getMessage(), e);
         }
     }
+
     @Override
-    public void guardarReserva (ReservaDTO reservaDTO, UsuarioDTO usuarioDTO) throws RemoteException{
-        System.out.println("metodo guardarReserva en ServerfacadeImpl"); //sout
+    public void guardarReserva(ReservaDTO reservaDTO, UsuarioDTO usuarioDTO) throws RemoteException {
+        System.out.println("metodo guardarReserva en ServerfacadeImpl"); // sout
         try {
             servicioReserva.guardarReserva(reservaDTO, usuarioDTO);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RemoteException("Error al crear la reserva");
-        } 
+        }
     }
 
     @Override
@@ -99,7 +103,6 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
             throw new RemoteException("Error al abrir la puertas: " + e.getMessage(), e);
         }
     }
-
 
     public static void main(String[] args) {
         if (args.length != 3) {
@@ -119,7 +122,5 @@ public class ServerFacadeImpl extends UnicastRemoteObject implements ServerFacad
             e.printStackTrace();
         }
     }
-
-   
 
 }
